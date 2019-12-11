@@ -1,0 +1,33 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Agregar saldo a favor - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Agregar saldo a favor</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">formulario</div>
+            <div class="panel-body">
+
+                <div class="form-group form-group-sm">
+                    <label for="form_TxtNombre" class="col-sm-3 control-label">Valor saldo favor:</label>
+                    <div class="col-sm-9">
+                        {{ form_widget(form.vrSaldoFavor , { 'attr': {'class': 'form-control','value':'0'} }) }}
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

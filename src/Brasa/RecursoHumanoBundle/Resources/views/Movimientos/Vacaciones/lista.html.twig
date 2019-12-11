@@ -1,0 +1,127 @@
+{% extends '::base.html.twig' %}
+{% block title %}Vacaciones lista - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Lista vacaciones</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body"> 
+                <div class="form-group form-group-sm">
+                    <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Empleado:</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                          <div class="col-lg-2">
+                            <div class="input-group">
+                              {{ form_widget(form.txtNumeroIdentificacion, { 'attr': {'class': 'form-control'} }) }} 
+                            </div>
+                          </div>
+                          <div class="col-lg-10">
+                            <div class="input-group">                                      
+                                {{ form_widget(form.txtNombreCorto, { 'attr': {'class': 'form-control', 'readOnly': 'ReadOnly'} }) }}                              
+                              <span class="input-group-btn">                                        
+                                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado') }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">                    
+                    <label for="form_centroCostoRel" class="col-sm-8 control-label">Grupo pago:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                                           
+                <div class="form-group form-group-sm">  
+                    <label for="form_estadoAutorizado" class="col-sm-8 control-label">Autorizado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoAutorizado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_estadoPagado" class="col-sm-8 control-label">Pagado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoPagado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                    
+            </div>
+        </div>
+    
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>                
+                <th>CODIGO</th>
+                <th>GRUPO PAGO</th>
+                <th>IDENTIFICACIÓN</th>
+                <th>EMPLEADO</th>
+                <th>P. DESDE</th>
+                <th>P. HASTA</th>
+                <th>D. DESDE</th>
+                <th>D. HASTA</th>                
+                <th>DIAS</th>
+                <th>DD</th>
+                <th>DDR</th>
+                <th>DP</th>                
+                <th style="text-align: right">TOTAL</th>
+                <th>AUT</th>
+                <th>PAG</th>
+                <th style="text-align: center"></th>
+                <th style="text-align: center"></th>
+                <th style="text-align: center"></th>
+            </tr>
+            {% for arVacaciones in arVacaciones %}
+            <tr>
+                <input type="hidden" name="LblCodigo[]" value="{{ arVacaciones.codigoVacacionPk }}">
+                <td>{{ arVacaciones.codigoVacacionPk }}</td>
+                <td>{{ arVacaciones.centroCostoRel.nombre  }}</td>
+                <td>{{ arVacaciones.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arVacaciones.empleadoRel.nombreCorto  }}</td>
+                <td>{{ arVacaciones.fechaDesdePeriodo |date("Y/m/d")  }}</td>
+                <td>{{ arVacaciones.fechaHastaPeriodo |date("Y/m/d")  }}</td>
+                <td>{{ arVacaciones.fechaDesdeDisfrute |date("Y/m/d")  }}</td>
+                <td>{{ arVacaciones.fechaHastaDisfrute |date("Y/m/d")  }}</td>                
+                <td style="text-align: right">{{ arVacaciones.diasVacaciones  }}</td>
+                <td style="text-align: right">{{ arVacaciones.diasDisfrutados  }}</td>
+                <td style="text-align: right">{{ arVacaciones.diasDisfrutadosReales  }}</td>
+                <td style="text-align: right">{{ arVacaciones.diasPagados  }}</td>
+                <td style="text-align: right">{{ arVacaciones.vrVacacion | number_format(0, '.', ',') }}</td>
+                <td>{% if arVacaciones.estadoAutorizado == 1 %} SI {% else %} NO {% endif %}</td>
+                <td>{% if arVacaciones.estadoPagoGenerado == 1 %} SI {% else %} NO {% endif %}</td>
+                <td style="text-align: center">{% if arVacaciones.estadoPagoGenerado == 0 %}<a href="{{ path('brs_rhu_movimiento_vacacion_nuevo', {'codigoContrato': arVacaciones.codigoContratoFk, 'codigoVacacion': arVacaciones.codigoVacacionPk }) }}" ><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a>{% endif %}</td>                                            
+                <td><a href="{{ path('brs_rhu_movimiento_vacacion_detalle', { 'codigoVacacion': arVacaciones.codigoVacacionPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22 title="Detalles del registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arVacaciones.codigoVacacionPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <!-- Botones Menu Items -->
+        <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arVacaciones.getTotalItemCount }}</span></div>                        
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arVacaciones) }}       
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_vacacion_nuevo', {'codigoVacacion': 0}) }}">Nuevo</a>                
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+            </div>
+        </div>    
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

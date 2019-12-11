@@ -1,0 +1,61 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Factura detalle resumen - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        {% if arPedido != null %}
+        <div class="panel panel-default">
+            <div class="panel-heading">Información del servicio</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arPedido.codigoPedidoPk }}</td>
+                        <td class="titulo">NUMERO</td>
+                        <td class="td-in-well">{{ arPedido.numero }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CLIENTE:</td>
+                        <td class="td-in-well">{{ arPedido.clienteRel.nombreCorto }}</td>
+                        <td class="titulo" >HORAS DIURNAS:</td>
+                        <td align="right">{{ arPedido.horasDiurnas | number_format(0, '.', ',')}}</td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">SECTOR:</td>
+                        <td class="td-in-well">{{ arPedido.sectorRel.nombre }}</td>
+                        <td class="titulo" >HORAS NOCTURNAS:</td>
+                        <td align="right">{{ arPedido.horasNocturnas | number_format(0, '.', ',')}}</td>
+                    </tr>                 
+                    <tr>
+                        <td class="titulo">USUARIO:</td>
+                        <td class="td-in-well">{{ arPedido.usuario}}</td>
+                        <td class="titulo" >HORAS:</td>
+                        <td align="right">{{ arPedido.horas | number_format(0, '.', ',')}}</td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">CODIGO DETALLE:</td>
+                        <td class="td-in-well">{{ arFacturaDetalle.codigoPedidoDetalleFk }}</td>
+                        <td class="titulo" >COSTO:</td>
+                        <td align="right">{{ arPedido.vrTotalCosto | number_format(0, '.', ',')}}</td>
+                    </tr>                
+                    <tr>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo" >MINIMO:</td>
+                        <td align="right">{{ arPedido.vrTotalPrecioMinimo | number_format(0, '.', ',')}}</td>
+                    </tr>                
+                    <tr>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo" >VALOR:</td>
+                        <td align="right">{{ arPedido.vrTotal | number_format(0, '.', ',')}}</td>
+                    </tr>                 
+                </table>
+            </div>
+        </div> 
+        {% else %}
+            <h4>La factura no proviene de un pedido</h4>
+        {% endif %}                    
+        <br />
+
+    </div>
+{% endblock %}

@@ -1,0 +1,334 @@
+{% extends '::base.html.twig' %}
+{% block title %}Accidente trabajo nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo accidente trabajo</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">            
+            <div class="form-group form-group-sm">
+                <label for="form_txtNumeroIdentificacion" class="col-sm-3 control-label">Empleado:</label>
+                <div class="col-sm-9">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          <input id="form_txtNumeroIdentificacion"  name="form_txtNumeroIdentificacion"  type="text" class="form-control" value="{{ arAccidenteTrabajo.empleadoRel.numeroIdentificacion |default('') }}"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                          <input id="form_txtNombreCorto"  name="form_txtNombreCorto"  type="text" class="form-control" value="{{ arAccidenteTrabajo.empleadoRel.nombreCorto |default('') }}" readOnly="ReadOnly" />
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado') }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_ciudadRel" class="col-sm-3 control-label">Ciudad accidente:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.ciudadRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>     
+            <div class="form-group">
+                <label for="form_codigoFurat" class="col-sm-3 control-label">Código furat:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.codigoFurat, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_coordinadorEncargado" class="col-sm-3 control-label">Coordinador encargado:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.coordinadorEncargado, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_cargoCoordinadorEncargado" class="col-sm-3 control-label">Cargo coordinador encargado:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.cargoCoordinadorEncargado, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_fechaAccidente" class="col-sm-3 control-label">Fecha accidente:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.fechaAccidente, {'attr': {'maxlength' : 10} }) }} 
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_tipoAccidenteRel" class="col-sm-3 control-label">Tipo accidente:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.tipoAccidenteRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_fechaEnviaInvestigacion" class="col-sm-3 control-label">fecha envia investigación:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.fechaEnviaInvestigacion, {'attr': {'maxlength' : 10} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_fechaIncapacidadDesde" class="col-sm-3 control-label">fecha incapacidad desde:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.fechaIncapacidadDesde, {'attr': {'maxlength' : 10} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_fechaIncapacidadHasta" class="col-sm-3 control-label">fecha incapacidad hasta:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.fechaIncapacidadHasta, {'attr': {'maxlength' : 10} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_dias" class="col-sm-3 control-label">Días:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.dias, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_tiempoServicioEmpleado" class="col-sm-3 control-label">Tiempo servicio empleado:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.tiempoServicioEmpleado, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_oficioHabitual" class="col-sm-3 control-label">Oficio habitual:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.oficioHabitual, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_cie10" class="col-sm-3 control-label">Cie10:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.cie10, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_diagnostico" class="col-sm-3 control-label">Diagnóstico:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.diagnostico, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_naturalezaLesion" class="col-sm-3 control-label">Naturaleza de la lesión:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.naturalezaLesion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_cuerpoAfectado" class="col-sm-3 control-label">Cuerpo afectado:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.cuerpoAfectado, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_agente" class="col-sm-3 control-label">Agente:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.agente, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_mecanismoAccidente" class="col-sm-3 control-label">Mecanismo accidente:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.mecanismoAccidente, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_tareaDesarrolladaMomentoAccidente" class="col-sm-3 control-label">Tarea desarrollada momento accidente:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.tareaDesarrolladaMomentoAccidente, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_lugarAccidente" class="col-sm-3 control-label">Lugar accidente:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.lugarAccidente, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_descripcionAccidente" class="col-sm-3 control-label">Descripción accidente:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.descripcionAccidente, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_actoInseguro" class="col-sm-3 control-label">Acto inseguro:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.actoInseguro, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_condicionInsegura" class="col-sm-3 control-label">Condición Insegura:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.condicionInsegura, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_factorPersonal" class="col-sm-3 control-label">Factor personal:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.factorPersonal, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_factorTrabajo" class="col-sm-3 control-label">Factor trabajo:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.factorTrabajo, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="panel-heading">Recomendaciones B49</div>
+            <div class="panel-heading">Lista priorizada de acciones de intervención</div>
+            <div class="form-group">
+                <label for="form_planAccion1" class="col-sm-3 control-label">Plan de acción 1:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.planAccion1, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_tipoControlUnoRel" class="col-sm-3 control-label">Tipo Control:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.tipoControlUnoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_fechaVerificacion1" class="col-sm-3 control-label">Fecha verificación:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.fechaVerificacion1, {'attr': {'maxlength' : 10} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_areaResponsable1" class="col-sm-3 control-label">Área responsable:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.areaResponsable1, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_planAccion2" class="col-sm-3 control-label">Plan de acción 2:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.planAccion2, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_tipoControlDosRel" class="col-sm-3 control-label">Tipo Control:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.tipoControlDosRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_fechaVerificacion2" class="col-sm-3 control-label">Fecha verificación:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.fechaVerificacion2, {'attr': {'maxlength' : 10} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_areaResponsable2" class="col-sm-3 control-label">Área responsable:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.areaResponsable2, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_planAccion3" class="col-sm-3 control-label">Plan de acción 3:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.planAccion3, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_tipoControlTresRel" class="col-sm-3 control-label">Tipo Control:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.tipoControlTresRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_fechaVerificacion3" class="col-sm-3 control-label">Fecha verificación:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.fechaVerificacion3, {'attr': {'maxlength' : 10} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_areaResponsable3" class="col-sm-3 control-label">Área responsable:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.areaResponsable3, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="panel-heading">Participantes de la investigación</div>    
+            <div class="form-group">
+                <label for="form_participanteInvestigacion1" class="col-sm-3 control-label">Participante investigación 1</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.participanteInvestigacion1, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_cargoParticipanteInvestigacion1" class="col-sm-3 control-label">Cargo</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.cargoParticipanteInvestigacion1, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_participanteInvestigacion2" class="col-sm-3 control-label">Participante investigación 2</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.participanteInvestigacion2, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_cargoParticipanteInvestigacion2" class="col-sm-3 control-label">Cargo</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.cargoParticipanteInvestigacion2, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_participanteInvestigacion3" class="col-sm-3 control-label">Participante investigación 3</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.participanteInvestigacion3, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_cargoParticipanteInvestigacion3" class="col-sm-3 control-label">Cargo</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.cargoParticipanteInvestigacion3, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_representanteLegal" class="col-sm-3 control-label">Representante legal</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.representanteLegal, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_cargoRepresentanteLegal" class="col-sm-3 control-label">Cargo representante legal</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.cargoRepresentanteLegal, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_licencia" class="col-sm-3 control-label">Licencia</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.licencia, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_fechaVerificacion" class="col-sm-3 control-label">Fecha verificación</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.fechaVerificacion, {'attr': {'maxlength' : 10} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_reponsableVerificacion" class="col-sm-3 control-label">Responsable verificación</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.responsableVerificacion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>    
+        </div>
+    </div>          
+    <div class="modal-footer">      
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_accidente_trabajo_lista') }}">Cancelar</a>        
+            {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

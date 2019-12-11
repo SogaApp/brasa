@@ -1,0 +1,51 @@
+<script>
+    $('#myModal').modal('toggle');
+</script>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Generar archivo plano</h4>
+            </div>
+            {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+            <div class="modal-body">
+                <div class="form-group form-group-sm">
+                    <label for="form_tipo" class="col-sm-4 control-label">Tipo:</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_arlIRel" class="col-sm-4 control-label">Arl:</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.arlIRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_entidad" class="col-sm-4 control-label">Entidad pila:</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.entidad, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_sucursal" class="col-sm-4 control-label">Cod sucursal:</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.sucursal, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="submit" name="OpGenerar" value="1">PLANILLA TIPO I</button>
+                <button class="btn btn-default" type="submit" name="OpGenerar" value="2">PLANILLA TIPO E</button>
+                <button class="btn btn-default" type="submit" name="OpGenerar" value="3">CLIENTE INTERNO</button>
+                {#<button class="btn btn-default" type="submit" name="OpGenerarSucursales" value="3">Interno sucursales#}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

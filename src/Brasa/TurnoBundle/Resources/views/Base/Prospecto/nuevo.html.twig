@@ -1,0 +1,61 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo prospecto</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">                                      
+            <div class="form-group form-group-sm">
+                <label for="form_nit" class="col-sm-3 control-label">Nit:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.nit, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_nombreCorto" class="col-sm-3 control-label">Nombre corto:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.nombreCorto, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                </div>                
+            </div>  
+            <div class="form-group form-group-sm">
+                <label for="form_estrato" class="col-sm-3 control-label">Estrato:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.estrato, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                                
+            <div class="form-group form-group-sm">
+                <label for="form_contacto" class="col-sm-3 control-label">Contacto:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.contacto, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                </div>                
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label for="form_celularContacto" class="col-sm-3 control-label">Celular contacto:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.celularContacto, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_telefonoContacto" class="col-sm-3 control-label">Telefono contacto:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.telefonoContacto, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-3 control-label">Comentarios:</label>
+                <div class="col-sm-9">
+                   {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                 
+        </div>
+    </div>               
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_tur_base_prospecto_lista') }}">Cancelar</a>        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends '::base.html.twig' %}
+{% block title %}Pedido nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo pedido</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">             
+            <div class="form-group form-group-sm">
+                <label for="txtNit" class="col-sm-3 control-label">Cliente:</label>
+                <div class="col-sm-9">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          <input id="txtNit"  name="txtNit"  type="text" class="form-control" value="{{ arPedido.clienteRel.nit |default('') }}"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                          <input id="txtNombreCorto"  name="txtNombreCorto"  type="text" class="form-control" value="{{ arPedido.clienteRel.nombreCorto |default('') }}" readOnly="ReadOnly" />
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_tur_buscar_cliente', { 'campoCodigo': 'txtNit', 'campoNombre': 'txtNombreCorto' }) }}', 'buscarTercero', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_pedidoTipoRel" class="col-sm-3 control-label">Tipo:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.pedidoTipoRel, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                          
+            <div class="form-group form-group-sm">
+                <label for="form_sectorRel" class="col-sm-3 control-label">Sector:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.sectorRel, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div> 
+            <div class="form-group form-group-sm">
+                <label for="form_fechaProgramacion" class="col-sm-3 control-label">Fecha programacion:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.fechaProgramacion) }}
+                </div>
+            </div>             
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-3 control-label">Comentarios:</label>
+                <div class="col-sm-9">
+                   {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                 
+        </div>
+    </div>               
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_tur_movimiento_pedido') }}">Cancelar</a>        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

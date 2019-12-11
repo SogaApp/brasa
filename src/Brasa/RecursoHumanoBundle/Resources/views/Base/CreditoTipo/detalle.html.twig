@@ -1,0 +1,77 @@
+{% extends '::base.html.twig' %}
+{% block title %}Crédito tipo detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles tipo crédito</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">Información del tipo crédito</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</th>
+                        <td class="td-in-well">{{ arCreditosTipo.codigoCreditoTipoPk }}</td>
+                        <td class="titulo">NOMBRE:</th>
+                        <td class="td-in-well">{{ arCreditosTipo.nombre }}</td>
+                        <td class="titulo">CUPO MÁXIMO:</th>
+                        <td class="td-in-well">{{ arCreditosTipo.cupoMaximo }}</td>
+                    </tr>                    
+                </table>
+            </div>
+        </div>
+
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>{{ knp_pagination_sortable(arCreditosTiposEmpleados, 'CÓDIGO', 'c.codigoCreditoPk') }}</th>
+                <th>FECHA</th>
+                <th>C. COSTO</th>
+                <th>EMPLEADO</th>
+                <th style="text-align: right">VR. CREDITO</th>
+                <th style="text-align: right">VR. CUOTA</th>
+                <th style="text-align: right">VR. SEGURO</th>
+                <th style="text-align: right">CUOTAS</th>
+                <th style="text-align: right">C. ACTUAL</th>
+                <th style="text-align: right">PAGADO</th>
+                <th style="text-align: right">APROBADO</th>
+                <th style="text-align: right">SUSPENDIDO</th>
+            </tr>
+            {% for arCreditosTiposEmpleados in arCreditosTiposEmpleados %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arCreditosTiposEmpleados.codigoCreditoPk }}">{{ arCreditosTiposEmpleados.codigoCreditoPk }} </td>
+                <td>{{ arCreditosTiposEmpleados.fecha |date("Y/m/d")  }}</td>
+                <td>{{ arCreditosTiposEmpleados.centroCostoRel.nombre }}</td>
+                <td>{{ arCreditosTiposEmpleados.empleadoRel.nombreCorto  }}</td>
+                <td style="text-align: right">{{ arCreditosTiposEmpleados.VrPagar | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCreditosTiposEmpleados.VrCuota | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCreditosTiposEmpleados.Seguro | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCreditosTiposEmpleados.numeroCuotas | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCreditosTiposEmpleados.numeroCuotaActual | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right" {% if arCreditosTiposEmpleados.estadoPagado == 1 %} class="success"> SI {% else %} <td {{ arCreditosTiposEmpleados.estadoPagado }} class="danger">NO {% endif %}</td>
+                <td style="text-align: right" {% if arCreditosTiposEmpleados.aprobado == 0 %} class="danger"> NO {% else %} <td class="success">SI {% endif %}</td>
+                <td style="text-align: right" {% if arCreditosTiposEmpleados.estadoSuspendido == 0 %} class="success"> NO {% else %} <td class="danger">SI {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <!-- Botones Menu Items -->
+        {{ knp_pagination_render(arCreditosTiposEmpleados) }}       
+        
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+        </div>
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_creditotipo_listar') }}" style="float:left">Volver</a>
+            </div>
+        </div>    
+        
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

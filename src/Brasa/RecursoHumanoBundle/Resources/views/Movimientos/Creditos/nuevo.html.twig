@@ -1,0 +1,132 @@
+{% extends '::base.html.twig' %}
+{% block title %}Crédito nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo crédito</h3>    
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_creditoTipoRel" class="col-sm-3 control-label">Crédito:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.creditoTipoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>            
+            
+            <div class="form-group form-group-sm">
+                <label for="form_txtNumeroIdentificacion" class="col-sm-3 control-label">Empleado:</label>
+                <div class="col-sm-9">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          <input id="form_txtNumeroIdentificacion"  name="form_txtNumeroIdentificacion"  type="text" class="form-control" value="{{ arCredito.empleadoRel.numeroIdentificacion |default('') }}"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                          <input id="form_txtNombreCorto"  name="form_txtNombreCorto"  type="text" class="form-control" value="{{ arCredito.empleadoRel.nombreCorto |default('') }}" readOnly="ReadOnly" />
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado') }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-group-sm">
+                <label for="form_vrPagar" class="col-sm-3 control-label">Total crédito:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.vrPagar, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_vrCuota" class="col-sm-3 control-label">Valor cuota:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.vrCuota, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_numeroCuotas" class="col-sm-3 control-label">Numero cuotas:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.numeroCuotas, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_numeroCuotaActual" class="col-sm-3 control-label">Numero cuota actual:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.numeroCuotaActual, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Validar cuotas:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.validarCuotas) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_creditoTipoPagoRel" class="col-sm-3 control-label">Tipo pago:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.creditoTipoPagoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>  
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Fecha credito:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.fechaCredito, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_fechaInicio" class="col-sm-3 control-label">Fecha inicio:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.fechaInicio, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_seguro" class="col-sm-3 control-label">Seguro:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.seguro, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_numeroLibranza" class="col-sm-3 control-label">Número libranza:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.numeroLibranza, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-3 control-label">Comentarios:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general (Primas)</div>
+        <div class="panel-body">          
+            <div class="form-group form-group-sm">
+                <label for="form_vrCuota" class="col-sm-3 control-label">Valor cuota prima:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.vrCuotaPrima, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Apicar cuota prima:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.aplicarCuotaPrima) }}
+                </div>
+            </div> 
+        </div>
+    </div>                
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_creditos_lista') }}">Cancelar</a>        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>    
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

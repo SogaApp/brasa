@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %}
+{% block title %}Comprobantes lista - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+    <div class="page-header">    
+        <h3>Listado comprobantes</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }} 
+    <table class="table table-striped table-bordered table-condensed table-hover">
+        <tr>
+            
+            <th>CÓDIGO</th>
+            <th>NOMBRE</th>
+            <th></th>
+            <th></th>
+        </tr>
+        
+            {%for arComprobantes in arComprobantes %}
+               <tr>
+                <td>{{arComprobantes.codigoComprobantePk}}</td>
+                <td>{{arComprobantes.nombre}}</td>
+                <td><a href="{{ path('brs_ctb_base_comprobantes_nuevo',{'codigoComprobante': arComprobantes.codigoComprobantePk})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arComprobantes.codigoComprobantePk }}" /></td>
+            {%endfor%}
+            </tr>            
+    </table>
+    {{ knp_pagination_render(arComprobantes) }}
+    <div class="btn-toolbar" style="float: right">              
+        <div class="btn-group">                
+            {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_ctb_base_comprobantes_nuevo', {'codigoComprobante': 0}) }}">Nuevo</a>
+        </div>
+        <div class="btn-group">
+            {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}</td>                   
+        </div>
+    </div>     
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

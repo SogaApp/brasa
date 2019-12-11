@@ -1,0 +1,166 @@
+{% extends '::base.html.twig' %}
+{% block title %}Detalle usuario - Soga App{% endblock %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles del usuario</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arUsuario.id }}</td>
+                        <td class="titulo">USUARIO</td>
+                        <td class="td-in-well">{{ arUsuario.nombreCorto }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Fin Encabezado Movimiento -->
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#documentos" data-toggle="tab">Documentos</a></li>
+            <li><a href="#especiales" data-toggle="tab">Especiales</a></li>
+            <li><a href="#roles" data-toggle="tab">Roles</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="documentos">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="documentos" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>ID</th>
+                            <th>TIPO</th>
+                            <th>MODULO</th>
+                            <th>PERMISO</th>
+                            <th>INGRESO</th>
+                            <th>NUEVO</th>
+                            <th>EDITAR</th>
+                            <th>ELIMINAR</th>
+                            <th>AUTORIZAR</th>
+                            <th>DESAUTORIZAR</th>
+                            <th>APROBAR</th>
+                            <th>ANULAR</th>
+                            <th>IMPRIMIR</th>
+                            <th></th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodosTabla(this, 'ChkSeleccionarPermisoDocumento[]');"/></th>
+                        </tr>
+                        {% for arPermisosDocumentos in arPermisosDocumentos %}
+                            <tr>
+                                <td><span class="badge">{{ arPermisosDocumentos.codigoDocumentoFk }}</span></td>
+                                <td>{{ arPermisosDocumentos.documentoRel.tipo  }}</td>
+                                <td>{{ arPermisosDocumentos.documentoRel.modulo  }}</td>
+                                <td>{{ arPermisosDocumentos.documentoRel.nombre  }}</td>
+                                <td>{% if arPermisosDocumentos.ingreso  == 1%} SI {% else %}NO{% endif%}</td>
+                                <td>{% if arPermisosDocumentos.nuevo  == 1%} SI {% else %}NO{% endif%}</td>
+                                <td>{% if arPermisosDocumentos.editar  == 1%} SI {% else %}NO{% endif%}</td>
+                                <td>{% if arPermisosDocumentos.eliminar  == 1%} SI {% else %}NO{% endif%}</td>
+                                <td>{% if arPermisosDocumentos.autorizar  == 1%} SI {% else %}NO{% endif%}</td>
+                                <td>{% if arPermisosDocumentos.desautorizar  == 1%} SI {% else %}NO{% endif%}</td>
+                                <td>{% if arPermisosDocumentos.aprobar  == 1%} SI {% else %}NO{% endif%}</td>
+                                <td>{% if arPermisosDocumentos.anular  == 1%} SI {% else %}NO{% endif%}</td>
+                                <td>{% if arPermisosDocumentos.imprimir  == 1%} SI {% else %}NO{% endif%}</td>
+                                <td><a href="javascript:abrirVentana3('{{ path('brs_seg_usuario_detalle_permiso_documento_editar', {'codigoPermisoDocumento': arPermisosDocumentos.codigoPermisoDocumentoPk }) }}', 'editarPermisoDocumento', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                                                                        
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarPermisoDocumento[]" value="{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <!-- Botones Menu Items -->
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_seg_admin_usuario_detalle_nuevo_documento', {'codigoUsuario': arUsuario.id }) }}', 'Archivos', 680, 800)" >Nuevo</a>
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarDocumento, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                    </div>
+                </div>
+                <!-- Fin Botones Menu Items -->    
+            </div>
+            <div class="tab-pane" id="especiales">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="especiales" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CODIGO</th>
+                            <th>MODULO</th>
+                            <th>TIPO</th>
+                            <th>PERMISO</th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodosTabla(this, 'ChkSeleccionarPermisoEspecial[]');"/></th>
+                        </tr>
+                        {% for arPermisosEspeciales in arPermisosEspeciales %}
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="LblCodigoGuiaEspecial[]" value="{{ arPermisosEspeciales.codigoUsuarioPermisoEspecialPk }}">
+                                    <span class="badge">{{ arPermisosEspeciales.codigoUsuarioPermisoEspecialPk }}</span>
+                                </td>
+                                <td>{{ arPermisosEspeciales.permisoEspecialRel.modulo }}</td>
+                                <td>{{ arPermisosEspeciales.permisoEspecialRel.tipo }}</td>
+                                <td>{{ arPermisosEspeciales.permisoEspecialRel.nombre }}</td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarPermisoEspecial[]" value="{{ arPermisosEspeciales.codigoUsuarioPermisoEspecialPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <!-- Botones Menu Items -->
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_seg_admin_usuario_detalle_nuevo_especial', {'codigoUsuario': arUsuario.id }) }}', 'Archivos', 500, 800)" >Nuevo</a>
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarEspecial, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                    </div>
+                </div>
+                <!-- Fin Botones Menu Items -->
+            </div>
+            <div class="tab-pane" id="roles">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="roles" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CODIGO</th>
+                            <th>ROL</th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                        </tr>
+                        {% for arUsuarioRoles in arUsuarioRoles %}
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="LblCodigoUsuarioRol[]" value="{{ arUsuarioRoles.codigoUsuarioRolPk }}">
+                                    <span class="badge">{{ arUsuarioRoles.codigoUsuarioRolPk }}</span>
+                                </td>
+                                <td>{{ arUsuarioRoles.rolRel.nombre }}</td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarUsuarioRol[]" value="{{ arUsuarioRoles.codigoUsuarioRolPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <!-- Botones Menu Items -->
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_seg_usuario_detalle_rol_nuevo', {'codigoUsuario': arUsuario.id }) }}', 'Archivos', 500, 800)" >Nuevo</a>
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarRol, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                    </div>
+                </div>
+                <!-- Fin Botones Menu Items -->
+            </div>                    
+        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <a  class="btn btn-default btn-sm" href="{{ path('brs_seg_admin_usuario_lista') }}">Volver</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends '::base.html.twig' %}
+{% block title %}Programacion de pago lista - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Programaciones pago</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body"> 
+                <div class="form-group form-group-sm">  
+                    <label for="form_pagoTipoRel" class="col-sm-2 control-label">Tipo:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.pagoTipoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_centroCostoRel" class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>                 
+
+                <div class="form-group form-group-sm">  
+                    <label for="form_estadoGenerado" class="col-sm-2 control-label">Generado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoGenerado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_estadoPagado" class="col-sm-2 control-label">Pagado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoPagado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>           
+            </div>
+        </div> 
+        <table  class="table table-striped table-bordered  table-condensed table-hover">
+            <tr>
+                <th>ID</th>
+                <th>TIPO</th>
+                <th>GRUPO PAGO</th>
+                <th>PERIODO</th>
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th>DIAS</th>
+                <th>NETO</th>
+                <th><p style="margin: 0" data-toggle="tooltip" data-placement="top" title="Numero de empleados y/o contratos a procesar">#</p></th>                
+                <th>GENERADO</th>
+                <th></th>
+                <th>PAGADO</th>
+                <th style="text-align: center"></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for arProgramacionPago in arProgramacionPago %}
+                {% if arProgramacionPago.inconsistencias %}
+                    <tr class="danger">
+                {% else %}
+                    <tr>
+                {% endif %}                               
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arProgramacionPago.codigoProgramacionPagoPk }}">{{ arProgramacionPago.codigoProgramacionPagoPk }} </td>
+                <td><b>{{ arProgramacionPago.pagoTipoRel.nombre  }}</b></td>
+                <td>{{ arProgramacionPago.centroCostoRel.nombre  }}</td>
+                <td>{{ arProgramacionPago.centroCostoRel.periodoPagoRel.nombre  }}</td>
+                <td><b>{{ arProgramacionPago.fechaDesde |date("Y/m/d")  }}</b></td>
+                <td {% if (arProgramacionPago.estadoGenerado == 0 or arProgramacionPago.estadoPagado == 0) and date(arProgramacionPago.fechaHasta) < date() %}class="danger"{% endif %}><b>{{ arProgramacionPago.fechaHasta |date("Y/m/d")  }}</b></td>
+                <td>{{ arProgramacionPago.dias  }}</td>
+                <td style="text-align: right">{{ arProgramacionPago.vrNeto | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">
+                    {{ arProgramacionPago.numeroEmpleados | number_format(0, '.', ',') }}
+                    {% if arProgramacionPago.inconsistencias == 1 %} (<a href="javascript:abrirVentana3('{{ path('brs_rhu_programaciones_pago_inconsistencias', { 'codigoProgramacionPago': arProgramacionPago.codigoProgramacionPagoPk }) }}', 'VerInconsistencias', 600, 900)" >Inconsistencias)</a>{% endif %}
+                </td>                                                
+                <td>
+                    {% if arProgramacionPago.estadoGenerado == 0 %}
+                        {% if arProgramacionPago.empleadosGenerados == 1 %}
+                            <button class="btn btn-default btn-xs" type="submit" name="OpGenerar" value="{{ arProgramacionPago.codigoProgramacionPagoPk }}">Generar</button>                             
+                        {% else %}
+                            NO
+                        {% endif %}
+                    {% else %}
+                        {% if arProgramacionPago.estadoPagado == 0 %}
+                            <button class="btn btn-default btn-xs" type="submit" name="OpDeshacer" value="{{ arProgramacionPago.codigoProgramacionPagoPk }}">Deshacer</button> 
+                        {% else %}
+                            SI
+                        {% endif %}                        
+                    {% endif %}
+                </td>
+                <td>
+                    {% if arProgramacionPago.estadoPagado == 0 %}
+                        {% if arProgramacionPago.estadoGenerado == 1 %}
+                            <button class="btn btn-default btn-xs" type="submit" name="OpLiquidar" value="{{ arProgramacionPago.codigoProgramacionPagoPk }}">Liquidar</button> 
+                        {% endif %}
+                    {% endif %}                                        
+                </td>
+                <td>
+                    {% if arProgramacionPago.estadoPagado == 0 %}
+                        {% if arProgramacionPago.estadoGenerado == 1 %}
+                            <button class="btn btn-default btn-xs" type="submit" name="OpPagar" value="{{ arProgramacionPago.codigoProgramacionPagoPk }}" onclick="javascript:if (!confirm('Esta seguro que desea pagar la nomina?'))return false;">Pagar</button> 
+                        {% else %}
+                            NO
+                        {% endif %}
+                    {% else %}
+                        SI
+                    {% endif %}
+                </td>                                 
+                <td>
+                    {% if arProgramacionPago.empleadosGenerados == 1 %}
+                        <button class="btn btn-default btn-xs" type="submit" name="OpExcelDetalle" value="{{ arProgramacionPago.codigoProgramacionPagoPk }}">Excel</button> 
+                    {% endif %}
+                </td> 
+                {% if arProgramacionPago.estadoGenerado == 0 %}
+                    <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_rhu_programaciones_pago_nuevo', {'codigoProgramacionPago': arProgramacionPago.codigoProgramacionPagoPk}) }}', 'NuevaProgramacionPago', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                
+                {% else %}                
+                    <td></td>
+                {% endif %}                    
+                {% if arProgramacionPago.codigoPagoTipoFk == 1 %}
+                    <td style="text-align: center"><a href="{{ path('brs_rhu_programaciones_pago_detalle', { 'codigoProgramacionPago': arProgramacionPago.codigoProgramacionPagoPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>
+                {% else %}
+                    <td style="text-align: center"><a href="{{ path('brs_rhu_programaciones_pago_detalle_prima', { 'codigoProgramacionPago': arProgramacionPago.codigoProgramacionPagoPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>                    
+                {% endif %}                       
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arProgramacionPago.codigoProgramacionPagoPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Programación pago <span class="badge">{{ arProgramacionPago.getTotalItemCount }}</span></div>                        
+            </div>
+            <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arProgramacionPago) }}       
+            </div>
+        </div>                
+        <div class="btn-toolbar" style="float: right">                 
+            <div class="btn-group">                
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                                
+            </div>
+            <div class="btn-group">                
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_programaciones_pago_nuevo', {'codigoProgramacionPago': 0}) }}', 'NuevaProgramacionPago', 600, 900)" >Nuevo</a>
+            </div>                        
+            <div class="btn-group">                                
+                {{ form_widget(form.BtnEliminarPago, { 'attr': {'class': 'btn btn-danger btn-sm', 'onclick': 'return confirm("Esta seguro de eliminar el registro?")'} }) }}
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+

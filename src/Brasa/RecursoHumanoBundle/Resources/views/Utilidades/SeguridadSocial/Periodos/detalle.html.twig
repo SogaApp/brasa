@@ -1,0 +1,115 @@
+{% extends '::base.html.twig' %}
+{% block title %}Seguridad social detalle periodos - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Lista periodos detalle</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Información periodo</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arPeriodo.codigoPeriodoPk }}</td>
+                        <td class="titulo">DESDE:</td>
+                        <td class="td-in-well">{{ arPeriodo.fechaDesde |date("Y/m/d") }}</td>
+                        <td class="titulo">HASTA:</td>
+                        <td class="td-in-well">{{ arPeriodo.fechaHasta |date("Y/m/d") }}</td>
+                        <td class="titulo">PERIODO:</td>
+                        <td class="td-in-well">{{ arPeriodo.fechaHasta |date("Y-m") }}</td> 
+                        <td class="titulo">PAGO:</td>
+                        <td class="td-in-well">{{ arPeriodo.fechaPago |date("Y-m") }}</td>                         
+                    </tr>                    
+                </table>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>SUCURSAL</th>
+                <th>DETALLE</th>
+                <th>GEN</th>
+                <th>CER</th>
+                <th>REG</th>
+                <th style="text-align: right">TOTAL</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+            </tr>
+            {% for arSsoPeriodoDetalles in arSsoPeriodoDetalles %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arSsoPeriodoDetalles.codigoPeriodoDetallePk }}">{{ arSsoPeriodoDetalles.codigoPeriodoDetallePk }} </td>
+                <td>{{ arSsoPeriodoDetalles.SsoSucursalRel.nombre  }} ({{arSsoPeriodoDetalles.SsoSucursalRel.codigoInterface}})</td>
+                <td>{{ arSsoPeriodoDetalles.detalle  }}</td>
+                <td {% if arSsoPeriodoDetalles.estadoGenerado == 1 %}class="success"{% endif %}>{% if arSsoPeriodoDetalles.estadoGenerado == 1 %} SI {% else %} NO {% endif %}</td>
+                <td {% if arSsoPeriodoDetalles.estadoCerrado == 1 %}class="success"{% endif %}>{% if arSsoPeriodoDetalles.estadoCerrado == 1 %} SI {% else %} NO {% endif %}</td>
+                <td>{{ arSsoPeriodoDetalles.numeroRegistros  }}</td>
+                <td style="text-align: right">{{ arSsoPeriodoDetalles.totalCotizacion | number_format(0, '.', ',') }} </td>
+                <td>{% if arSsoPeriodoDetalles.estadoGenerado == 1 %} <button class="btn btn-default btn-xs" type="submit" name="OpGenerarArchivo" value="{{ arSsoPeriodoDetalles.codigoPeriodoDetallePk }}">Archivo plano</button>  {% endif %}</td>
+                <td>{% if arSsoPeriodoDetalles.estadoGenerado == 1 %} <button class="btn btn-default btn-xs" type="submit" name="OpGenerarExcel" value="{{ arSsoPeriodoDetalles.codigoPeriodoDetallePk }}">Excel</button>  {% endif %}</td>
+                <td>
+                    {% if arSsoPeriodoDetalles.estadoGenerado == 0 %}
+                        <button class="btn btn-default btn-xs" type="submit" name="OpGenerar" value="{{ arSsoPeriodoDetalles.codigoPeriodoDetallePk }}">Generar</button>
+                    {% else %}
+                        {% if  arSsoPeriodoDetalles.estadoCerrado == 0 %}
+                            <button class="btn btn-danger btn-xs" type="submit" name="OpDesgenerar" value="{{ arSsoPeriodoDetalles.codigoPeriodoDetallePk }}">Desgenerar</button>
+                        {% else %}
+                            <button class="btn btn-danger btn-xs" type="submit" name="OpDesgenerar" value="{{ arSsoPeriodoDetalles.codigoPeriodoDetallePk }}" disabled="disabled">Desgenerar</button>
+                        {% endif %}    
+                    {% endif %}
+                </td>
+                <td>
+                    {% if arSsoPeriodoDetalles.estadoCerrado == 0 %}
+                        <button class="btn btn-default btn-xs" type="submit" name="OpCerrar" value="{{ arSsoPeriodoDetalles.codigoPeriodoDetallePk }}">Cerrar</button>
+                    {% endif %}
+                </td>
+                <td style="text-align: center">{% if arSsoPeriodoDetalles.estadoGenerado == 1 %}<a href="{{ path('brs_rhu_ss_periodo_detalle_aportes', { 'codigoPeriodoDetalle': arSsoPeriodoDetalles.codigoPeriodoDetallePk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a>{% endif %}</td>
+                <td style="text-align: center"><a href="{{ path('brs_rhu_ss_periodo_detalle_empleados', { 'codigoPeriodoDetalle': arSsoPeriodoDetalles.codigoPeriodoDetallePk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_043_group.png') }}" ></a></td>
+                {% if arSsoPeriodoDetalles.estadoGenerado == 0 %}
+                    <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_rhu_ss_periodo_detalle_nuevo', { 'codigoPeriodo': codigoPeriodo, 'codigoPeriodoDetallePk': arSsoPeriodoDetalles.codigoPeriodoDetallePk }) }}', 'EditarNuevoDetalle', 600, 900)" style="float:left"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arSsoPeriodoDetalles.codigoPeriodoDetallePk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {{ knp_pagination_render(arSsoPeriodoDetalles) }}
+
+
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_ss_periodo_lista') }}" style="float:left">Volver</a>
+            </div>
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_ss_periodo_detalle_nuevo', { 'codigoPeriodo': codigoPeriodo, 'codigoPeriodoDetallePk': 0 }) }}', 'AgregarNuevoDetalle', 600, 900)" style="float:left">Nuevo</a>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default btn-sm" type="submit" name="OpGenerarPagosExcel" value="{{ codigoPeriodo }}">Excel pagos periodo</button>
+            </div>
+                
+            <div class="btn-group">    
+                <button class="btn btn-default btn-sm" type="submit" name="OpGenerarAportesExcel" value="{{ codigoPeriodo }}">Excel aportes periodo</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-danger btn-sm" type="submit" name="OpEliminar" value="{{ codigoPeriodo }}">Eliminar</button>
+            </div>
+        </div>    
+
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

@@ -1,0 +1,287 @@
+{% extends '::base.html.twig' %}
+{% block title %}Configuración nómina - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">    
+    {{ form_start(formConfiguracion, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(formConfiguracion) }}
+    <h3>Configuración</h3>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#configuracion" data-toggle="tab">Configuración</a></li>
+            <li><a href="#consecutivo" data-toggle="tab">Consecutivo</a></li>
+            <li><a href="#seguridadsocial" data-toggle="tab">Seguridad social</a></li>
+            <li><a href="#contabilidad" data-toggle="tab">Contabilidad</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="configuracion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Información de la configuración</div>
+                        <div class="panel-body">
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-3 control-label">Código auxilio transporte:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.conceptoAuxilioTransporte, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Valor auxilio transporte:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.vrAuxilioTransporte, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>    
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Salario mínimo:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.vrSalario, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>    
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código crédito:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.conceptoCredito, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código seguro:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.conceptoSeguro, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código horas diurnas trabajadas:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.conceptoHoraDiurnaTrabajada, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código entidad riesgo profesionales:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.conceptoRiesgoProfesional, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Porcentaje pensión extra:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.porcentajePensionExtra, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código incapacidad:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.conceptoIncapacidad, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Iva servicios temporales:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.porcentajeIva, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código retención fuente:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.conceptoRetencionFuente, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>    
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">% Bonificacion no prestacional:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.porcentajeBonificacionNoPrestacional, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Edad minima empleado:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.edadMinimaEmpleado, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código entidad exámen ingreso:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.entidadExamenIngreso, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código comprobante pago nómina:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.comprobantePagoNomina, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código comprobante pago banco:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.comprobantePagoBanco, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">    
+                                <label class="col-sm-3 control-label">Código vacacion:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.conceptoVacacion, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>    
+                            
+                                
+                        </div>
+                </div>  
+            </div>
+            <div class="tab-pane" id="consecutivo">
+                <div id="consecutivo" style="width: 100%">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Información de los consecutivos</div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered table-condensed table-hover">
+                                    <tr>
+                                        <th>CÓDIGO</th>
+                                        <th>NOMBRE</th>
+                                        <th>CONSECUTIVO</th>
+                                    </tr>
+                                    {% for arConsecutivo in arConsecutivo %}
+                                    <tr>
+                                        
+                                        <td>
+                                            <input type="hidden" name="LblCodigo[]" value="{{ arConsecutivo.codigoConsecutivoPk }}">
+                                            <span class="badge">{{ arConsecutivo.codigoConsecutivoPk }}</span>
+                                        </td>
+                                        <td>{{ arConsecutivo.nombre }}</td>
+                                        <td style="text-align: left"><input class="input-grid" type="text" name="TxtConsecutivo{{ arConsecutivo.codigoConsecutivoPk }}" value="{{ arConsecutivo.consecutivo }}" size="5" style="text-align: right; width:50px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                    </div>            
+                </div> 
+            </div>
+            <div class="tab-pane" id="seguridadsocial">
+                <div id="seguridadsocial" style="width: 100%">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Información de la seguridad social</div>
+                            <div class="panel-body">
+                                <div class="form-group form-group-sm">
+                                <label class="col-sm-3 control-label">Control pago examen:</label>
+                                <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.controlPago, { 'attr': {'class': 'form-control'} }) }}
+                                        <p style="font-size: 0.8em;">- Dato para determinar pago examen</p>
+                                </div>                                        
+                                </div>
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Porcentaje cesantias:</label>
+                                    <div class="col-sm-9">
+                                            {{ form_widget(formConfiguracion.prestacionesPorcentajeCesantias, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>                                        
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Porcentaje int cesantias:</label>
+                                    <div class="col-sm-9">
+                                            {{ form_widget(formConfiguracion.prestacionesPorcentajeInteresesCesantias, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>                                    
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Porcentaje vacaciones:</label>
+                                    <div class="col-sm-9">
+                                            {{ form_widget(formConfiguracion.prestacionesPorcentajeVacaciones, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>                                    
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Porcentaje primas:</label>
+                                    <div class="col-sm-9">
+                                            {{ form_widget(formConfiguracion.prestacionesPorcentajePrimas, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>                                    
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Porcentaje caja:</label>
+                                    <div class="col-sm-9">
+                                            {{ form_widget(formConfiguracion.aportesPorcentajeCaja, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>                                    
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Porcentaje aportes vacaciones:</label>
+                                    <div class="col-sm-9">
+                                            {{ form_widget(formConfiguracion.aportesPorcentajeVacaciones, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div> 
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Tipo base pago vacaciones:</label>
+                                    <div class="col-sm-9">
+                                            {{ form_widget(formConfiguracion.tipoBasePagoVacaciones, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Tipo planilla pago:</label>
+                                    <div class="col-sm-9">
+                                            {{ form_widget(formConfiguracion.tipoPlanillaSso, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>    
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Afecta vacaciones parafiscales:</label>
+                                    <div class="col-sm-9">
+                                            {{ form_widget(formConfiguracion.afectaVacacionesParafiscales) }}
+                                    </div>
+                                </div>    
+                            </div>
+                    </div>            
+                </div> 
+            </div>
+            <div class="tab-pane" id="contabilidad">
+                <div id="contabilidad" style="width: 100%">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Información contable</div>
+                            <div class="panel-body">                                                                       
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Cuenta contable nomina por pagar:</label>
+                                    <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.cuentaNominaPagar, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-sm">    
+                                    <label class="col-sm-3 control-label">Cuenta contable Pagos:</label>
+                                    <div class="col-sm-9">
+                                        {{ form_widget(formConfiguracion.cuentaPago, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>      
+                            </div>
+                    </div>            
+                </div>
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">Información cuentas provision</div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered table-condensed table-hover">
+                                <tr>
+                                    <th>CÓDIGO</th>
+                                    <th>NOMBRE</th>
+                                    <th>CUENTA</th>
+                                    <th>TIPO CUENTA</th>
+                                    <th>CUENTA OPERACION</th>
+                                    <th>CUENTA COMERCIAL</th>
+                                </tr>
+                                {% for arConfiguracionProvision in arConfiguracionProvision %}
+                                <tr>
+
+                                    <td>
+                                        <input type="hidden" name="LblCodigo[]" value="{{ arConfiguracionProvision.codigoConfiguracionProvisionPk }}">
+                                        <span class="badge">{{ arConfiguracionProvision.codigoConfiguracionProvisionPk }}</span>
+                                    </td>
+                                    <td>{{ arConfiguracionProvision.nombre }}</td>
+                                    <td style="text-align: center"><input class="input-grid" type="text" name="TxtCuenta{{ arConfiguracionProvision.codigoConfiguracionProvisionPk }}" value="{{ arConfiguracionProvision.codigoCuentaFk }}" size="5" style="text-align: right; width:80px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                    <td style="text-align: center"><input class="input-grid" type="text" name="TxtTipoCuenta{{ arConfiguracionProvision.codigoConfiguracionProvisionPk }}" value="{{ arConfiguracionProvision.tipoCuenta }}" size="5" style="text-align: right; width:80px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                    <td style="text-align: center"><input class="input-grid" type="text" name="TxtCuentaOperacion{{ arConfiguracionProvision.codigoConfiguracionProvisionPk }}" value="{{ arConfiguracionProvision.codigoCuentaOperacionFk }}" size="5" style="text-align: right; width:80px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                    <td style="text-align: center"><input class="input-grid" type="text" name="TxtCuentaComercial{{ arConfiguracionProvision.codigoConfiguracionProvisionPk }}" value="{{ arConfiguracionProvision.codigoCuentaComercialFk }}" size="5" style="text-align: right; width:80px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                </div>            
+                                    
+            </div>
+            <div class="modal-footer">      
+                {{ form_widget(formConfiguracion.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            </div>                    
+        </div>
+    {{ form_end(formConfiguracion) }}
+</div>      
+{% endblock %}

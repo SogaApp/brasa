@@ -1,0 +1,55 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Descargo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <h3>Nuevo descargo</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion descargo</div>
+        <div class="panel-body">
+            
+            <div class="form-group form-group-sm">
+                <label for="form_txtNumeroIdentificacion" class="col-sm-2 control-label">Empleado:</label>
+                <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          <input id="form_txtNumeroIdentificacion"  name="form_txtNumeroIdentificacion"  type="text" class="form-control" value="{{ arDisciplinarioDescargo.empleadoRel.numeroIdentificacion |default('') }}"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                          <input id="form_txtNombreCorto"  name="form_txtNombreCorto"  type="text" class="form-control" value="{{ arDisciplinarioDescargo.empleadoRel.nombreCorto |default('') }}" readOnly="ReadOnly" />
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado') }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-group-sm">
+                <label for="form_fecha" class="col-sm-2 control-label">Fecha:</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.fecha) }}                        
+                </div>                
+            </div>  
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Descargo:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.descargo, { 'attr': {'class': 'form-control', 'rows': 20} }) }}
+                </div>
+            </div>             
+        </div>
+    </div>                   
+    <div class="modal-footer">        
+            {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-sm btn-primary'} }) }}            
+    </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

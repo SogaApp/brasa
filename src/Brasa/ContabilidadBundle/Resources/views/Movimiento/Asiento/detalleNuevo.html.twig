@@ -1,0 +1,91 @@
+{% extends '::base.html.twig' %}
+{% block title %}Detalle asiento nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo detalle asiento</h3>    
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_cuentaRel" class="col-sm-3 control-label">Cuenta:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.cuentaRel, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>            
+            <div class="form-group form-group-sm">
+                <label for="form_terceroRel" class="col-sm-3 control-label">Tercero:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.terceroRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_centroCostoRel" class="col-sm-3 control-label">Centro costo:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_asientoTipoRel" class="col-sm-3 control-label">Tipo asiento:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.asientoTipoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_fecha" class="col-sm-3 control-label">Fecha:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.fecha, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_documentoReferente" class="col-sm-3 control-label">Documento referente:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.documentoReferente, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_soporte" class="col-sm-3 control-label">Soporte:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.soporte, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_plazo" class="col-sm-3 control-label">Plazo:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.plazo, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_valorBase" class="col-sm-3 control-label">Valor base:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.valorBase, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_debito" class="col-sm-3 control-label">Débito:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.debito, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="form_credito" class="col-sm-3 control-label">Crédito:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.credito, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_descripcion" class="col-sm-3 control-label">descripcion:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.descripcion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_ctb_mov_asientos_lista') }}">Cancelar</a>        
+        {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.BtnGuardarNuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

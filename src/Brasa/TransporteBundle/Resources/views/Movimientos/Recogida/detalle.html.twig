@@ -1,0 +1,77 @@
+{% extends '::base.html.twig' %}
+{% block title %}Recogida detalle - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Detalle recogida</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+    {{ form_errors(form) }}
+    <div class="btn-toolbar" style="float:left">
+        <div class="btn-group">
+            {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+        </div>
+    </div>
+    <br /><br />
+    <!-- Encabezado Movimiento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Información</div>
+      <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered">
+                <tr>
+                    <td class="titulo">CÓDIGO:</td>
+                    <td class="td-in-well">{{ arRecogida.codigoRecogidaPk }}</td>
+                    <td class="titulo">CÓDIGO CLIENTE</td>
+                    <td class="td-in-well">{{ arRecogida.codigoClienteFk }}</td>
+                    <td class="titulo">CLIENTE</td>
+                    <td class="td-in-well">{{ arRecogida.clienteRel.nombreCorto }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">ANUNCIANTE:</td>
+                    <td class="td-in-well">{{ arRecogida.anunciante }}</td>
+                    <td class="titulo">DIRECCIÓN</td>
+                    <td class="td-in-well">{{ arRecogida.direccion }}</td>
+                    <td class="titulo">TELÉFONO</td>
+                    <td class="td-in-well">{{ arRecogida.telefono }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">FECHA ANUNCIO:</td>
+                    <td class="td-in-well">{{ arRecogida.fechaAnuncio|date('Y-m-d') }}</td>
+                    <td class="titulo">FECHA RECOGIDA</td>
+                    <td class="td-in-well">{{ arRecogida.fechaRecogida|date('Y-m-d') }}</td>
+                    <td class="titulo">UNIDADES</td>
+                    <td class="td-in-well">{{ arRecogida.unidades }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">PESO REAL:</td>
+                    <td class="td-in-well">{{ arRecogida.pesoReal }}</td>
+                    <td class="titulo">PESO VOLUMEN</td>
+                    <td class="td-in-well">{{ arRecogida.pesoVolumen }}</td>
+                    <td class="titulo" style="text-align: right">VR. DECLARADO</td>
+                    <td class="td-in-well" style="text-align: right">{{ arRecogida.vrDeclarado | number_format(2, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">CONTENIDO:</td>
+                    <td class="td-in-well" colspan="5">{{ arRecogida.contenido }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">COMENTARIOS:</td>
+                    <td class="td-in-well" colspan="5">{{ arRecogida.comentarios }}</td>
+                </tr>
+            </table>
+      </div>
+    </div>
+
+
+
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <a  class="btn btn-default btn-sm" href="{{ path('brs_tte_recogida_lista') }}">Volver</a>
+</div>
+{% endblock %}

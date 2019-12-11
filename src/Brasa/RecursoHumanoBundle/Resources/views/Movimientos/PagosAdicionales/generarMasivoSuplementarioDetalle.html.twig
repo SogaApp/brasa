@@ -1,0 +1,118 @@
+{% extends '::base.html.twig' %}
+{% block title %}tiempo suplementario masivo - Soga App{% endblock %}
+{% block content %}
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+    {{ form_errors(form) }} 
+    <div class="page-header">
+        <h3>Generar tiempo suplementario (Masivo-Detalle)</h3>
+    </div>
+    <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body"> 
+                <div class="form-group form-group-sm">  
+                    <label for="form_departamentoEmpresaRel" class="col-sm-2 control-label">Departamento empresa:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.departamentoEmpresaRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                                                    
+            </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Empleados</div>
+      <div class="panel-body">                                     
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <tr>
+                    <th>DOCUMENTO</th>
+                    <th>{{ knp_pagination_sortable(arProgramacionPagoDetalle, 'NOMBRES', 'e.nombreCorto') }}</th>                                                                        
+                    <th>{{ knp_pagination_sortable(arProgramacionPagoDetalle, 'APELLIDO1', 'e.apellido1') }}</th>  
+                    <th>{{ knp_pagination_sortable(arProgramacionPagoDetalle, 'APELLIDO2', 'e.apellido2') }}</th> 
+                    <th>DEPARTAMENTO E.</th>
+                    <th>SALARIO</th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas nocturas">H.N</p></th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas festivas diurnas">H.F.D</p></th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas festivas nocturas">H.F.N</p></th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas extras ordinarias diurnas">H.E.O.D</p></th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas extras ordinarias nocturnas">H.E.O.N</p></th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas extras festivas diurnas">H.E.F.D</p></th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas extras festivas nocturnas">H.E.F.N</p></th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas recargo nocturno">H.R.N</p></th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas recargo festivo diurno">H.R.F.D</p></th>
+                    <th><p data-toggle="tooltip" data-placement="top" title="Horas recargo festivo nocturno">H.R.F.N</p></th>
+
+                </tr>
+                {% for arProgramacionPagoDetalle in arProgramacionPagoDetalle %}
+                <tr >
+
+                    <input type="hidden" name="LblCodigo[]" value="{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}">    
+                    <td>{{ arProgramacionPagoDetalle.empleadoRel.numeroIdentificacion}}</td>
+                    <td>{{ arProgramacionPagoDetalle.empleadoRel.nombre1}} {{ arProgramacionPagoDetalle.empleadoRel.nombre2}}</td>
+                    <td>{{ arProgramacionPagoDetalle.empleadoRel.apellido1 }}</td>
+                    <td>{{ arProgramacionPagoDetalle.empleadoRel.apellido2 }}</td>
+                    <td>{{ arProgramacionPagoDetalle.departamentoEmpresaRel.nombre | default('')}}</td>
+                    <td style="text-align: right">{{ arProgramacionPagoDetalle.empleadoRel.vrSalario | number_format(2, '.', ',') }}</td>
+                    {% if arProgramacionPago.estadoPagado == 0 %}
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHN{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasNocturnas }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHFD{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasFestivasDiurnas }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHFN{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasFestivasNocturnas }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHEOD{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasExtrasOrdinariasDiurnas }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHEON{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasExtrasOrdinariasNocturnas }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHEFD{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasExtrasFestivasDiurnas }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHEFN{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasExtrasFestivasNocturnas }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHRN{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasRecargoNocturno }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHRFD{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasRecargoFestivoDiurno }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtHRFN{{ arProgramacionPagoDetalle.codigoProgramacionPagoDetallePk }}" value="{{ arProgramacionPagoDetalle.horasRecargoFestivoNocturno }}" size="5" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                    {% else %}
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasNocturnas | number_format(0, '.', ',') }}</td> 
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasFestivasDiurnas | number_format(0, '.', ',') }}</td>                               
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasFestivasNocturnas | number_format(0, '.', ',') }}</td>                                               
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasExtrasOrdinariasDiurnas | number_format(0, '.', ',') }}</td>                               
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasExtrasOrdinariasNocturnas | number_format(0, '.', ',') }}</td>                                               
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasExtrasFestivasDiurnas | number_format(0, '.', ',') }}</td>                               
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasExtrasFestivasNocturnas | number_format(0, '.', ',') }}</td>                                                               
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasRecargoNocturno | number_format(0, '.', ',') }}</td>                                                                               
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasRecargoFestivoDiurno | number_format(0, '.', ',') }}</td>                                                                                               
+                        <td style="text-align: right">{{ arProgramacionPagoDetalle.horasRecargoFestivoNocturno | number_format(0, '.', ',') }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>      
+            <div class="btn-toolbar" style="float: left">                
+                <div class="btn-group">
+                    {{ knp_pagination_render(arProgramacionPagoDetalle) }}                
+                </div>            
+                <div class="btn-group">
+                    <a href="#" class="btn btn-default btn-sm">Registros <span class="badge">{{ arProgramacionPagoDetalle.getTotalItemCount }}</span></a>
+
+                </div>
+            </div>        
+            <div class="btn-toolbar" style="float: right">                
+                <div class="btn-group">                
+                    {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+                </div>           
+            </div>                                             
+            {{ form_rest(form) }}
+        {{ form_end(form) }}
+      </div>
+    </div>
+    
+    <br /><br />
+
+</div>            
+{% endblock %}

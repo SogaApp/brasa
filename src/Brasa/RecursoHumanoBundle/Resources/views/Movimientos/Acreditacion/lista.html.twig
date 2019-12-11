@@ -1,0 +1,148 @@
+{% extends '::base.html.twig' %}
+{% block title %}Acreditaciones lista - Soga App{% endblock %}
+{% block content %}
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+<div class="container">
+    <div class="page-header">
+        <h3>Lista acreditaciones</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Empleado:</label>
+                <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          {{ form_widget(form.txtNumeroIdentificacion, { 'attr': {'class': 'form-control'} }) }} 
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                            {{ form_widget(form.txtNombreCorto, { 'attr': {'class': 'form-control', 'readOnly': 'ReadOnly'} }) }}                              
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado') }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                </div>                
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-2 control-label">Fecha vence desde:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.fechaDesde) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Rechazado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoRechazado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-2 control-label">Fecha vence hasta</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.fechaHasta) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Validado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoValidado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div> 
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.filtrarFecha) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Acreditado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoAcreditado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>                    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>{{ knp_pagination_sortable(arAcreditaciones, 'CODIGO', 'ee.codigoAcreditacionPk') }}</th>
+                <th>DOCUMENTO</th>
+                <th>{{ knp_pagination_sortable(arAcreditaciones, 'NOMBRE', 'e.nombreCorto') }}</th>                
+                <th>TIPO</th>
+                <th>VENCE</th>
+                <th>CARGO</th>
+                <th>REGISTRO</th>                
+                <th>REC</th>
+                <th>VAL</th>
+                <th>FECHA</th>                
+                <th>ACR</th>  
+                <th>FECHA</th>
+                <th>VENCE</th>                
+                <th style="text-align: center"></th>                
+                <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+            </tr>
+            {% for arAcreditaciones in arAcreditaciones %}
+            <tr>
+                <td>{{ arAcreditaciones.codigoAcreditacionPk }} </td>
+                <td>{{ arAcreditaciones.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arAcreditaciones.empleadoRel.nombreCorto  }}</td>                                                
+                <td>{{ arAcreditaciones.acreditacionTipoRel.nombre |default('value') }}</td>                                                
+                <td>{{ arAcreditaciones.fechaVenceCurso |date('Y/m/d') }}</td>                                               
+                <td>{{ arAcreditaciones.acreditacionTipoRel.cargo |default('value') }}</td>                                                                
+                <td>{{ arAcreditaciones.numeroRegistro }}</td>                               
+                <td>{% if arAcreditaciones.estadoRechazado == 1 %} SI [{{ arAcreditaciones.acreditacionRechazoRel.nombre | default('') }}] {% else %} NO {% endif %}</td>                 
+                <td>{% if arAcreditaciones.estadoValidado == 1 %} SI [{{ arAcreditaciones.numeroValidacion }}] {% else %} NO {% endif %}</td>                 
+                <td>{% if arAcreditaciones.estadoValidado == 1 %}{{ arAcreditaciones.fechaValidacion | date('Y/m/d') }}{% endif %}</td>                                                
+                <td>{% if arAcreditaciones.estadoAcreditado == 1 %} SI {% else %} NO {% endif %}</td>                                                
+                <td>{% if arAcreditaciones.estadoAcreditado == 1 %}{{ arAcreditaciones.fechaAcreditacion | date('Y/m/d') }}{% endif %}</td>                                                
+                <td>{% if arAcreditaciones.estadoAcreditado == 1 %}{{ arAcreditaciones.fechaVencimiento | date('Y/m/d') }}{% endif %}</td>                                                
+                <td style="text-align: center">{% if arAcreditaciones.estadoValidado == 0 %}<a href="{{ path('brs_rhu_movimiento_acreditacion_nuevo', {'codigoAcreditacion': arAcreditaciones.codigoAcreditacionPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a>{% endif %}</td>                
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arAcreditaciones.codigoAcreditacionPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Botones Menu Items -->.
+        <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Estudios <span class="badge">{{ arAcreditaciones.getTotalItemCount }}</span></div>
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arAcreditaciones) }}
+        </div>
+        <div class="btn-toolbar" style="float: right">            
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_acreditacion_cargar_validacion') }}', 'cargarValidacion', 600, 900)" >Cargar validacion</a>
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_acreditacion_cargar_acreditacion') }}', 'cargarAcreditacion', 600, 900)" >Cargar acreditacion</a>
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcelInforme, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_acreditacion_nuevo', {'codigoAcreditacion': 0}) }}">Nuevo</a>
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm', 'onclick': 'return confirm("Esta seguro de eliminar el registro?")'} }) }}
+            </div>
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

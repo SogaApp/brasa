@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+          <h1>Recursos humanos y nomina <small>¿Como inicio?</small></h1>
+        </div>        
+        <div class="list-group">
+          <a href="#" class="list-group-item active">Indice</a>
+          <a href="{{ path('brs_rhu_base_centros_costos_lista') }}" class="list-group-item">Crear centros de costo</a>
+          <a href="{{ path('brs_rhu_base_empleados_lista') }}" class="list-group-item">Crear los empleados</a>
+          <a href="{{ path('brs_rhu_base_empleados_lista') }}" class="list-group-item">Crear contratos de trabajo</a>
+          <a href="{{ path('brs_rhu_inicio') }}" class="list-group-item">Programaciones de pago (Generar)</a>
+          <a href="{{ path('brs_rhu_inicio') }}" class="list-group-item">Pagar nomina</a>
+        </div>     
+    </div>
+{% endblock %}

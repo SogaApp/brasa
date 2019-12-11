@@ -1,0 +1,130 @@
+{% extends '::base.html.twig' %}
+{% block title %}Créditos lista - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+            $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <div class="page-header">
+        <h3>Lista créditos</h3>
+    </div>
+    <div>
+        {% if mensaje != "0" %}        
+            <div class="alert alert-warning" role="alert">{{mensaje}}</div>
+        {% endif %}    
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Empleado:</label>
+                <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          {{ form_widget(form.txtNumeroIdentificacion, { 'attr': {'class': 'form-control'} }) }} 
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                            {{ form_widget(form.txtNombreCorto, { 'attr': {'class': 'form-control', 'readOnly': 'ReadOnly'} }) }}                              
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado') }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+                                
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }} 
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }} 
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                    
+            </div>
+        </div>
+    
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>{{ knp_pagination_sortable(arCreditos, 'CÓD', 'c.codigoCreditoPk') }}</th>
+                <th>TIPO</th>
+                <th>INICIA</th>
+                <th>DOCUMENTO</th>
+                <th>EMPLEADO</th>
+                <th style="text-align: right">VALOR</th>
+                <th style="text-align: right">VR.CUOTA</th>                
+                <th style="text-align: right">CUOTAS</th>
+                <th style="text-align: right">C.ACTUAL</th>
+                <th><p data-toggle="tooltip" data-placement="top" title="Pagado">PAG</p></th>                
+                <th><p data-toggle="tooltip" data-placement="top" title="Suspendido">SUS</p></th>
+                <th style="text-align: center"></th>
+                <th style="text-align: center"></th>
+                <th style="text-align: center"></th>
+            </tr>
+            {% for arCreditos in arCreditos %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arCreditos.codigoCreditoPk }}">{{ arCreditos.codigoCreditoPk }} </td>
+                <td>{{ arCreditos.creditoTipoRel.nombre|default('')  }}</td>
+                <td>{{ arCreditos.fechaInicio |date("Y/m/d")  }}</td>
+                <td>{{ arCreditos.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arCreditos.empleadoRel.nombreCorto  }}</td>
+                <td style="text-align: right">{{ arCreditos.VrPagar | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCreditos.VrCuota | number_format(0, '.', ',') }}</td>                
+                <td style="text-align: right">{{ arCreditos.numeroCuotas | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCreditos.numeroCuotaActual | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right" {% if arCreditos.estadoPagado == 1 %} class="success"> SI {% else %} <td {{ arCreditos.estadoPagado }} class="danger">NO {% endif %}</td>
+                <td style="text-align: right" {% if arCreditos.estadoSuspendido == 0 %} class="success"> NO {% else %} <td class="danger">SI {% endif %}</td>
+                {% if arCreditos.estadoPagado == 0 %}
+                    <td style="text-align: center"><a href="{{ path('brs_rhu_creditos_nuevo', { 'codigoCredito': arCreditos.codigoCreditoPk }) }}" ><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                                   
+                {% else %}    
+                    <td></td>
+                {% endif %}                    
+                <td><a href="{{ path('brs_rhu_credito_detalle', { 'codigoCredito': arCreditos.codigoCreditoPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22 title="Detalles del registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arCreditos.codigoCreditoPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <!-- Botones Menu Items -->
+        <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arCreditos.getTotalItemCount }}</span></div>                        
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arCreditos) }}       
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnPdf, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_cargar_creditos' ) }}', 'CargarCredito', 600, 900)" >Importar TXT</a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_creditos_nuevo', {'codigoCredito': 0}) }}">Nuevo</a>                
+            </div>
+            <div class="btn-group">                
+                {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm', 'onclick': 'return confirm("Esta seguro de eliminar el registro?")'} }) }}
+            </div>
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

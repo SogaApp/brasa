@@ -1,0 +1,70 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Ver programacion soporte pago - Soga App{% endblock %}
+{% block content %}
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Programacion</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}                      
+        <table width="100%" class="table table-condensed table-bordered">
+            <tr>           
+                <th>RECURSO</th>
+                {% for arrDiaSemana in arrDiaSemana %}
+                <th>{{ arrDiaSemana.dia }}{{ arrDiaSemana.diaSemana }}</th>
+                {% endfor %}
+            </tr>
+            {% for arProgramacionAlterna in arProgramacionAlterna %}               
+                <tr>                    
+                    <td>{{ arProgramacionAlterna.recursoRel.nombreCorto |default('')  }}</td>
+                    <td>{{ arProgramacionAlterna.dia1  }}</td>
+                    <td>{{ arProgramacionAlterna.dia2  }}</td>
+                    <td>{{ arProgramacionAlterna.dia3  }}</td>
+                    <td>{{ arProgramacionAlterna.dia4  }}</td>
+                    <td>{{ arProgramacionAlterna.dia5  }}</td>
+                    <td>{{ arProgramacionAlterna.dia6  }}</td>
+                    <td>{{ arProgramacionAlterna.dia7  }}</td>
+                    <td>{{ arProgramacionAlterna.dia8  }}</td>
+                    <td>{{ arProgramacionAlterna.dia9  }}</td>
+                    <td>{{ arProgramacionAlterna.dia10  }}</td>
+                    <td>{{ arProgramacionAlterna.dia11  }}</td>
+                    <td>{{ arProgramacionAlterna.dia12  }}</td>
+                    <td>{{ arProgramacionAlterna.dia13  }}</td>
+                    <td>{{ arProgramacionAlterna.dia14  }}</td>
+                    <td>{{ arProgramacionAlterna.dia15  }}</td>
+                    <td>{{ arProgramacionAlterna.dia16  }}</td>
+                    <td>{{ arProgramacionAlterna.dia17  }}</td>
+                    <td>{{ arProgramacionAlterna.dia18  }}</td>
+                    <td>{{ arProgramacionAlterna.dia19  }}</td>
+                    <td>{{ arProgramacionAlterna.dia20  }}</td>
+                    <td>{{ arProgramacionAlterna.dia21  }}</td>
+                    <td>{{ arProgramacionAlterna.dia22  }}</td>
+                    <td>{{ arProgramacionAlterna.dia23  }}</td>
+                    <td>{{ arProgramacionAlterna.dia24  }}</td>
+                    <td>{{ arProgramacionAlterna.dia25  }}</td>
+                    <td>{{ arProgramacionAlterna.dia26  }}</td>
+                    <td>{{ arProgramacionAlterna.dia27  }}</td>
+                    <td>{{ arProgramacionAlterna.dia28  }}</td>
+                    <td>{{ arProgramacionAlterna.dia29  }}</td>
+                    <td>{{ arProgramacionAlterna.dia30  }}</td>
+                    <td>{{ arProgramacionAlterna.dia31  }}</td>                                         
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-group" style="float: left">                
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arProgramacionAlterna.getTotalItemCount }}</span></div>
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arProgramacionAlterna) }}
+        </div>       
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+    
+
+</div>
+{% endblock %}

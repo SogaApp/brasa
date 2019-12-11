@@ -1,0 +1,197 @@
+{% extends '::base.html.twig' %}
+{% block title %}Aspirante nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo aspirante</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">  
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Zona:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.zonaRel, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>             
+            <div class="form-group form-group-sm">
+                <label for="form_tipoIdentificacionRel" class="col-sm-2 control-label">Tipo identificación:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.tipoIdentificacionRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_numeroIdentificacion" class="col-sm-2 control-label">Identificacion:</label>
+                <div class="col-sm-10">
+                        {% if form_errors(form.numeroIdentificacion) %}
+                            {{ form_widget(form.numeroIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                            <div class="alert alert-danger" role="alert">{{ form_errors(form.numeroIdentificacion)}}</div>
+                        {% else %}
+                            {{ form_widget(form.numeroIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                        {% endif %}
+                </div>
+            </div>
+   
+            <div class="form-group form-group-sm">
+                <label for="form_ciudadExpedicionRel" class="col-sm-2 control-label">Ciudad expedición:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.ciudadExpedicionRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label for="form_nombre1" class="col-sm-2 control-label">Nombre 1:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.nombre1, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_nombre2" class="col-sm-2 control-label">Nombre 2:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.nombre2, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_apellido1" class="col-sm-2 control-label">Apellido 1:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.apellido1, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_apellido2" class="col-sm-2 control-label">Apellido 2:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.apellido2, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_codigoSexoFk" class="col-sm-2 control-label">Sexo:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.codigoSexoFk, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_rhRel" class="col-sm-2 control-label">Rh:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.rhRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_estatura" class="col-sm-2 control-label">Estatura:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.estatura, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_peso" class="col-sm-2 control-label">Peso:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.peso, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label for="form_fechaNacimiento" class="col-sm-2 control-label">Fecha nacimiento:</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.fechaNacimiento, {'attr': {'maxlength' : 10} }) }}                        
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_ciudadNacimientoRel" class="col-sm-2 control-label">Ciudad nacimiento:</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.ciudadNacimientoRel, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_cargoAspira" class="col-sm-2 control-label">Cargo que aspira:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.cargoAspira, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_operacion" class="col-sm-2 control-label">Operación:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.operacion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label for="form_reintegro" class="col-sm-2 control-label">Reintegro:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.reintegro, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_recomendado" class="col-sm-2 control-label">Recomendado por:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.recomendado, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_codigoTipoLibreta" class="col-sm-2 control-label">Libreta militar:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.codigoTipoLibreta, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_estadoCivilRel" class="col-sm-2 control-label">Estado civil:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.estadoCivilRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                  
+            <div class="form-group form-group-sm">
+                <label for="form_correo" class="col-sm-2 control-label">Correo:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.correo, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_direccion" class="col-sm-2 control-label">Direccion:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.direccion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_barrio" class="col-sm-2 control-label">Barrio:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.barrio, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>  
+            <div class="form-group form-group-sm">
+                <label for="form_ciudadRel" class="col-sm-2 control-label">Ciudad:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.ciudadRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_telefono" class="col-sm-2 control-label">Telefono:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.telefono, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_celular" class="col-sm-2 control-label">Celular:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.celular, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div> 
+            <div class="form-group form-group-sm">
+                <label for="form_codigoDisponibilidadFk" class="col-sm-2 control-label">Disponibilidad:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.codigoDisponibilidadFk, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                                           
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-2 control-label">Comentarios:</label>
+                <div class="col-sm-10">
+                            {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                
+        </div>
+    </div>               
+    <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_aspirante_lista') }}">Cancelar</a>
+            {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

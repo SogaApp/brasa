@@ -1,0 +1,25 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Horario periodo nuevo - Soga App{% endblock %} 
+{% block content %}
+<div class="container">    
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo periodo horario</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Fecha periodo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.fechaPeriodo, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>   
+</div>
+</div>
+    <div class="modal-footer">
+            
+            {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>    
+{% endblock %}

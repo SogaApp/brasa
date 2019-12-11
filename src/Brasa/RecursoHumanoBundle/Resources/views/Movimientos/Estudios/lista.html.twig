@@ -1,0 +1,106 @@
+{% extends '::base.html.twig' %}
+{% block title %}Estudios lista - Soga App{% endblock %}
+{% block content %}
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+<div class="container">
+    <div class="page-header">
+        <h3>Lista estudios/cursos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Identificacion:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.TxtIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_TxtNombre" class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.TxtNombre, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaVencimientoControl" class="col-sm-2 control-label">F. ven curso/estudio:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaVencimientoCurso, {'attr': {'maxlength' : 10} }) }} 
+                    </div>
+                    <label for="form_empleadoEstudioTipoRel" class="col-sm-2 control-label">Estudio:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.empleadoEstudioTipoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>{{ knp_pagination_sortable(arEstudios, 'CODIGO', 'ee.codigoEmpleadoEstudioPk') }}</th>
+                <th>IDENTIFICACIÓN</th>
+                <th>{{ knp_pagination_sortable(arEstudios, 'NOMBRE', 'e.nombreCorto') }}</th>
+                <th>TIPO EST/CUR</th>
+                <th>ESTUDIO</th>
+                <th>CURSO</th>
+                <th>FECHA INICIO</th>
+                <th>FECHA TERMINACIÓN</th>
+                <th>FECHA VEN CURSO/ESTUDIO</th>
+                <th></th>
+                <th></th>
+                <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+            </tr>
+            {% for arEstudios in arEstudios %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arEstudios.codigoEmpleadoEstudioPk }}">{{ arEstudios.codigoEmpleadoEstudioPk }} </td>
+                <td>{{ arEstudios.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arEstudios.empleadoRel.nombreCorto  }}</td>
+                <td>{{ arEstudios.empleadoEstudioTipoRel.nombre  }}</td>
+                <td>{{ arEstudios.titulo  }}</td>
+                <td>{{ arEstudios.estudioTipoAcreditacionRel.nombre | default('')  }}</td>
+                <td>{% if arEstudios.fechaInicio != null %}{{ arEstudios.fechaInicio | date('Y/m/d') }}{% else %}{% endif%}</td>
+                <td>{% if arEstudios.fechaTerminacion != null %}{{ arEstudios.fechaTerminacion | date('Y/m/d') }}{% else %}{% endif%}</td>
+                <td>{% if arEstudios.fechaVencimientoCurso != null %}{{ arEstudios.fechaVencimientoCurso | date('Y/m/d') }}{% else %}{% endif%}</td>
+                <td style="text-align: center"><a href="{{ path('brs_rhu_estudio_nuevo', {'codigoEstudio': arEstudios.codigoEmpleadoEstudioPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                <td style="text-align: center"><a href="{{ path('brs_rhu_estudio_detalle', { 'codigoEstudio': arEstudios.codigoEmpleadoEstudioPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arEstudios.codigoEmpleadoEstudioPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Botones Menu Items -->.
+        <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Estudios <span class="badge">{{ arEstudios.getTotalItemCount }}</span></div>
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arEstudios) }}
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_estudio_nuevo', {'codigoEstudio': 0}) }}">Nuevo</a>
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm', 'onclick': 'return confirm("Esta seguro de eliminar el registro?")'} }) }}
+            </div>
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

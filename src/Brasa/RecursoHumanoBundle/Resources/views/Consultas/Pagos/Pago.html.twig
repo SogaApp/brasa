@@ -1,0 +1,110 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta pagos - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <div class="page-header">
+        <h3>Consulta pagos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">                
+                <div class="form-group form-group-sm">  
+                    <label for="form_centroCostoRel" class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                                           
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Identificacion:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_codigoProgramacionPago" class="col-sm-2 control-label">Código Pago:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.codigoPago, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>   
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }} 
+                    </div>                
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }} 
+                    </div>                
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrarPago, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                    
+            </div>
+        </div> 
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>NUMERO</th>
+                <th>TIPO</th>                
+                <th>IDENTIFICACION</th>                
+                <th>EMPLEADO</th>                
+                <th>COSTO COSTO</th>
+                <th>P. DESDE</th>
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th style="text-align: right">SALARIO</th>
+                <th style="text-align: right">IBC</th>
+                <th style="text-align: right">IBP</th>
+                <th style="text-align: right">DEVENGADO</th>
+                <th style="text-align: right">DEDUCCIONES</th>
+                <th style="text-align: right">NETO</th>
+                
+            </tr>
+            {% for arPagos in arPagos %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arPagos.codigoPagoPk }}">{{ arPagos.codigoPagoPk }} </td>
+                <td>{{ arPagos.numero  }}</td>
+                <td>{{ arPagos.pagoTipoRel.nombre  }}</td>
+                <td>{{ arPagos.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arPagos.empleadoRel.nombreCorto  }}</td>
+                <td>{{ arPagos.centroCostoRel.nombre  }}</td>                
+                <td>{{ arPagos.fechaDesdePago |date("Y/m/d")  }}</td>
+                <td>{{ arPagos.fechaDesde |date("Y/m/d")  }}</td>
+                <td>{{ arPagos.fechaHasta |date("Y/m/d")  }}</td>
+                <td style="text-align: right">{{ arPagos.vrSalario | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagos.vrIngresoBaseCotizacion | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagos.vrIngresoBasePrestacion | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagos.vrDevengado | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagos.vrDeducciones | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagos.vrNeto | number_format(2, '.', ',') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arPagos) }} 
+            </div>
+            
+        </div>                
+        <div class="btn-toolbar" style="float: right">                 
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcelPago, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+

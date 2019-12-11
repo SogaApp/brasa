@@ -1,0 +1,159 @@
+{% extends '::base.html.twig' %}
+{% block title %}Proceso disciplinario detalle - Soga App{% endblock %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Proceso disciplinario</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                {% if arDisciplinario.estadoCerrado == 0%}
+                    <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_disciplinario_nuevo', { 'codigoCentroCosto': arDisciplinario.codigoCentroCostoFk, 'codigoEmpleado':  arDisciplinario.codigoEmpleadoFk, 'codigoDisciplinario': arDisciplinario.codigoDisciplinarioPk }) }}" >Editar</a>
+                {% endif %}
+                {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+                {{ form_widget(form.BtnCerrar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 5,  'numero': arDisciplinario.codigoDisciplinarioPk }) }}', 'Archivos', 500, 700)" >Archivos</a>
+            </div>
+        </div>
+        <br /><br />
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información disciplinario</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td>{{ arDisciplinario.codigoDisciplinarioPk }}</td>
+                        <td class="titulo">PROCESO:</td>
+                        <td>{{ arDisciplinario.disciplinarioTipoRel.nombre }}</td>
+                        <td class="titulo">FECHA DEL INCIDENTE O CASO:</td>
+                        <td>{{ arDisciplinario.fechaIncidente|date('Y/m/d') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CAUSAL O MOTIVO:</td>
+                        <td>{{ arDisciplinario.asunto|default('NO APLICA') }}</td>
+                        <td class="titulo">FECHA NOTIFICACIÓN:</td>
+                        <td>{% if arDisciplinario.estadoSuspension == 1%}{{ arDisciplinario.fechaNotificacion | date('Y/m/d') }} {% else %}NO APLICA{% endif%}</td>
+                        <td class="titulo">FECHA SANCION (DESDE):</td>
+                        <td>{% if arDisciplinario.estadoSuspension == 1%}{{ arDisciplinario.fechaDesdeSancion | date('Y/m/d') }} {% else %}NO APLICA{% endif%}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">EMPLEADO:</td>
+                        <td>{{ arDisciplinario.empleadoRel.nombreCorto }}</td>
+                        <td class="titulo">IDENTIFICACIÓN:</td>
+                        <td>{{ arDisciplinario.empleadoRel.numeroIdentificacion }}</td>
+                        <td class="titulo">FECHA SANCION (HASTA):</td>
+                        <td>{% if arDisciplinario.estadoSuspension == 1%}{{ arDisciplinario.fechaHastaSancion | date('Y/m/d') }} {% else %}NO APLICA{% endif%}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">GRUPO PAGO:</td>
+                        <td>{{ arDisciplinario.centroCostoRel.nombre | default('') }}</td>
+                        <td class="titulo">CARGO:</td>
+                        <td>{{ arDisciplinario.cargoRel.nombre | default('') }}</td>
+                        <td class="titulo">FECHA INGRESO A TRABAJAR:</td>
+                        <td>{% if arDisciplinario.estadoSuspension == 1%}{{ arDisciplinario.fechaIngresoTrabajo | date('Y/m/d') }} {% else %}NO APLICA{% endif%}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">PUESTO:</td>
+                        <td>{{ arDisciplinario.puesto }}</td>
+                        <td class="titulo">ZONA:</td>
+                        <td>{{ arDisciplinario.empleadoRel.zonaRel.nombre |default('') }}</td>
+                        <td class="titulo">DÍAS SANCIÓN</td>
+                        <td>{{ arDisciplinario.diasSuspencion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo"></td>
+                        <td></td>
+                        <td class="titulo">REENTRENAMIENTO:</td>
+                        <td>{% if arDisciplinario.reentrenamiento == 1%}SI {% else %}NO {% endif%}</td>
+                        <td class="titulo">OPERACIÓN</td>
+                        <td>{{ arDisciplinario.empleadoRel.subzonaRel.nombre |default('') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo"></td>
+                        <td></td>
+                        <td class="titulo">PROCEDE</td>
+                        <td>{% if arDisciplinario.estadoProcede == 1%}SI {% else %}NO {% endif%}</td>
+                        <td class="titulo">AUTORIZADO</td>
+                        <td>{% if arDisciplinario.estadoAutorizado == 1%}SI {% else %}NO {% endif%}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo"></td>
+                        <td></td>
+                        <td class="titulo">GENERA SUSPENCION:</td>
+                        <td>{% if arDisciplinario.estadoSuspension == 1%}SI {% else %}NO {% endif%}</td>
+                        <td class="titulo">CERRADO</td>
+                        <td>{% if arDisciplinario.estadoCerrado == 1%}SI {% else %}NO {% endif%}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">COMENTARIOS:</td>
+                        <td colspan="5" >{{ arDisciplinario.comentarios }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Fin Encabezado Movimiento -->
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#descargo" data-toggle="tab">Descargo</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="descargo">
+                <div id="descargo" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>                            
+                            <th>FECHA</th>
+                            <th>DESCARGO</th>
+                            <th>EMPLEADO</th>
+                            <th></th>
+                            <th></th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodosTabla(this, 'ChkSeleccionarDescargo[]');"/></th>
+                        </tr>
+                        {% for arDescargos in arDescargos %}
+                            <tr>
+                                <input type="hidden" name="LblCodigo[]" value="{{ arDescargos.codigoDisciplinarioDescargoPk }}">
+                                <td>{{ arDescargos.fecha|date('Y-m-d H:i:s A') }}</td>                                
+                                <td>{{ arDescargos.descargo }}</td>                                                                                                                                                                
+                                <td>{{ arDescargos.empleadoRel.nombreCorto |default('')}}</td>
+                                {% if arDisciplinario.estadoAutorizado == 1 %}
+                                    <td></td>
+                                {% else %}
+                                    <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_disciplinario_descargo_nuevo', { 'codigoDisciplinario': arDisciplinario.codigoDisciplinarioPk, 'codigoDisciplinarioDescargo': arDescargos.codigoDisciplinarioDescargoPk }) }}', 'AgregarDescargos', 600, 1200)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                                {% endif%}
+                                <td align="center"><button class="btn btn-default btn-xs" type="submit" name="OpImprimir" value="{{ arDescargos.codigoDisciplinarioDescargoPk }}">Imprimir</button></td>
+                                <td align="center"><input type="checkbox" name="ChkSeleccionarDescargo[]" value="{{ arDescargos.codigoDisciplinarioDescargoPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <!-- Botones Menu Items -->
+                    <div class="btn-toolbar" style="float: right">
+                        <div class="btn-group">
+                            {% if arDisciplinario.estadoCerrado == 0 %}
+                                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_disciplinario_descargo_nuevo', {'codigoDisciplinario': arDisciplinario.codigoDisciplinarioPk, 'codigoDisciplinarioDescargo': 0}) }}', 'AgregarDescargos', 600, 1200)" >Nuevo</a>
+                            {% endif %}
+                        </div>
+                        <div class="btn-group">
+                            {{ form_widget(form.BtnEliminarDescargo, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                        </div>
+                    </div>
+                    <!-- Fin Botones Menu Items -->
+                </div>
+            </div>                  
+        </div>    
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <a  class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_disciplinario') }}">Volver</a>
+    </div>
+{% endblock %}

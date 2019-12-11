@@ -1,0 +1,32 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Detalles
+        </h1>
+    </section>
+    <section class="content">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                {% for key, detalle in detalles %}
+                    <tr>
+                        <th width="20px">{{ key }}</th>
+                           <td width="30px">
+                            {% if detalle is iterable and detalle.timezone is defined %}
+                               {{ detalle['date']|date('Y-m-d h:i:s') }}
+                           {% else %}
+                               {{ detalle }}
+                           {% endif %}
+                           </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+    <style>
+        th {
+            text-transform: uppercase;
+        }
+    </style>
+
+{% endblock %}

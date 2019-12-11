@@ -1,0 +1,269 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle cliente</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">                      
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+            </div>
+        </div>
+        <br /><br />
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arCliente.codigoClientePk }}</td>
+                        <td class="titulo">NIT:</td>
+                        <td class="td-in-well">{{ arCliente.nit }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">NOMBRE:</td>
+                        <td class="td-in-well">{{ arCliente.nombreCorto }}</td>
+                        <td class="titulo">SECTOR:</td>
+                        <td>{{ arCliente.sectorRel.nombre }}</td>
+                    </tr>  
+                    <tr>
+                        <td class="titulo">NOMBRE COMPLETO:</td>
+                        <td class="td-in-well">{{ arCliente.nombreCompleto }}</td>
+                        <td class="titulo">SECTOR COMERCIAL:</td>
+                        <td>{{ arCliente.sectorComercialRel.nombre | default('')}}</td>
+                    </tr>                    
+                    <tr>
+                        <td class="titulo">DIRECCION:</td>
+                        <td class="td-in-well">{{ arCliente.direccion }}</td>
+                        <td class="titulo">ESTRATO:</td>
+                        <td>{{ arCliente.estrato }}</td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">BARRIO:</td>
+                        <td class="td-in-well">{{ arCliente.barrio }}</td>
+                        <td class="titulo">FORMA PAGO:</td>
+                        <td>{{ arCliente.formaPagoRel.nombre }}</td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">CIUDAD:</td>
+                        <td class="td-in-well">{{ arCliente.ciudadRel.nombre }}</td>
+                        <td class="titulo">PLAZO PAGO:</td>
+                        <td>{{ arCliente.plazoPago }}</td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">TELEFONO:</td>
+                        <td class="td-in-well">{{ arCliente.telefono }}</td>
+                        <td class="titulo"></td>
+                        <td></td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">CELULAR:</td>
+                        <td class="td-in-well">{{ arCliente.celular }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">EMAIL:</td>
+                        <td class="td-in-well">{{ arCliente.email }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                    </tr>    
+                    <tr>
+                        <td class="titulo">GERENTE:</td>
+                        <td class="td-in-well">{{ arCliente.gerente }}</td>
+                        <td class="titulo">CELULAR</td>
+                        <td>{{ arCliente.celularGerente }}</td>
+                    </tr>    
+                    <tr>
+                        <td class="titulo">FINANCIERO:</td>
+                        <td class="td-in-well">{{ arCliente.financiero }}</td>
+                        <td class="titulo">CELULAR:</td>
+                        <td>{{ arCliente.celularFinanciero }}</td>
+                    </tr>  
+                    <tr>
+                        <td class="titulo">CONTACTO:</td>
+                        <td class="td-in-well">{{ arCliente.contacto }}</td>
+                        <td class="titulo">CELULAR:</td>
+                        <td>{{ arCliente.celularContacto }}</td>
+                    </tr>                    
+                    <tr>
+                        <td class="titulo">USUARIO:</td>
+                        <td class="td-in-well">{{ arCliente.usuario }}</td>
+                        <td class="titulo"></td>
+                        <td></td>
+                    </tr>                    
+                </table>
+            </div>
+        </div>
+
+        <!-- Fin Encabezado Movimiento -->
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#puestos" data-toggle="tab">Puestos</a></li>
+            <li><a href="#proyectos" data-toggle="tab">Proyectos</a></li>
+            <li><a href="#gruposfacturacion" data-toggle="tab">Grupos facturacion</a></li>
+            <li><a href="#direcciones" data-toggle="tab">Direcciones</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="puestos">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="puestos" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>COD</th>                                
+                            <th>NOMBRE</th>
+                            <th>PROGRAMADOR</th>
+                            <th>ZONA</th>
+                            <th>DIRECCION</th>
+                            <th>CIUDAD</th>
+                            <th>TELEFONO</th>
+                            <th>CONTACTO</th>
+                            <th>OPERACION</th>
+                            <th>C.COSTO</th>
+                            <th>C.DOTACION</th>
+                            <th></th>
+                            <th></th>
+                            <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                        </tr>
+                        {% for arPuestos in arPuestos %}
+                            <tr>
+                                <td>{{ arPuestos.codigoPuestoPk  }}<input type="hidden" name="LblCodigo[]" value="{{ arPuestos.codigoPuestoPk }}"></td>                    
+                                <td>{{ arPuestos.nombre  }}</td>
+                                <td>{{ arPuestos.programadorRel.nombre | default('')}}</td>
+                                <td>{{ arPuestos.zonaRel.nombre | default('')}}</td>
+                                <td>{{ arPuestos.direccion  }}</td>
+                                <td>{{ arPuestos.ciudadRel.nombre | default('')}}</td>  
+                                <td>{{ arPuestos.telefono  }}</td>                                
+                                <td>{{ arPuestos.contacto  }}</td>
+                                <td>{{ arPuestos.operacionRel.nombre |default('')  }}</td>
+                                <td>{{ arPuestos.codigoCentroCostoContabilidadFk }}</td>
+                                <td style="text-align: right">{{ arPuestos.costoDotacion | number_format(0, '.', ',') }}</td>
+                                <td><a href="javascript:abrirVentana3('{{ path('brs_tur_base_cliente_puesto_nuevo', {'codigoCliente': arCliente.codigoClientePk, 'codigoPuesto': arPuestos.codigoPuestoPk }) }}', 'AgregarNuevoDetalle', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                        
+                                <td style="text-align: center"><a href="{{ path('brs_tur_base_puesto_detalle', { 'codigoPuesto': arPuestos.codigoPuestoPk }) }}" target="_blanck"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>                                
+                                <td><input type="checkbox" name="ChkSeleccionarPuesto[]" value="{{ arPuestos.codigoPuestoPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <div class="btn-toolbar" style="float: right">
+                        <div class="btn-group">            
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_tur_base_cliente_puesto_nuevo', {'codigoCliente': arCliente.codigoClientePk, 'codigoPuesto': 0 }) }}', 'AgregarNuevoDetalle', 600, 900)">Nuevo</a>            
+                        </div>
+                        <div class="btn-group">
+                            {{ form_widget(form.BtnEliminarPuesto, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+                        
+            <div class="tab-pane" id="proyectos">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="proyectos" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>COD</th>                                
+                            <th>NOMBRE</th>
+                            <th></th>
+                            <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                        </tr>
+                        {% for arProyectos in arProyectos %}
+                            <tr>
+                                <td>{{ arProyectos.codigoProyectoPk  }}<input type="hidden" name="LblCodigo[]" value="{{ arProyectos.codigoProyectoPk }}"></td>                    
+                                <td>{{ arProyectos.nombre  }}</td>                                
+                                <td><a href="javascript:abrirVentana3('{{ path('brs_tur_base_cliente_proyecto_nuevo', {'codigoCliente': arCliente.codigoClientePk, 'codigoProyecto': arProyectos.codigoProyectoPk }) }}', 'AgregarNuevoDetalle', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                                                        
+                                <td><input type="checkbox" name="ChkSeleccionarProyecto[]" value="{{ arProyectos.codigoProyectoPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <div class="btn-toolbar" style="float: right">
+                        <div class="btn-group">            
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_tur_base_cliente_proyecto_nuevo', {'codigoCliente': arCliente.codigoClientePk, 'codigoProyecto': 0 }) }}', 'AgregarNuevoDetalle', 600, 900)">Nuevo</a>            
+                        </div>
+                        <div class="btn-group">
+                            {{ form_widget(form.BtnEliminarProyecto, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="tab-pane" id="gruposfacturacion">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="gruposfacturacion" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>COD</th>                                
+                            <th>NOMBRE</th>
+                            <th>ABREVIATURA</th>
+                            <th>CONCEPTO</th>
+                            <th></th>
+                            <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                        </tr>
+                        {% for arGruposFacturacion in arGruposFacturacion %}
+                            <tr>
+                                <td>{{ arGruposFacturacion.codigoGrupoFacturacionPk  }}<input type="hidden" name="LblCodigo[]" value="{{ arGruposFacturacion.codigoGrupoFacturacionPk }}"></td>                    
+                                <td>{{ arGruposFacturacion.nombre  }}</td>                                
+                                <td>{{ arGruposFacturacion.abreviatura  }}</td> 
+                                <td>{{ arGruposFacturacion.concepto  }}</td> 
+                                <td><a href="javascript:abrirVentana3('{{ path('brs_tur_base_cliente_grupo_facturacion_nuevo', {'codigoCliente': arCliente.codigoClientePk, 'codigoGrupoFacturacion': arGruposFacturacion.codigoGrupoFacturacionPk }) }}', 'AgregarNuevoDetalle', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                                                        
+                                <td><input type="checkbox" name="ChkSeleccionarGrupoFacturacion[]" value="{{ arGruposFacturacion.codigoGrupoFacturacionPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <div class="btn-toolbar" style="float: right">
+                        <div class="btn-group">            
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_tur_base_cliente_grupo_facturacion_nuevo', {'codigoCliente': arCliente.codigoClientePk, 'codigoGrupoFacturacion': 0 }) }}', 'AgregarNuevoDetalle', 600, 900)">Nuevo</a>            
+                        </div>
+                        <div class="btn-group">
+                            {{ form_widget(form.BtnEliminarProyecto, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                        </div>
+                    </div>                    
+                </div>
+            </div>                        
+                        
+            <div class="tab-pane" id="direcciones">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="direcciones" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>COD</th>                                
+                            <th>NOMBRE</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        {% for arClienteDirecciones in arClienteDirecciones %}
+                            <tr>
+                                <td>{{ arClienteDirecciones.codigoClienteDireccionPk  }}<input type="hidden" name="LblCodigoClienteDireccion[]" value="{{ arClienteDirecciones.codigoClienteDireccionPk }}"></td>                    
+                                <td>{{ arClienteDirecciones.nombre  }}</td>
+                                <td><a href="javascript:abrirVentana3('{{ path('brs_tur_base_cliente_direccion_nuevo', {'codigoCliente': arCliente.codigoClientePk, 'codigoDireccion': arClienteDirecciones.codigoClienteDireccionPk }) }}', 'AgregarNuevoDetalle', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                        
+                                <td><input type="checkbox" name="ChkSeleccionarDireccion[]" value="{{ arClienteDirecciones.codigoClienteDireccionPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <div class="btn-toolbar" style="float: right">
+                        <div class="btn-group">            
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_tur_base_cliente_direccion_nuevo', {'codigoCliente': arCliente.codigoClientePk, 'codigoDireccion': 0 }) }}', 'AgregarNuevoDetalle', 600, 900)">Nuevo</a>            
+                        </div>
+                        <div class="btn-group">
+                            {{ form_widget(form.BtnEliminarDireccion, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                        </div>
+                    </div>                     
+                </div>
+            </div>                               
+        </div>
+
+
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <a  class="btn btn-default btn-sm" href="{{ path('brs_tur_base_cliente') }}">Volver</a>
+    </div>
+{% endblock %}

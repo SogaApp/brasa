@@ -1,0 +1,86 @@
+{% extends '::base.html.twig' %}
+{% block title %}Tercero nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">    
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo tercero</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nit:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.nit, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Digito verificación:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.digitoVerificacion, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.nombreCorto, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>                    
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nombres:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.nombres, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Primer apellido:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.apellido1, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Segundo apellido:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.apellido2, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>                        
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Dirección:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.direccion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Teléfono:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.telefono, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Celular:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.celular, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Fax:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.fax, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Email:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.email, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>                            
+        </div>
+    </div>
+    <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_inv_base_tercero') }}">Cancelar</a>
+            {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>    
+{% endblock %}

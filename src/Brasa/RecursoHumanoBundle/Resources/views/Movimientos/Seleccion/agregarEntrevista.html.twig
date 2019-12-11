@@ -1,0 +1,70 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Selección agregar entrevista - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <h3>Nueva entrevista</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion entrevista</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_seleccionEntrevistaTipoRel" class="col-sm-4 control-label">Tipo entrevista:</label>
+                <div class="col-sm-8">
+                    {{ form_widget(form.seleccionEntrevistaTipoRel, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_fecha" class="col-sm-4 control-label">Fecha/hora entrevista:</label>
+                <div class="col-sm-8">
+                    {{ form_widget(form.fecha) }}                        
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_resultado" class="col-sm-4 control-label">Resultado cualitativo:</label>
+                <div class="col-sm-8">
+                    {{ form_widget(form.resultado, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label"></label>
+                <div class="col-sm-8">
+                    Ejemplo: Bueno, excelente, apto, entre otros
+                </div>                
+            </div>    
+            <div class="form-group form-group-sm">
+                <label for="form_resultadoCuantitativo" class="col-sm-4 control-label">Resultado cuantitativo:</label>
+                <div class="col-sm-8">
+                    {{ form_widget(form.resultadoCuantitativo, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label"></label>
+                <div class="col-sm-8">
+                    Ejemplo: 80, 90, 95, entre otros
+                </div>                
+            </div>    
+            <div class="form-group form-group-sm">
+                <label for="form_nombreQuienEntrevista" class="col-sm-4 control-label">Persona que entrevista:</label>
+                <div class="col-sm-8">
+                    {{ form_widget(form.nombreQuienEntrevista, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>                
+            </div>    
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-4 control-label">Comentarios:</label>
+                <div class="col-sm-8">
+                            {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>             
+        </div>
+    </div>                   
+    <div class="modal-footer">        
+            {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-sm btn-primary'} }) }}
+            {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-sm btn-primary'} }) }}
+    </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

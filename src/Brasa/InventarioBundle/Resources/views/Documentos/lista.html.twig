@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">    
+    <h3>Lista de documentos</h3>    
+    <table  class="table table-striped table-bordered table-condensed"> 
+        <tr>
+            <th>ID</th>
+            <th></th>
+            <th>Nombre</th>                
+            <th>Operacion</th>
+            <th>Consecutivo</th>
+
+            <th></th>
+            <th></th>
+        </tr>
+        {% set intCodigoSubtipo = 0 %}
+        {% for documento in arDocumentos %}
+        {% if intCodigoSubtipo != documento.codigoDocumentoSubtipoFk %}
+        <tr> 
+            <td id="suptipo" colspan="20">{{ documento.documentoSubtipoRel.nombre }}</td>
+        </tr>
+        {% set intCodigoSubtipo = documento.codigoDocumentoSubtipoFk %}
+        {% endif %}            
+        <tr>
+            <td>{{ documento.codigoDocumentoPK }}</td>
+            <td>{{ documento.abreviatura }}</td>
+            <td>{{ documento.nombreDocumento }}</td>
+            {% if documento.operacionInventario == 1 %}
+                <td>Entrada</td>                             
+            {% endif %}            
+            {% if documento.operacionInventario == -1 %}
+                <td>Salida</td>                             
+            {% endif %}            
+            {% if documento.operacionInventario == 0 %}
+                <td>Neutro</td>                             
+            {% endif %}                
+            <td>{{ documento.consecutivo }}</td>                 
+            <td style="text-align: center"><a href="{{ path('brs_inv_movimientos_lista', { 'codigoDocumento': documento.codigoDocumentoPK }) }}"><IMG SRC="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>
+            <td style="text-align: center"><a  href="{{ path('brs_inv_movimientos_nuevo',{'codigoDocumento': documento.codigoDocumentoPK, 'codigoMovimiento': 0}) }}"><IMG SRC="{{ asset('imagenes/bootstrap/glyphicons_036_file.png') }}" width=16 height=16></a></td>                
+        </tr>   
+        {% endfor %}            
+    </table>    
+</div>
+{% endblock %}

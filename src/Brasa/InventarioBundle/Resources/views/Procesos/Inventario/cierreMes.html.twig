@@ -1,0 +1,35 @@
+{% extends 'zikmontFrontEndBundle::layout_app.html.twig' %}
+{% block content %}
+<div class="left_articles"> 
+    <br />
+    <p class="description"><h1>Cierres de mes</h1></p> 
+    <hr/>
+    <form  action="{{ path('inventario_procesos_cierre_mes') }}" method="post">                
+        <div class="well well-small">                                                                                     
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>Mes</th>
+                    <th style="text-align: right">Total ventas</th>
+                    <th style="text-align: right">Total compras</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for arCierreMesInventario in arCierreMesInventario %}
+                        <tr>                                                                              
+                            <td>{{ arCierreMesInventario.mes }}</td>                                                                                                          
+                            <td style="text-align: right">{{ arCierreMesInventario.totalVentas | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arCierreMesInventario.totalCompras | number_format(0, '.', ',') }}</td>
+                            {% if arCierreMesInventario.estadoCerrado == 1 %}
+                                <td><span class="label label-important">CERRADO</span></td>
+                            {% else %}
+                                <td><button class="btn" type="submit" name="BtnCerrar" value="{{ arCierreMesInventario.codigoCierreMesPk }}">Cerrar</button></td>
+                            {% endif %}
+                            
+                        </tr>
+                    {% endfor %}                     
+                </tbody>                                
+            </table>
+        </div>                    
+    </form>      
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo grupo recurso</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">                                                     
+            <div class="form-group form-group-sm">
+                <label for="form_nombre" class="col-sm-3 control-label">Nombre:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                </div>                
+            </div>  
+        </div>
+    </div>    
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion nomina</div>
+        <div class="panel-body">                    
+            <div class="form-group form-group-sm">
+                <label for="form_codigoTurnoFijoNominaFk" class="col-sm-3 control-label">Turno fijo:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.codigoTurnoFijoNominaFk, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                    <p style="font-size: 0.8em;">* Independiente del turno programado, se liquida con este turno la nomina</p>
+                </div>                
+            </div> 
+            <div class="form-group form-group-sm">
+                <label for="form_codigoTurnoFijoDescansoFk" class="col-sm-3 control-label">Turno fijo descanso:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.codigoTurnoFijoDescansoFk, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                    <p style="font-size: 0.8em;">* Cuando el turno es de descanso es reemplazado por este turno</p>
+                </div>                
+            </div>                     
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Dias de descanso fijo:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.diasDescansoFijo, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                                            
+                </div>                
+            </div>                    
+        </div>
+    </div>                
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_tur_base_recurso_grupo') }}">Cancelar</a>        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

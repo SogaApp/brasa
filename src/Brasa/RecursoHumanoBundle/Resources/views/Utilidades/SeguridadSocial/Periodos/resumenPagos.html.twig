@@ -1,0 +1,73 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Seguridad social aportes resumen pagos - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Resumen pagos</h3>
+    </div>
+         <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>NUMERO</th>
+                <th>TIPO</th>                                                                
+                <th>P. DESDE</th>
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th>DIAS</th>
+                <th>IBC</th>
+            </tr>  
+            {% set douTotalIBC = 0  %}              
+            {% for arPagos in arPagos %}
+            <tr>                
+                <td>{{ arPagos.numero  }}</td>
+                <td>{{ arPagos.pagoTipoRel.nombre  }}</td>
+                <td>{{ arPagos.fechaDesdePago |date("Y/m/d")  }}</td>
+                <td>{{ arPagos.fechaDesde |date("Y/m/d")  }}</td>
+                <td>{{ arPagos.fechaHasta |date("Y/m/d")  }}</td>
+                <td style="text-align: right">{{ arPagos.diasPeriodo | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagos.vrIngresoBaseCotizacion | number_format(0, '.', ',') }}</td>
+            </tr>                
+            {% set douTotalIBC = douTotalIBC + arPagos.vrIngresoBaseCotizacion %}                                       
+            {% endfor %}
+            <td colspan="6"></td>            
+            <td style="text-align: right">{{ douTotalIBC | number_format(0, '.', ',') }}</td>
+        </table>
+        <div class="page-header">
+        <h3>Detalles pagos</h3>
+    </div>
+         <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>ID</th>
+                <th>CODIGO</th>
+                <th>CONCEPTO</th>
+                <th>AD</th>
+                <th>PREST</th>
+                <th>COT</th>
+                <th>VALOR</th>
+                <th>IBC</th>
+                <th>IBP</th>
+                <th>IBCA</th>
+                <th>IBCS</th>
+            </tr>
+            {% set douTotalIBC = 0  %}                           
+            {% for arPagosDetalles in arPagosDetalles %}
+            <tr>                
+                <td>{{ arPagosDetalles.codigoPagoDetallePk  }}</td>
+                <td>{{ arPagosDetalles.codigoPagoConceptoFk  }}</td>
+                <td>{{ arPagosDetalles.pagoConceptoRel.nombre  }}</td>
+                <td>{% if arPagosDetalles.adicional == 1 %}SI{% else %}NO{% endif %}</td>
+                <td>{% if arPagosDetalles.prestacional == 1 %}SI{% else %}NO{% endif %}</td>
+                <td>{% if arPagosDetalles.cotizacion == 1 %}SI{% else %}NO{% endif %}</td>
+                <td style="text-align: right">{{ arPagosDetalles.vrPago | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagosDetalles.vrIngresoBaseCotizacion | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagosDetalles.vrIngresoBasePrestacion | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagosDetalles.vrIngresoBaseCotizacionAdicional | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPagosDetalles.vrIngresoBaseCotizacionSalario | number_format(0, '.', ',') }}</td>
+            </tr>
+            {% set douTotalIBC = douTotalIBC + arPagosDetalles.vrIngresoBaseCotizacion %}                                       
+            {% endfor %}
+            <td colspan="7"></td>            
+            <td style="text-align: right">{{ douTotalIBC | number_format(0, '.', ',') }}</td>            
+        </table>
+        
+</div>
+{% endblock %}

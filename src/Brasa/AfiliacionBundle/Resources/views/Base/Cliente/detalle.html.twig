@@ -1,0 +1,140 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <script>
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip() 
+        })
+    </script>    
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle cliente</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 17,  'numero': arCliente.codigoClientePk }) }}', 'Archivos', 500, 700)" >Archivos</a>                
+            </div>
+        </div>
+        <br /><br />
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arCliente.codigoClientePk }}</td>
+                        <td class="titulo">NIT:</td>
+                        <td class="td-in-well">{{ arCliente.nit }}</td>
+                        <td class="titulo">DIGITO VERIFICACION:</td>
+                        <td class="td-in-well">{{ arCliente.digitoVerificacion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">NOMBRE</td>
+                        <td class="td-in-well">{{ arCliente.nombreCorto }}</td>
+                        <td class="titulo">ASESOR:</td>
+                        <td class="td-in-well">{{ arCliente.asesorRel.nombre | default('') }}</td>
+                        <td class="titulo">EMAIL:</td>
+                        <td class="td-in-well">{{ arCliente.email }}</td>
+                    </tr>  
+                    <tr>
+                        <td class="titulo">TELEFONO:</td>
+                        <td class="td-in-well">{{ arCliente.telefono }}</td>
+                        <td class="titulo" >CELULAR:</td>
+                        <td class="td-in-well">{{ arCliente.celular }}</td>
+                        <td class="titulo">FAX:</td>
+                        <td class="td-in-well">{{ arCliente.fax }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CIUDAD:</td>
+                        <td class="td-in-well">{{ arCliente.ciudadRel.nombre | default('') }}</td>
+                        <td class="titulo" >DIRECCION:</td>
+                        <td class="td-in-well">{{ arCliente.direccion }}</td>
+                        <td class="titulo">BARRIO:</td>
+                        <td class="td-in-well">{{ arCliente.barrio }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CONTACTO:</td>
+                        <td class="td-in-well">{{ arCliente.contacto}}</td>
+                        <td class="titulo" >CELULAR:</td>
+                        <td class="td-in-well">{{ arCliente.celularContacto }}</td>
+                        <td class="titulo">TELEFONO:</td>
+                        <td class="td-in-well">{{ arCliente.telefonoContacto }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">SUCURSAL:</td>
+                        <td class="td-in-well">{{ arCliente.codigoSucursal }}</td>
+                        <td class="titulo" >INDEPENDIENTE:</td>
+                        <td class="td-in-well">{% if arCliente.independiente == 1%} SI {% else %} NO {% endif %}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">PENSION:</td>
+                        <td class="td-in-well">{% if arCliente.generaPension == 1%} SI {% else %} NO {% endif %}</td>                        
+                        <td class="titulo">% PENSION:</td>
+                        <td class="td-in-well">{{ arCliente.porcentajePension }}</td>
+                        <td class="titulo" >FORMA PAGO:</td>
+                        <td class="td-in-well">{{ arCliente.formaPagoRel.nombre | default('') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">SALUD:</td>
+                        <td class="td-in-well">{% if arCliente.generaSalud == 1%} SI {% else %} NO {% endif %}</td>                        
+                        <td class="titulo">% SALUD:</td>
+                        <td class="td-in-well">{{ arCliente.porcentajeSalud }}</td>
+                        <td class="titulo" >PLAZO PAGO:</td>
+                        <td class="td-in-well">{{ arCliente.plazoPago }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CAJA:</td>
+                        <td class="td-in-well">{% if arCliente.generaCaja == 1%} SI {% else %} NO {% endif %}</td>                        
+                        <td class="titulo">% CAJA:</td>
+                        <td class="td-in-well">{{ arCliente.porcentajeCaja }}</td>
+                        <td class="titulo">AFILIACION:</td>
+                        <td align="right">{{ arCliente.afiliacion | number_format(0, '.', ',') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">RIESGOS:</td>
+                        <td class="td-in-well">{% if arCliente.generaRiesgos == 1 %} SI {% else %} NO {% endif %}</td>                        
+                        <td class="titulo">REDONDEAR COBRO</td>
+                        <td class="td-in-well">{% if arCliente.redondearCobro == 1 %} SI {% else %} NO {% endif %}</td>
+                        <td class="titulo" >ADMINISTRACION:</td>
+                        <td align="right">{{ arCliente.administracion | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">SENA:</td>
+                        <td class="td-in-well">{% if arCliente.generaSena == 1 %} SI {% else %} NO {% endif %}</td>                        
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo" ></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ICBF:</td>
+                        <td class="td-in-well">{% if arCliente.generaIcbf == 1 %} SI {% else %} NO {% endif %}</td>                        
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo" ></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">COMENTARIOS:</td>
+                        <td class="td-in-well" colspan="5">{{ arCliente.comentarios }}
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <a  class="btn btn-default btn-sm" href="{{ path('brs_afi_base_cliente') }}">Volver</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends '::base.html.twig' %}
+{% block title %}Cartera recibo detalle - Soga App{% endblock %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle recibo</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">                
+                <a  class="btn btn-default btn-sm" href="{{ path('brs_cartera_movimiento_recibo_nuevo', {'codigoRecibo': 0 }) }}">Nuevo</a>                
+                {% if arRecibo.estadoAutorizado == 0 %}                    
+                    <a  class="btn btn-default btn-sm" href="{{ path('brs_cartera_movimiento_recibo_nuevo', {'codigoRecibo': arRecibo.codigoReciboPk }) }}">Editar</a>                
+                {% endif %}                    
+                {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+        </div>
+        <div style="float:right">
+            {% if arRecibo.estadoAutorizado == 1 %}<span class="label label-default">Autorizado</span>{% endif %}                        
+        </div>            
+        <br /><br />
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arRecibo.codigoReciboPk }}</td>
+                        <td class="titulo">NÚMERO:</td>
+                        <td class="td-in-well">{{ arRecibo.numero }}</td>
+                        <td class="titulo" align="right">TOTAL DESCUENTO:</td>
+                        <td align="right">{{ arRecibo.vrTotalDescuento | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CLIENTE:</td>
+                        <td class="td-in-well">{{ arRecibo.clienteRel.nombreCorto | default('') }}</td>
+                        <td class="titulo">NIT:</td>
+                        <td class="td-in-well">{{ arRecibo.clienteRel.nit | default('') }}</td>
+                        <td class="titulo" align="right">TOTAL AJUSTE PESO:</td>
+                        <td align="right">{{ arRecibo.vrTotalAjustePeso | number_format(0, '.', ',')}}</td>
+                    </tr>                  
+                    <tr>
+                        <td class="titulo">CUENTA BANCO:</td>
+                        <td class="td-in-well">{{ arRecibo.cuentaRel.nombre }}</td>
+                        <td class="titulo" >TIPO RECBO:</td>
+                        <td class="td-in-well">{{ arRecibo.reciboTipoRel.nombre }}</td>
+                        <td class="titulo" align="right">TOTAL RETE ICA:</td>
+                        <td align="right">{{ arRecibo.vrTotalReteIca | number_format(0, '.', ',')}}</td>
+                    </tr>                
+                    <tr>
+                        <td class="titulo">FECHA:</td>
+                        <td class="td-in-well">{{ arRecibo.fecha |date("Y/m/d") }}</td>
+                        <td class="titulo" >FECHA PAGO:</td>
+                        <td class="td-in-well">{{ arRecibo.fechaPago |date("Y/m/d") }}</td>
+                        <td class="titulo" align="right">TOTAL RETE IVA:</td>
+                        <td align="right">{{ arRecibo.vrTotalReteIva | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ANULADO:</td>
+                        <td class="td-in-well">{% if arRecibo.estadoAnulado == 1 %}SI{% else %}NO{% endif %}</td>
+                        <td class="titulo">IMPRESO:</td>
+                        <td class="td-in-well">{% if arRecibo.estadoImpreso == 1 %}SI{% else %}NO{% endif %}</td>
+                        <td class="titulo" align="right">TOTAL RETE FUENTE:</td>
+                        <td align="right">{{ arRecibo.vrTotalReteFuente | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">EXPORTADO:</td>
+                        <td class="td-in-well">{% if arRecibo.estadoExportado == 1 %}SI{% else %}NO{% endif %}</td>
+                        <td class="titulo">AUTORIZADO:</td>
+                        <td class="td-in-well">{% if arRecibo.estadoAutorizado == 1 %}SI{% else %}NO{% endif %}</td>
+                        <td class="titulo" align="right">TOTAL:</td>
+                        <td align="right">{{ arRecibo.vrTotal | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo" >COMENTARIOS: </td>
+                        <td class="td-in-well" colspan="5">{{ arRecibo.comentarios }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- Fin Encabezado Movimiento -->
+        <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>CÓDIGO RECIBO</th>
+                <th>CÓDIGO CUENTA COBRAR</th>
+                <th>NÚMERO FACTURA</th>
+                <th>TIPO</th>
+                <th>DESCUENTO</th>
+                <th>AJUSTE PESO</th>
+                <th>RETE ICA</th>
+                <th>RETE IVA</th>
+                <th>RETE FUENTE</th>
+                <th>VALOR</th>
+                <th></th>
+            </tr>
+            {% for arReciboDetalle in arReciboDetalle %}
+                <tr>
+                    <td>{{ arReciboDetalle.codigoReciboDetallePk  }}<input type="hidden" name="LblCodigo[]" value="{{ arReciboDetalle.codigoReciboDetallePk }}"></td>
+                    <td>{{ arReciboDetalle.codigoReciboFk  }}</td>                    
+                    <td>{{ arReciboDetalle.codigoCuentaCobrarFk  }}</td>                                  
+                    <td>{{ arReciboDetalle.numeroFactura  }}</td>
+                    <td>{{ arReciboDetalle.cuentaCobrarTipoRel.nombre  }}</td>
+                    {% if arRecibo.estadoAutorizado == 0 %}                        
+                        <td style="text-align: right"><input style="text-align: right" class="input-grid" type="text" name="TxtVrDescuento{{ arReciboDetalle.codigoReciboDetallePk }}" value="{{ arReciboDetalle.vrDescuento  }}" size="8" style="width:65px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>                        
+                        <td style="text-align: right"><input style="text-align: right" class="input-grid" type="text" name="TxtVrAjustePeso{{ arReciboDetalle.codigoReciboDetallePk }}" value="{{ arReciboDetalle.vrAjustePeso  }}" size="8" style="width:65px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>                        
+                        <td style="text-align: right"><input style="text-align: right" class="input-grid" type="text" name="TxtVrReteIca{{ arReciboDetalle.codigoReciboDetallePk }}" value="{{ arReciboDetalle.vrReteIca  }}" size="8" style="width:65px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>                        
+                        <td style="text-align: right"><input style="text-align: right" class="input-grid" type="text" name="TxtVrReteIva{{ arReciboDetalle.codigoReciboDetallePk }}" value="{{ arReciboDetalle.vrReteIva  }}" size="8" style="width:65px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>                        
+                        <td style="text-align: right"><input style="text-align: right" class="input-grid" type="text" name="TxtVrReteFuente{{ arReciboDetalle.codigoReciboDetallePk }}" value="{{ arReciboDetalle.vrReteFuente  }}" size="8" style="width:65px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>                        
+                        <td style="text-align: right"><input style="text-align: right" class="input-grid" type="text" name="TxtValor{{ arReciboDetalle.codigoReciboDetallePk }}" value="{{ arReciboDetalle.valor  }}" size="8" style="width:65px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>                        
+                    {% else %}                        
+                        <td style="text-align: right">{{ arReciboDetalle.vrDescuento | number_format(0, '.', ',') }}</td> 
+                        <td style="text-align: right">{{ arReciboDetalle.vrAjustePeso | number_format(0, '.', ',') }}</td> 
+                        <td style="text-align: right">{{ arReciboDetalle.vrReteIca | number_format(0, '.', ',') }}</td> 
+                        <td style="text-align: right">{{ arReciboDetalle.vrReteIva | number_format(0, '.', ',') }}</td> 
+                        <td style="text-align: right">{{ arReciboDetalle.vrReteFuente | number_format(0, '.', ',') }}</td> 
+                        <td style="text-align: right">{{ arReciboDetalle.valor | number_format(0, '.', ',') }}</td> 
+                    {% endif %}
+                    <td style="text-align: center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arReciboDetalle.codigoReciboDetallePk }}" /></td>
+                </tr>
+            {% endfor %}
+        </table>
+            <div class="btn-toolbar" style="float: right">
+                {% if arRecibo.estadoAutorizado == 0 %}
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_cartera_movimiento_recibo_detalle_nuevo', {'codigoRecibo': arRecibo.codigoReciboPk, 'codigoReciboDetalle': 0 }) }}', 'AgregarNuevoDetalle', 600, 900)">Nuevo</a>
+                    </div>
+                {% endif %}       
+                <div class="btn-group">
+                    {{ form_widget(form.BtnDetalleActualizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                </div>        
+                <div class="btn-group">
+                    {{ form_widget(form.BtnDetalleEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                </div>
+            </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <div class="btn-group">
+            <a  class="btn btn-default btn-sm" href="{{ path('brs_cartera_movimiento_recibo_listar') }}">Volver</a>
+        </div>
+    </div>
+{% endblock %}

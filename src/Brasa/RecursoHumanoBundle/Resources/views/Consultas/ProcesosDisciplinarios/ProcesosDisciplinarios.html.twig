@@ -1,0 +1,95 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta procesos disciplinarios - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <div class="page-header">
+        <h3>Consulta procesos disciplinarios</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                    <label for="form_centroCostoRel" class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Identificacion:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.TxtIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrarProcesosDisciplinarios, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>FECHA</th>
+                <th>PROCESO</th>
+                <th>MOTIVO</th>
+                <th>DOCUMENTO</th>
+                <th>NOMBRE</th>
+                <th>GRUPO PAGO</th>                                
+                <th>ZONA</th>
+                <th>OPERACION</th>
+                <th>USUARIO</th>
+                <th>PROCEDE</th>
+            </tr>
+            {% for arProcesosDisciplinarios in arProcesosDisciplinarios %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arProcesosDisciplinarios.codigoDisciplinarioPk }}">{{ arProcesosDisciplinarios.codigoDisciplinarioPk }} </td>
+                <td>{{ arProcesosDisciplinarios.fecha |date("Y/m/d")  }}</td>
+                <td>{{ arProcesosDisciplinarios.disciplinarioTipoRel.nombre  }}</td>
+                <td>{{ arProcesosDisciplinarios.disciplinarioMotivoRel.nombre  }}</td>
+                <td>{{ arProcesosDisciplinarios.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arProcesosDisciplinarios.empleadoRel.nombreCorto  }}</td>
+                <td>{{ arProcesosDisciplinarios.centroCostoRel.nombre  }}</td>
+                <td>{{ arProcesosDisciplinarios.empleadoRel.zonaRel.nombre  }}</td>
+                <td>{{ arProcesosDisciplinarios.empleadoRel.subzonaRel.nombre }}</td>
+                <td>{{ arProcesosDisciplinarios.codigoDisciplinarioPk  }}</td>
+                <td>{% if arProcesosDisciplinarios.estadoProcede == 1%}SI{% else %}NO{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arProcesosDisciplinarios) }}
+            </div>
+
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcelProcesosDisciplinarios, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+

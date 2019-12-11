@@ -1,0 +1,53 @@
+{% extends '::base.html.twig' %}
+{% block title %}Contenido formatos lista - Soga App{% endblock %} 
+{% block content %}
+    <div class="container">
+    <div class="page-header">    
+        <h3>Listado contenidos de formatos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }} 
+    <table class="table table-striped table-bordered table-condensed table-hover">
+        <tr>
+            <th>CÓDIGO</th>
+            <th>{{ knp_pagination_sortable(arContenidoFormatos, 'TITULO', 'cf.codigoContenidoFormatoPk') }}</th> 
+            <th>COD. FORMATO</th>
+            <th>VERSIÓN</th>
+            <th>FECHA VERSIÓN</th>
+            <th>REQUIERE FORMATO ISO</th>
+            <th></th>
+            <th></th>
+        </tr>
+        
+            {%for arContenidoFormatos in arContenidoFormatos %}
+               <tr>
+                <td>{{arContenidoFormatos.codigoContenidoFormatoPk}}</td>
+                <td align="justify">{{arContenidoFormatos.titulo}}</td>
+                <td align="justify">{{arContenidoFormatos.codigoFormatoIso}}</td>
+                <td align="justify">{{arContenidoFormatos.version}}</td>
+                <td align="justify">{% if arContenidoFormatos.fechaVersion != null %}{{arContenidoFormatos.fechaVersion | date('Y-m-d')}}{% else %}{% endif %}</td>
+                <td align="justify">{% if arContenidoFormatos.requiereFormatoIso == 1%} SI {% else %} NO {% endif %}</td>
+                <td><a href="{{ path('brs_gen_base_contenido_formato_nuevo',{'codigoContenidoFormato': arContenidoFormatos.codigoContenidoFormatoPk})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arContenidoFormatos.codigoContenidoFormatoPk }}" /></td>
+            {%endfor%}
+            </tr>            
+    </table>
+    <div class="btn-group" style="float: left">
+        <div class="btn btn-default btn-sm">Contenido Formatos <span class="badge">{{ arContenidoFormatos.getTotalItemCount }}</span></div>                        
+    </div>
+    <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+        {{ knp_pagination_render(arContenidoFormatos) }}       
+    </div>
+    <div class="btn-toolbar" style="float: right">              
+        <div class='btn-group'>
+            <a class="btn btn-default btn-sm" href="{{ path('brs_gen_base_contenido_formato_nuevo', {'codigoContenidoFormato': 0}) }}">Nuevo</a>
+        </div>
+        <div class="btn-group">
+            {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}</td>                   
+        </div>
+        
+    </div>     
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,1281 @@
+{% block stylesheets %}
+    <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('brasa_general_inicio') }}">Soga App</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administración <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {% if arModulo.general == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">General</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_gen_base_asesor') }}">Asesores</a></li>
+                                    <li><a href="{{ path('brs_gen_base_bancos') }}">Bancos</a></li>
+                                    <li><a href="{{ path('brs_gen_base_cuentas') }}">Cuentas</a></li>
+                                    <li><a href="{{ path('brs_gen_base_contenido_formato_lista') }}">Formatos
+                                            principal</a></li>
+                                    <li><a href="{{ path('brs_gen_base_contenido_formato_secundario_lista') }}">Formatos
+                                            secundario</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.contabilidad == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Contabilidad</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_ctb_base_terceros_lista') }}">Terceros</a></li>
+                                    <li><a href="{{ path('brs_ctb_base_comprobantes_lista') }}">Comprobantes</a></li>
+                                    <li><a href="{{ path('brs_ctb_base_cuentas_lista') }}">Cuentas</a></li>
+                                    <li><a href="{{ path('brs_ctb_base_centro_costo_lista') }}">Centro de Costos</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.recursoHumano == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Recurso humano</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_rhu_base_cliente') }}">Cliente</a></li>
+                                    <li><a href="{{ path('brs_rhu_base_centros_costos_lista') }}">Grupo de pago</a></li>
+                                    <li><a href="{{ path('brs_rhu_base_empleados_lista') }}">Empleados</a></li>
+                                    <li><a href="{{ path('brs_rhu_base_contratos_lista') }}">Contratos</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">General</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_base_creditotipo_listar') }}">Tipo de
+                                                    crédito</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_empleado_estudio_tipo_lista') }}">Tipo de
+                                                    estudio</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_examentipo_listar') }}">Tipo de
+                                                    exámen</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_examen_cargo_lista') }}">Exámen por
+                                                    cargo</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_licenciatipo_listar') }}">Tipo de
+                                                    licencia</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_capacitacion_tipo_lista') }}">Tipo de
+                                                    capacitación</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_contrato_tipo_lista') }}">Tipo de
+                                                    contratos</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_disciplinario_tipo_lista') }}">Tipo de
+                                                    procesos disciplinarios</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_carta_tipo_lista') }}">Tipo de cartas</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('brs_rhu_base_empleado_informacion_interna_tipo_lista') }}">Tipo
+                                                    de información interna empleado</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_desempeno_concepto_tipo_listar') }}">Tipo
+                                                    de concepto de gestión del desempeño</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_desempeno_concepto_listar') }}">Concepto
+                                                    de gestión del desempeño</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_pago_concepto_lista') }}">Concepto de
+                                                    pago</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_permiso_tipo_lista') }}">Tipo de
+                                                    permiso</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Contratacion</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_base_cargo') }}">Cargos</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_requisito_concepto_lista') }}">Conceptos
+                                                    de requisitos</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_requisito_cargo_lista') }}">Requisitos
+                                                    por cargos</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_banco_listar') }}">Bancos</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_departamento_empresa_listar') }}">Departamentos
+                                                    empresa</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_horario_listar') }}">Horario</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_turno_listar') }}">Turno</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Seguridad social</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_base_ssosucursal_listar') }}">Sucursales
+                                                    aportes</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_salud_listar') }}">Salud</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_pension_listar') }}">Pension</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_caja_listar') }}">Caja compensación</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_base_salud_tipo_lista') }}">Tipo salud</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_base_pension_tipo_lista') }}">Tipo pensión</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Salud ocupacional</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_base_clasificacion_listar') }}">Clasificación
+                                                    de riesgos</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_riesgoProfesional_listar') }}">Riesgos
+                                                    profesionales</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Seleccion</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_base_seleccion_prueba_tipo_listar') }}">Tipo
+                                                    de prueba selección</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_seleccion_entrevista_tipo_listar') }}">Tipo
+                                                    de entrevista selección</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_motivocierre_seleccion_listar') }}">Motivo
+                                                    de cierre</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Academia</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_base_academia_listar') }}">Academia</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_acreditacion_tipo_lista') }}">Tipo
+                                                    acreditación</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Dotacion</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_base_dotacion_elemento_tipo_lista') }}">Tipo
+                                                    dotación</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_dotacion_elemento_lista') }}">Elementos
+                                                    dotación</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_dotacion_cargo_lista') }}">Dotación por
+                                                    cargo</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="{{ path('brs_rhu_base_entidadexamen_listar') }}">Entidad examen</a>
+                                    </li>
+                                    <li><a href="{{ path('brs_rhu_base_sede_listar') }}">Sedes</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Zona</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_base_zona') }}">Zona</a></li>
+                                            <li><a href="{{ path('brs_rhu_base_subzona') }}">SubZona</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Aspirante</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_base_motivodescarte_aspirante_listar') }}">Motivo
+                                                    descarte</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.transporte == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Transporte</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_tte_base_clientes_lista') }}">Clientes</a></li>
+                                    <li><a href="{{ path('brs_tte_base_precios_lista') }}">Lista precios</a></li>
+                                    <li><a href="{{ path('brs_tte_base_productos_lista') }}">Productos</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.turno == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Turno</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cliente</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_base_cliente') }}">Cliente</a></li>
+                                            <li><a href="{{ path('brs_tur_base_contrato') }}">Contrato</a></li>
+                                            <li><a href="{{ path('brs_tur_base_puesto') }}">Puesto</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Recurso</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_base_recurso_lista') }}">Recurso</a></li>
+                                            <li><a href="{{ path('brs_tur_base_recurso_grupo') }}">Grupo</a></li>
+                                            <li><a href="{{ path('brs_tur_base_recurso_tipo') }}">Tipo recurso</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Turnos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_base_turno') }}">Turno</a></li>
+                                            <li><a href="{{ path('brs_tur_base_plantilla_lista') }}">Plantilla</a></li>
+                                            <li><a href="{{ path('brs_tur_base_secuencia_lista') }}">Secuencia</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Operaciones</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_base_proyecto') }}">Proyecto</a></li>
+                                            <li><a href="{{ path('brs_tur_base_operacion') }}">Operacion</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="{{ path('brs_tur_base_prospecto_lista') }}">Prospecto</a></li>
+                                    <li><a href="{{ path('brs_tur_base_concepto_servicio_lista') }}">Concepto
+                                            servicio</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">General</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_base_factura_tipo') }}">Tipo factura</a></li>
+                                            <li><a href="{{ path('brs_tur_base_novedad_tipo') }}">Tipo novedad</a></li>
+                                            <li><a href="{{ path('brs_tur_base_elemento_dotacion') }}">Elemento
+                                                    dotacion</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.cartera == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Cartera</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_cartera_base_cliente_listar') }}">Clientes</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">General</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_cartera_base_recibo_tipo_listar') }}">Recibo
+                                                    tipo</a></li>
+                                            <li><a href="{{ path('brs_cartera_base_cuentacobrar_tipo_listar') }}">Cuenta
+                                                    cobro tipo</a></li>
+                                            <li><a href="{{ path('brs_cartera_base_notacredito_concepto_listar') }}">Nota
+                                                    credito concepto</a></li>
+                                            <li><a href="{{ path('brs_cartera_base_notadebito_concepto_listar') }}">Nota
+                                                    debito concepto</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.inventario == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Inventario</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_inv_base_item') }}">Item</a></li>
+                                    <li><a href="{{ path('brs_inv_base_bodega') }}">Bodega</a></li>
+                                    <li><a href="{{ path('brs_inv_base_marca') }}">Marca</a></li>
+                                    <li><a href="{{ path('brs_inv_base_tercero') }}">Tercero</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.afiliacion == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Afiliacion</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_afi_base_cliente') }}">Cliente</a></li>
+                                    <li><a href="{{ path('brs_afi_base_empleado') }}">Empleado</a></li>
+                                    <li>
+                                        <a href="{{ path('brs_afi_base_razonSocial') }}">Razon
+                                            social</a></li>
+                                    <li><a href="{{ path('brs_afi_base_entidad_entrenamiento') }}">Entidad
+                                            entrenamiento</a></li>
+                                    <li><a href="{{ path('brs_afi_base_curso_tipo') }}">Tipo curso</a></li>
+                                    <li><a href="{{ path('brs_afi_base_sucursal') }}">Sucursales</a></li>
+                                    <li><a href="{{ path('brs_afi_base_periodo_fecha_pago') }}">Fecha pago periodo
+                                            seguridad social</a></li>
+                                    <li><a href="{{ path('brs_afi_base_configuracion') }}">Configuracion</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Consultas <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {% if arModulo.contabilidad == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Contabilidad</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_ctb_consultas_registros') }}">Registros</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="{{ path('brs_ctb_consultas_balance_prueba') }}">Balance
+                                            de prueba</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.recursoHumano == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Recurso humano</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Aspirantes inconsistencias</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_aspirantes_inconsistencias') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Adicionales al pago</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_adicionales_pago') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Costos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consulta_costo') }}">General</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Empleados</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consulta_empleado') }}">General</a></li>
+                                            <li><a href="{{ path('brs_rhu_consultas_empleado') }}">Completo</a></li>
+                                            <li><a href="{{ path('brs_rhu_consultas_pagos_deducciones_empleado') }}">Pagos
+                                                    y deducciones</a></li>
+                                            <li><a href="{{ path('brs_rhu_consultas_empleado_estudios_vencimiento') }}">Estudios
+                                                    vencimiento</a></li>
+                                            <li>
+                                                <a href="{{ path('brs_rhu_consultas_empleado_requisitos_pendientes') }}">Requisitos
+                                                    pendientes</a></li>
+                                            <li><a href="{{ path('brs_rhu_consulta_empleado_centro_costo_mes') }}">Centro
+                                                    costo (Mes)</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Creditos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_creditos_general') }}">General</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Servicios</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_servicios_cobrar') }}">Por
+                                                    cobrar</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Pagos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_pago') }}">Pagos</a></li>
+                                            <li><a href="{{ path('brs_rhu_consulta_pago_detalle') }}">Pagos detalle</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Concepto pago</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consulta_pago_concepto') }}">Concepto pago
+                                                    consolidado (Nom,vac,liq)</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Incapacidades</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_incapacidades_lista') }}">Lista</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_consultas_incapacidades_cobrar_pago') }}">Por
+                                                    cobrar</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Seguridad social</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_sso_aportes') }}">Aportes</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Contratos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_contrato_fecha_ingreso') }}">Por
+                                                    fecha ingreso</a></li>
+                                            <li><a href="{{ path('brs_rhu_consultas_contrato_fecha_terminacion') }}">Por
+                                                    fecha terminación (contratos inactivos)</a></li>
+                                            <li><a href="{{ path('brs_rhu_consultas_contrato_periodo') }}">Por
+                                                    periodo</a></li>
+                                            <li><a href="{{ path('brs_rhu_consultas_contrato_vacaciones_pagar') }}">Vacaciones
+                                                    por pagar</a></li>
+                                            <li><a href="{{ path('brs_rhu_consulta_contrato_fechavencimiento') }}">Por
+                                                    fecha vencimiento (contratos activos)</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Pago banco</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_pago_pendientes_banco') }}">Pendientes</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Dotaciones</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_rhu_consultas_dotacion_pendiente') }}">Pendientes</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Examanes</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_examenes_vencimiento') }}">Vencimiento</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_consultas_examen_cobrar') }}">Por cobrar</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="{{ path('brs_rhu_consultas_procesos_disciplinarios') }}">Procesos
+                                            disciplinarios</a>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Control de acceso</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_control_acceso_empleados') }}">Empleados</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_consultas_control_acceso_visitantes') }}">Visitantes</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Permisos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consultas_permisos') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Visitas</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_consulta_visita_fechavencimiento') }}">Por
+                                                    fecha vencimiento</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.turno == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Turnos</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Recursos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_consulta_recursos_disponibles') }}">Disponibles</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Servicios</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_consulta_servicios_detalles') }}">Detalles</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_tur_consulta_servicios_detalles_recursos') }}">Detalles
+                                                    y recursos</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Pedidos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_consulta_pedidos_detalles') }}">Detalles</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_tur_consulta_pedidos_pendientes_facturar') }}">Pendientes
+                                                    facturar</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Programaciones</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_consulta_programaciones_detalles') }}">Detalles</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Facturas</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_consulta_facturas_detalles') }}">Detalles</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Costos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_consulta_costo_recurso') }}">Recursos</a></li>
+                                            <li><a href="{{ path('brs_tur_consulta_costo_servicio') }}">Servicio</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.cartera == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Cartera</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cuentas por cobrar</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_cartera_consulta_cuentacobrar_lista') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Anticipo</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_cartera_consulta_anticipo_resumen') }}">Resumen</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_cartera_consulta_anticipo_lista') }}">Lista</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('brs_cartera_consulta_anticipo_detalle') }}">Detalle</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Recibo</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_cartera_consulta_recibo_resumen') }}">Resumen</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_cartera_consulta_recibo_lista') }}">Lista</a></li>
+                                            <li><a href="{{ path('brs_cartera_consulta_recibo_detalle') }}">Detalle</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Nota credito</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_cartera_consulta_notacredito_lista') }}">Lista</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('brs_cartera_consulta_notacredito_detalle') }}">Detalle</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Nota debito</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_cartera_consulta_notadebito_lista') }}">Lista</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('brs_cartera_consulta_notadebito_detalle') }}">Detalle</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Saldo Favor</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_cartera_consulta_saldofavor_resumen') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.inventario == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Inventario</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_inv_consulta_disponible') }}">Disponibles</a></li>
+                                    <li><a href="{{ path('brs_inv_consulta_kardex') }}">Kardex</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.afiliacion == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Afiliacion</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Periodo</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_afi_consulta_periodo_detalle') }}">Detalles</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Contratos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_afi_consulta_contrato_general') }}">General</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_afi_consulta_contrato_ingreso') }}">Ingresos</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cuentas por cobrar</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_cartera_consulta_cuentacobrarafiliacion_lista') }}">Afiliacion</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('brs_cartera_consulta_cuentacobrarpila_lista') }}">Pila</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Afiliaciones pendientes</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_afi_consulta_contrato_afiliacionpagopendiente') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Afiliaciones pagadas</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_afi_consulta_pago_afiliaciones') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Clientes sin afiliacion</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_afi_consulta_clientes_sin_afiliaciones') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Procesos <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {% if arModulo.contabilidad == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Contabilidad</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Contabilizar</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_ctb_procesos_contabilizar_asientos') }}">Asientos</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.recursoHumano == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Recurso humano</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cierre de año</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_proceso_cierre_anio') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Provision</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_proceso_provision') }}">Provision</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Generar soporte pago horario</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_proceso_soporte_pago_horario') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Control acceso</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_rhu_proceso_control_acceso_horario_periodo_listar') }}">Generar
+                                                    periodo horario</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Contabilizar</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_proceso_contabilizar_pago') }}">Pago</a></li>
+                                            <li>
+                                                <a href="{{ path('brs_rhu_proceso_contabilizar_provision') }}">Provision</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_proceso_contabilizar_liquidacion') }}">Liquidacion</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('brs_rhu_proceso_contabilizar_vacacion') }}">Vacacion</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_proceso_contabilizar_pago_banco') }}">Pago
+                                                    banco</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.turno == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Turno</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Generar pedidos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_proceso_generar_pedido_lista') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Generar facturas</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_proceso_generar_factura') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Generar programacion</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_tur_proceso_generar_programacion_lista') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Generar soporte pago</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_proceso_generar_soporte_pago') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cerrar mes</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_proceso_cierre_mes') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Mantenimiento</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_proceso_mantenimiento_pedido') }}">Pedido</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_tur_proceso_mantenimiento_programacion') }}">Programacion</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Contabilizar</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_tur_proceso_contabilizar_factura') }}">Facturacion</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.afiliacion == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Afiliacion</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_afi_proceso_generar_periodo') }}">Generar periodo</a></li>
+                                    <li><a href="{{ path('brs_afi_proceso_actualizar_clientecartera') }}">Actualizar
+                                            cliente cartera</a></li>
+                                    <li><a href="{{ path('brs_afi_proceso_actualizar_clienteadministracion') }}">Actualizar
+                                            cliente administracion</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Utilidades <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {% if arModulo.general == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">General</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Calendario</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_gen_utilidad_calendario') }}">Ver</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Gestor de archivos</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_gen_utilidad_gestorarchivo', {'codigoDirectorioPadre': 0}) }}">Ver</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Log</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_gen_utilidad_log') }}">Ver</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.contabilidad == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Contabilidad</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Intercambio datos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_ctb_utilidades_intercambio_datos_exportar') }}">Exportar</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.recursoHumano == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Recursos humanos</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Programaciones de pago</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_utilidades_pagos_generar_periodo') }}">Generar
+                                                    periodo</a></li>
+                                            <li>
+                                                <a href="{{ path('brs_rhu_utilidades_programacion_pago_comprobante_masivo', { 'codigoProgramacionPago': 0 }) }}">Descargar
+                                                    comprobante masivo (pdf)</a></li>
+                                            <li>
+                                                <a href="{{ path('brs_rhu_utilidades_programacion_pago_comprobante_correo', { 'codigoProgramacionPago': 0 }) }}">Envio
+                                                    comprobante correo</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Notificaciones</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_rhu_utilidades_notificaciones_cierreprogramacionpago') }}">Cierre
+                                                    programacion pago</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Seguridad social</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_ss_periodo_lista') }}">Aportes</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Medios magneticos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_utilidades_medios_magneticos_informe') }}">Dian</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Información dane</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_rhu_utilidades_informacion_dane_informe') }}">Dane</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Proyeccion</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_utilidades_proyeccion') }}">Proyeccion</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_utilidades_proyeccion_parametro') }}">Proyeccion
+                                                    (Parametro)</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Supervigilancia</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_utilidades_supervigilancia_parafiscales') }}">Pago
+                                                    parafiscales</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cartas</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_rhu_utilidades_cartas_generar') }}">Notificaciones</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_utilidades_carta_laboral') }}">Carta
+                                                    laboral</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1"
+                                           href="{{ path('brs_rhu_utilidades_certificado_ingreso_retencion') }}">Certificado
+                                            ingreso retención</a>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Horario de acceso</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_utilidad_horario_acceso_empleado') }}">Empleados</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_utilidades_control_acceso_visitante') }}">Visitantes</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cambio de salario (clientes)</a>
+                                        <ul class="dropdown-menu">
+                                            {#<li><a href="{{ path('brs_afi_base_cliente_cambio_salario') }}">Por cliente</a>#}
+                                            </li>
+                                            {#<li><a href="{{ path('brs_afi_base_empleado_cambio_salario') }}">Por empleado</a>#}
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.turno == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Turnos</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Programaciones</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_utilidad_programacion_inconsistencias') }}">Analizar
+                                                    inconsistencias</a></li>
+                                            <li>
+                                                <a href="{{ path('brs_tur_utilidad_programacion_importar') }}">Importar</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_tur_utilidad_programacion_descarga_masiva') }}">descarga
+                                                    masiva pdf</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Servicios (Permanentes)</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_utilidad_servicio_inconsistencias') }}">Analizar
+                                                    inconsistencias</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Facturas</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_utilidad_editar_factura') }}">Editar
+                                                    factura</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Movimientos <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {% if arModulo.contabilidad == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Contabilidad</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_ctb_movimiento_registro') }}">Registro</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Asientos</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_ctb_mov_asientos_lista') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.recursoHumano == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Recurso humano</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Seleccion</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_seleccionrequisito_lista') }}">Requisición</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_movimiento_aspirante_lista') }}">Aspirante</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_seleccion_lista') }}">Seleccion</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Seguridad social</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_examen_listar') }}">Examen</a></li>
+                                            <li><a href="{{ path('brs_rhu_pago_examen_lista') }}">Pago examen</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Contratacion</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_requisito_lista') }}">Requisitos</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Nomina</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_programaciones_pago_lista') }}">Programacion
+                                                    pago</a></li>
+                                            <li><a href="{{ path('brs_rhu_pagos_lista') }}">Pago</a></li>
+                                            <li><a href="{{ path('brs_rhu_movimiento_pago_banco') }}">Pago banco</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_movimiento_liquidacion') }}">Liquidacion</a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li>
+                                                <a href="{{ path('brs_rhu_pagos_adicionales_lista', { 'modalidad': 1, 'periodo': 0 }) }}">Adicional
+                                                    al pago (Permanente)</a></li>
+                                            <li>
+                                                <a href="{{ path('brs_rhu_pagos_adicionales_lista_fecha', { 'modalidad': 2 }) }}">Adicional
+                                                    al pago (Fecha)</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{{ path('brs_rhu_licencias_lista') }}">Licencia</a></li>
+                                            <li><a href="{{ path('brs_rhu_movimiento_incapacidad') }}">Incapacidad</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_incapacidades_pagos_lista') }}">Pago
+                                                    incapacidad</a></li>
+                                            <li><a href="{{ path('brs_rhu_movimiento_vacacion') }}">Vacaciones</a></li>
+                                            <li><a href="{{ path('brs_rhu_movimiento_embargo') }}">Embargos</a></li>
+                                            <li><a href="{{ path('brs_rhu_creditos_lista') }}">Creditos</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{{ path('brs_rhu_movimiento_reclamo') }}">Reclamaciones</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Comercial</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_facturas_lista') }}">Factura</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Dotacion</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_dotacion_lista') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Salud ocupacional</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_movimiento_accidente_trabajo_lista') }}">Accidente
+                                                    de trabajo</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Información interna</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_rhu_empleado_informacion_interna_lista') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Recurso humano</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_rhu_movimiento_disciplinario') }}">Proceso
+                                                    disciplinario</a></li>
+                                            <li><a href="{{ path('brs_rhu_capacitacion_lista') }}">Capacitacion</a></li>
+                                            <li><a href="{{ path('brs_rhu_desempeno_lista') }}">Gestión del
+                                                    desempeño</a></li>
+                                            <li><a href="{{ path('brs_rhu_permiso_lista') }}">Permisos</a></li>
+                                            <li><a href="{{ path('brs_rhu_movimiento_acreditacion') }}">Acreditacion</a>
+                                            </li>
+                                            <li><a href="{{ path('brs_rhu_estudio_lista') }}">Estudios</a></li>
+                                            <li><a href="{{ path('brs_rhu_movimiento_visita') }}">Visitas</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Control acceso</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_rhu_control_acceso_empleado_lista') }}">Empleado</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.turno == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Turno</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cotizacion</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_movimiento_cotizacion') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Servicio</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_movimiento_servicio') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Pedido</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_movimiento_pedido') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Programacion</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_movimiento_programacion') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Factura</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_movimiento_factura') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Novedad</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tur_movimiento_novedad') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.transporte == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Transporte</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Recogida</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tte_recogida_lista') }}">Lista</a></li>
+                                            <li>
+                                                <a href="{{ path('brs_tte_programacion_recogida_lista') }}">Programacion</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Guia</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_tte_guia_lista') }}">Lista</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.cartera == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Cartera</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cuenta cobrar</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_cartera_movimiento_cuentacobrar_listar') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Anticipo</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_cartera_movimiento_anticipo_listar') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Recibo</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('brs_cartera_movimiento_recibo_listar') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Nota Credito</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_cartera_movimiento_notacredito_listar') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Nota Debito</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('brs_cartera_movimiento_notadebito_listar') }}">Lista</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.afiliacion == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Afiliacion</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_afi_movimiento_curso') }}">Curso</a></li>
+                                    <li><a href="{{ path('brs_afi_movimiento_pago_curso') }}">Pago curso</a></li>
+                                    <li><a href="{{ path('brs_afi_movimiento_periodo') }}">Periodo seguridad social</a>
+                                    </li>
+                                    <li><a href="{{ path('brs_afi_movimiento_novedad') }}">Novedad</a></li>
+                                    <li><a href="{{ path('brs_afi_movimiento_factura') }}">Factura</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if arModulo.inventario == 1 %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Inventario</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('brs_inv_movimiento_movimiento_ingreso', {'codigoTipoDocumento': 1 }) }}">Entrada</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('brs_inv_movimiento_movimiento_ingreso', {'codigoTipoDocumento': 2 }) }}">Salida</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{ app.user.username|lower }} <span
+                                class="badge">{{ app.user.tareasPendientes }}</span><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('brs_gen_movimiento_tarea') }}">Tareas</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Configuración</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('brs_tur_configuracion', { 'codigoConfiguracionPk': 1 }) }}">Turno</a>
+                                </li>
+                                <li><a href="{{ path('brs_car_configuracion', { 'codigoConfiguracionPk': 1 }) }}">Cartera</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('brs_rhu_configuracion_nomina', { 'codigoConfiguracionPk': 1 }) }}">Nomina</a>
+                                </li>
+                                <li><a href="{{ path('brs_rhu_configuracion_nomina_parametros_prestaciones') }}">Nomina
+                                        - Parametros prestacion</a></li>
+                                <li>
+                                    <a href="{{ path('brs_gen_configuracion_general', { 'codigoConfiguracionPk': 1 }) }}">General</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Seguridad</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('brs_seg_admin_usuario_lista') }}">Usuarios</a></li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Seguridad</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('brs_seg_usuario_detalle_ver', { 'codigoUsuario': app.user.id }) }}">Usuario</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        <li><a href="#">Parametrizacion</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ path('logout') }}">Salir</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

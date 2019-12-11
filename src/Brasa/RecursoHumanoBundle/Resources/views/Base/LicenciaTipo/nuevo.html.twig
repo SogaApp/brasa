@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %}
+{% block title %}Licencias tipo nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">    
+    {{ form_start(formLicenciaTipo, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(formLicenciaTipo) }}
+    <h3>Nuevo tipo licencia</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formLicenciaTipo.nombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Pago concepto:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formLicenciaTipo.pagoConceptoRel, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Afecta salud:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formLicenciaTipo.afectaSalud, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Ausentismo:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formLicenciaTipo.ausentismo, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+</div>
+</div>
+    <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_licenciatipo_listar') }}">Cancelar</a>
+            {{ form_widget(formLicenciaTipo.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+{{ form_end(formLicenciaTipo) }}
+</div>    
+{% endblock %}

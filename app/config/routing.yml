@@ -1,0 +1,55 @@
+brasa_afiliacion_annotation:
+    resource: "@BrasaAfiliacionBundle/Controller/"
+    type:     annotation
+
+brasa_turno_annotation:
+    resource: "@BrasaTurnoBundle/Controller/"
+    type:     annotation 
+
+brasa_administracion_documental_annotation:
+    resource: "@BrasaAdministracionDocumentalBundle/Controller/"
+    type:     annotation 
+
+brasa_recurso_humano:
+    resource: "@BrasaRecursoHumanoBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+brasa_recurso_humano_annotation:
+    resource: "@BrasaRecursoHumanoBundle/Controller/"
+    type:     annotation    
+
+brasa_transporte:
+    resource: "@BrasaTransporteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+brasa_cartera:
+    resource: "@BrasaCarteraBundle/Controller/"
+    type:     annotation 
+
+brasa_contabilidad_annotation:
+    resource: "@BrasaContabilidadBundle/Controller"
+    type:     annotation
+
+brasa_tesoreria:
+    resource: "@BrasaTesoreriaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+brasa_inventario_annotation:
+    resource: "@BrasaInventarioBundle/Controller"
+    type:     annotation
+
+brasa_seguridad:
+    resource: "@BrasaSeguridadBundle/Resources/config/routing.yml"
+    prefix:   /
+
+brasa_seguridad_annotation:
+    resource: "@BrasaSeguridadBundle/Controller/"
+    type:     annotation 
+
+brasa_general:
+    resource: "@BrasaGeneralBundle/Resources/config/routing.yml"
+    prefix:   /
+
+brasa_general_annotation:
+    resource: "@BrasaGeneralBundle/Controller/"
+    type:     annotation 

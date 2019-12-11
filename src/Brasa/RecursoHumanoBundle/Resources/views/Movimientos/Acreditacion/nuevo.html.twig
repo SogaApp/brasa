@@ -1,0 +1,90 @@
+{% extends '::base.html.twig' %}
+{% block title %}Acreditacion nueva - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <h3>Nueva acreditacion</h3>    
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_txtNumeroIdentificacion" class="col-sm-3 control-label">Empleado:</label>
+                <div class="col-sm-9">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          <input id="form_txtNumeroIdentificacion"  name="form_txtNumeroIdentificacion"  type="text" class="form-control" value="{{ arAcreditacion.empleadoRel.numeroIdentificacion |default('') }}"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                          <input id="form_txtNombreCorto"  name="form_txtNombreCorto"  type="text" class="form-control" value="{{ arAcreditacion.empleadoRel.nombreCorto |default('') }}" readOnly="ReadOnly" />
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado') }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Tipo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.acreditacionTipoRel, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                     
+            <div class="form-group form-group-sm">
+                <label for="form_numeroRegistro" class="col-sm-3 control-label">Numero registro:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.numeroRegistro, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label for="form_academiaRel" class="col-sm-3 control-label">Academia:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.academiaRel, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>              
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Vencimiento curso:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.fechaVenceCurso) }}
+                </div>
+            </div>                
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-3 control-label">Comentarios:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>    
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información rechazado</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Rechazado:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.estadoRechazado) }}
+                </div>
+            </div>            
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Motivo rechazo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.acreditacionRechazoRel, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                            
+        </div>
+    </div>                
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_acreditacion') }}">Cancelar</a>        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

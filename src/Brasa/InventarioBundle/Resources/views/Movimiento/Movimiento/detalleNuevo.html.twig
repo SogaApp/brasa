@@ -1,0 +1,31 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Item nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo item</h3>      
+    <table class="table table-striped table-bordered table-condensed">
+        <tr>
+            <th>CODIGO</th>
+            <th>NOMBRE</th>
+            <th>MARCA</th>            
+            <th>PRECIO</th>            
+            <th></th>
+        </tr>
+        {% for arItem in arItem %}
+            <tr>
+                <td>{{ arItem.codigoItemPk  }}<input type="hidden" name="LblCodigoConcepto[]" value="{{ arItem.codigoItemPk }}"></td>
+                <td>{{ arItem.nombre }}</td>
+                <td>{{ arItem.marcaRel.nombre |default('') }}</td>
+                <td style="text-align: right">{{ arItem.vrPrecioPredeterminado | number_format(0, '.', ',') }}</td>                                                
+                <td align="center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arItem.codigoItemPk }}" /></td>
+            </tr>
+        {% endfor %}
+    </table>    
+                
+    <div class="modal-footer">            
+            {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

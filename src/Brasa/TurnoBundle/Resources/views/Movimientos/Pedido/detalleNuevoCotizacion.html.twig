@@ -1,0 +1,48 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Programacion detalle nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo detalle desde cotizacion</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">                            
+                                           
+        </div>
+    </div>    
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CODIGO</th>
+                <th>FECHA</th>
+                <th>VENCE</th>
+                <th>CLIENTE</th>
+                <th>SECTOR</th>
+                <th>H</th>
+                <th>H.D</th>
+                <th>H.N</th>
+                <th>VALOR</th>
+                <th></th>
+            </tr>
+            {% for arCotizaciones in arCotizaciones %}
+            <tr>
+                <td>{{ arCotizaciones.codigoCotizacionPk  }}</td>
+                <td>{{ arCotizaciones.fecha |date("Y/m/d")  }}</td>
+                <td>{{ arCotizaciones.fechaVence |date("Y/m/d")  }}</td>
+                <td>{{ arCotizaciones.clienteRel.nombreCorto |default('')  }}</td>
+                <td>{{ arCotizaciones.sectorRel.nombre |default('')  }}</td>
+                <td style="text-align: right">{{ arCotizaciones.horas | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCotizaciones.horasDiurnas | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCotizaciones.horasNocturnas | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCotizaciones.vrTotal | number_format(0, '.', ',') }}</td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arCotizaciones.codigoCotizacionPk }}" /></td>
+            </tr>
+
+            {% endfor %}
+        </table>    
+                
+    <div class="modal-footer">            
+            {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

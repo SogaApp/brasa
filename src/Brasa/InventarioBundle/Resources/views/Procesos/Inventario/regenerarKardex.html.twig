@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">                
+    <br />
+    <p class="description"><h1>Regenerar Kardex</h1></p> 
+    <hr/>
+    <form  action="{{ path('brs_inv_procesos_regenerar_kardex') }}" method="post">                
+        <button class="btn" type="submit" name="OpSubmit">Regenerar Kardex</button>       
+    </form>      
+</div>
+{% endblock %}

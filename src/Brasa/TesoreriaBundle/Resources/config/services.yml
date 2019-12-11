@@ -1,0 +1,7 @@
+parameters:
+#    brasa_tesoreria.example.class: Brasa\TesoreriaBundle\Example
+
+services:
+#    brasa_tesoreria.example:
+#        class: %brasa_tesoreria.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

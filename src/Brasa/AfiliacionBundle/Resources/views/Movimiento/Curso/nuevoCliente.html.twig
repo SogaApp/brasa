@@ -1,0 +1,87 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo curso</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">     
+                <div     class="form-group form-group-sm">
+                    <label for="txtNit" class="col-sm-3 control-label">Cliente:</label>
+                    <div class="col-sm-9">
+                        <div class="row">
+                          <div class="col-lg-2">
+                            <div class="input-group">
+                              {{ form_widget(form.TxtNit, { 'attr': {'class': 'form-control'} }) }}                              
+                            </div>
+                          </div>
+                          <div class="col-lg-10">
+                            <div class="input-group">     
+                              {{ form_widget(form.TxtNombreCliente, { 'attr': {'class': 'form-control', 'readOnly': 'ReadOnly'} }) }}                              
+                              <span class="input-group-btn">                                        
+                                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_afi_buscar_cliente', { 'campoCodigo': 'form_TxtNit', 'campoNombre': 'form_TxtNombreCliente' }) }}', 'buscarCliente', 600, 900)">Buscar</a>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>     
+            
+            <div class="form-group form-group-sm">
+                <label for="form_entidadEntrenamientoRel" class="col-sm-3 control-label">Entidad entrenamiento:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.entidadEntrenamientoRel, { 'attr': {'class': 'form-control'} }) }}                      
+                </div>                
+            </div>     
+            <div class="form-group form-group-sm">
+                <label for="form_cursoTipoRel" class="col-sm-3 control-label">Curso:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.cursoTipoRel, { 'attr': {'class': 'form-control'} }) }}                      
+                </div>                
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_fechaVence" class="col-sm-3 control-label">Vence:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.fechaVence) }}                      
+                </div>                
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label for="form_fechaProgramacion" class="col-sm-3 control-label">Programacion:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.fechaProgramacion) }}                      
+                </div>                
+            </div>  
+            <div class="form-group form-group-sm">
+                <div class="col-sm-offset-2 col-sm-10">
+                    {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                </div>
+            </div>                
+        </div>
+    </div>   
+    <table  class="table table-striped table-bordered table-condensed table-hover">
+        <tr>
+            <th>{{ knp_pagination_sortable(arEmpleados, 'CÓDIGO', 'p.codigoEmpleadoPk') }}</th>
+            <th>CLIENTE</th>
+            <th>IDENTIFICACION</th>
+            <th>NOMBRE</th>
+            <th></th>                
+        </tr>
+        {% for arEmpleados in arEmpleados %}
+        <tr>
+            <td>{{ arEmpleados.codigoEmpleadoPk  }}</td>
+            <td>{{ arEmpleados.clienteRel.nombreCorto  }}</td>
+            <td>{{ arEmpleados.numeroIdentificacion }}</td>
+            <td>{{ arEmpleados.nombreCorto }}</td>
+            <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arEmpleados.codigoEmpleadoPk }}" /></td>
+        </tr>
+
+        {% endfor %}
+    </table>                
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_afi_movimiento_curso') }}">Cancelar</a>        
+        {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}        
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

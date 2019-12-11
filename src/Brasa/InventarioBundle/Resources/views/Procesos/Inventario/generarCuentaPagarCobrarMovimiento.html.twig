@@ -1,0 +1,14 @@
+{% extends 'zikmontFrontEndBundle::layout_app.html.twig' %}
+{% block content %}
+<div class="left_articles"> 
+    <br />
+    <p class="description"><h1>Generar cuenta por pagar y/o cuenta por cobrar movimiento</h1></p> 
+    <hr/>
+    Genera cuenta por pagar o cuenta por cobrar segun la naturaleza del documento de inventario, este proceso puede duplicar las cuentas
+    se debe tener mucho cuidado
+    <form  action="{{ path('inventario_procesos_generar_cuentas_movimiento') }}" method="post">   
+        <input type="text" class="span2" name="TxtCodigoMovimiento"/>
+        <button class="btn" type="submit" name="OpSubmit">Generar cuenta por pagar o cuenta por cobrar</button>       
+    </form>      
+</div>
+{% endblock %}

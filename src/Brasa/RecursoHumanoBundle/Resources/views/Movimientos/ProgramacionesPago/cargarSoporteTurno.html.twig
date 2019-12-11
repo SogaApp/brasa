@@ -1,0 +1,41 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Cargar soporte de turnos - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Cargar soporte de turnos</h3> 
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CODIGO</th>
+                <th>GRUPO</th>
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th>RECURSOS</th>
+                <th></th>                
+            </tr>
+            {% for arSoportePagoPeriodos in arSoportePagoPeriodos %}
+            <tr>
+                <td>{{ arSoportePagoPeriodos.codigoSoportePagoPeriodoPk  }}</td>
+                <td>{{ arSoportePagoPeriodos.centroCostoRel.nombre | default('')  }}</td>
+                <td>{{ arSoportePagoPeriodos.fechaDesde |date("Y/m/d")  }}</td>
+                <td>{{ arSoportePagoPeriodos.fechaHasta |date("Y/m/d")  }}</td>  
+                <td style="text-align: right">{{ arSoportePagoPeriodos.recursos | number_format(0, '.', ',') }}</td>
+                {% if arSoportePagoPeriodos.inconsistencias == 0 and arSoportePagoPeriodos.estadoAprobadoPagoNomina == 1 %}
+                    <td><button class="btn btn-default btn-xs" type="submit" name="OpCargar" value="{{ arSoportePagoPeriodos.codigoSoportePagoPeriodoPk }}">Cargar</button></td>
+                {% else %}
+                    <td>
+                        {% if arSoportePagoPeriodos.inconsistencias == 1 %}
+                            Inconsistencias 
+                        {% endif %}
+                        {% if arSoportePagoPeriodos.estadoAprobadoPagoNomina == 0 %}                            
+                            Sin aprobar para pago nomina
+                        {% endif %}
+                    </td>
+                {% endif %}
+            </tr>
+
+            {% endfor %}
+        </table>       
+    {{ form_end(form) }}
+</div>
+{% endblock %}

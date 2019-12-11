@@ -1,0 +1,98 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta control acceso visitantes - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <div class="page-header">
+        <h3>Consulta control acceso visitantes</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">                
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtNumeroIdentificacion" class="col-sm-2 control-label">Identificación:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtNumeroIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                           
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtNombre" class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtNombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }} 
+                    </div>                
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }} 
+                    </div>                
+                </div>    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                    
+            </div>
+        </div> 
+            <table class="table table-striped table-bordered table-condensed">
+                <tr>
+                    <th>NRO</th>
+                    <th>IDENTIFICACION</th>
+                    <th>EMPLEADO</th>
+                    <th>DEPARTAMENTO EMPRESA</th>
+                    <th>FECHA</th>
+                    <th>HORA ENTRADA</th>
+                    <th>HORA SALIDA</th>
+                    <th>DURACIÓN VISITA</th>
+                    <th>MOTIVO</th>
+                    <th>ESCARAPELA</th>
+                    <th>COMENTARIOS</th>
+                </tr>
+            {% set contador = 1  %}
+            {% for arControlAccesosVisitantes in arControlAccesosVisitantes %}
+            <tr>
+                <td>{{ contador  }}</td>
+                <td>{{ arControlAccesosVisitantes.numeroIdentificacion  }}</td>
+                <td>{{ arControlAccesosVisitantes.nombre  }}</td>
+                <td>{{ arControlAccesosVisitantes.departamentoEmpresaRel.nombre  }}</td>
+                <td>{{ arControlAccesosVisitantes.fechaEntrada|date('Y-m-d')  }}</td>
+                <td>{{ arControlAccesosVisitantes.fechaEntrada|date('H:i:s')  }}</td>
+                <td>{% if arControlAccesosVisitantes.fechaSalida == null %} SIN SALIDA {% else %}{{ arControlAccesosVisitantes.fechaSalida|date('H:i:s')  }}{% endif%}</td>
+                <td>{{ arControlAccesosVisitantes.duracionRegistro|default('SIN SALIDA')  }}</td>
+                <td>{{ arControlAccesosVisitantes.motivo  }}</td>
+                <td>{{ arControlAccesosVisitantes.codigoEscarapela  }}</td>
+                <td>{{ arControlAccesosVisitantes.comentarios  }}</td>
+            </tr>
+            {% set contador = contador + 1  %}
+            {% endfor %}
+            </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arControlAccesosVisitantes) }} 
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arControlAccesosVisitantes.getTotalItemCount }}</span></div>        
+            </div>
+        </div>                
+        <div class="btn-toolbar" style="float: right">                 
+            <div class="btn-group">                
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

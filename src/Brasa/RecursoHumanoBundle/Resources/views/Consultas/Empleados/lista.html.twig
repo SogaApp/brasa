@@ -1,0 +1,99 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta empleados lista - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Lista empleados</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}                
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtNombre" class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtNombre , { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                    </div>
+                </div>  
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Identificación:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">  
+                    <label for="form_centroCostoRel" class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>   
+                <div class="form-group form-group-sm">  
+                    <label for="form_estadoActivo" class="col-sm-2 control-label">Estado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoActivo, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_estadoContratado" class="col-sm-2 control-label">Contratado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoContratado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                                                    
+            </div>
+        </div>        
+        <table  class="table table-striped table-bordered table-condensed table-hover">            
+            <tr>
+                <th>{{ knp_pagination_sortable(arEmpleados, 'CÓDIGO', 'e.codigoEmpleadoPk') }}</th>
+                <th>IDENTIFICACIÓN</th>
+                <th>{{ knp_pagination_sortable(arEmpleados, 'NOMBRE', 'e.nombreCorto') }}</th>                                                
+                <th>GRUPO PAGO</th>                
+                <th>CONTRATO</th>
+                <th>TELÉFONO</th>                                
+                <th>INICIO</th>
+                <th>C.COSTO</th>
+                <th>ACT</th>
+                <th style="text-align: center"></th>
+            </tr>
+            {% for arEmpleados in arEmpleados %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arEmpleados.codigoEmpleadoPk }}">{{ arEmpleados.codigoEmpleadoPk }} </td>
+                <td>{{ arEmpleados.numeroIdentificacion  }}</td>
+                <td>{{ arEmpleados.nombreCorto }}</td>
+                <td>{% if arEmpleados.centroCostoRel.nombre is defined %} {{ arEmpleados.centroCostoRel.nombre  }} {% endif %}</td>                
+                <td>{{ arEmpleados.codigoContratoActivoFk  }}</td>
+                <td>{{ arEmpleados.telefono }}</td>                                
+                <td>{% if arEmpleados.fechaContrato != "" %} {{ arEmpleados.fechaContrato|date('Y/m/d')  }} {% else %} SIN DEFINIR {% endif %}</td>                                
+                <td>{{ arEmpleados.codigoCentroCostoContabilidadFk }}</td>                                
+                <td>{% if arEmpleados.estadoActivo == 1 %} SI {% else %} NO {% endif %}</td>                                
+                <td style="text-align: center"><a href="{{ path('brs_rhu_consultas_empleado_detalle', { 'codigoEmpleado': arEmpleados.codigoEmpleadoPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22 title="Detalle del registro"></a></td>                
+            </tr>
+            {% endfor %} 
+        </table>                                         
+                  
+
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar">            
+            <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Empleados <span class="badge">{{ arEmpleados.getTotalItemCount }}</span></div>        
+            </div>
+
+            <div class="btn-sm" style="float: left">
+                {{ knp_pagination_render(arEmpleados) }}       
+            </div>
+             
+            <div class="btn-group" style="float: right">
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>                       
+        </div>          
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}   
+    
+</div>
+{% endblock %}

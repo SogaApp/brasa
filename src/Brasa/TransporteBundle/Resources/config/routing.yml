@@ -1,0 +1,175 @@
+# Base (Administracion)
+brs_tte_base_clientes_lista:
+    path:     /tte/base/clientes/lista
+    defaults: { _controller: BrasaTransporteBundle:BaseCliente:lista }
+    
+brs_tte_base_clientes_nuevo:
+    path:     /tte/base/clientes/nuevo/{codigoCliente}
+    defaults: { _controller: BrasaTransporteBundle:BaseCliente:nuevo } 
+    
+brs_tte_base_productos_lista:
+    path:     /tte/base/productos/lista
+    defaults: { _controller: BrasaTransporteBundle:BaseProducto:lista }
+    
+brs_tte_base_productos_nuevo:
+    path:     /tte/base/productos/nuevo/{codigoProducto}
+    defaults: { _controller: BrasaTransporteBundle:BaseProducto:nuevo }    
+    
+brs_tte_base_precios_lista:
+    path:     /tte/base/precios/lista
+    defaults: { _controller: BrasaTransporteBundle:BasePrecio:lista }
+    
+brs_tte_base_precios_nuevo:
+    path:     /tte/base/precios/nuevo/{codigoPrecio}
+    defaults: { _controller: BrasaTransporteBundle:BasePrecio:nuevo }
+    
+brs_tte_base_precios_detalle:
+    path:     /tte/base/precios/detalle/{codigoPrecio}
+    defaults: { _controller: BrasaTransporteBundle:BasePrecio:detalle }
+    
+brs_tte_base_precios_detalle_nuevo:
+    path:     /tte/base/precios/detalle/nuevo/{codigoPrecioDetalle}/{codigoPrecio}
+    defaults: { _controller: BrasaTransporteBundle:BasePrecio:detallenuevo }    
+
+# Movimientos
+brs_tte_guia_lista:
+   path:     /tte/guia/lista
+   defaults: { _controller: BrasaTransporteBundle:Guia:lista } 
+   
+brs_tte_guia_nuevo:
+   path:     /tte/guia/nuevo/{codigoRecogida}
+   defaults: { _controller: BrasaTransporteBundle:Guia:nuevo }
+
+brs_tte_recogida_lista:
+    path:     /transporte/recogida/lista
+    defaults: { _controller: BrasaTransporteBundle:Recogida:lista }
+
+brs_tte_recogida_detalle:
+    path:     /transporte/recogida/detalle/{codigoRecogida}
+    defaults: { _controller: BrasaTransporteBundle:Recogida:detalle }
+    
+brs_tte_recogida_nuevo:
+    path:     /transporte/recogida/nuevo/{codigoRecogida}
+    defaults: { _controller: BrasaTransporteBundle:Recogida:nuevo }    
+
+brs_tte_programacion_recogida_lista:
+    path:     /transporte/programacion/recogida/lista
+    defaults: { _controller: BrasaTransporteBundle:ProgramacionRecogida:lista }
+
+brs_tte_programacion_recogida_detalle:
+    path:     /transporte/programacion/recogida/detalle/{codigoProgramacionRecogida}
+    defaults: { _controller: BrasaTransporteBundle:ProgramacionRecogida:detalle }
+
+brs_tte_programacion_recogida_detalle_nuevo:
+    path:     /transporte/programacion/recogida/detalle/nuevo/{codigoProgramacionRecogida}
+    defaults: { _controller: BrasaTransporteBundle:ProgramacionRecogida:detalleNuevo }
+    
+brs_tte_programacion_recogida_nuevo:
+    path:     /transporte/programacion/recogida/nuevo/{codigoProgramacionRecogida}
+    defaults: { _controller: BrasaTransporteBundle:ProgramacionRecogida:nuevo }     
+    
+brs_tte_guias_lista:
+    path:     /transporte/guias/lista
+    defaults: { _controller: BrasaTransporteBundle:Guias:lista }
+
+brs_tte_guias_detalle:
+    path:     /transporte/guias/detalle/{codigoGuia}
+    defaults: { _controller: BrasaTransporteBundle:Guias:detalle }
+    
+brs_tte_guias_nuevo:
+    path:     /transporte/guias/nuevo/{codigoGuia}
+    defaults: { _controller: BrasaTransporteBundle:Guias:nuevo }    
+
+brs_tte_guias_funciones_entregar:
+    path:     /transporte/guias/funciones/entregar
+    defaults: { _controller: BrasaTransporteBundle:GuiasFunciones:entregar }    
+    
+brs_tte_guias_funciones_descargar:
+    path:     /transporte/guias/funciones/descargar
+    defaults: { _controller: BrasaTransporteBundle:GuiasFunciones:descargar }    
+
+brs_tte_guias_funciones_redespachar:
+    path:     /transporte/guias/funciones/redespachar
+    defaults: { _controller: BrasaTransporteBundle:GuiasFunciones:redespachar }        
+    
+brs_tte_despachos_lista:
+    path:     /transporte/despachos/lista
+    defaults: { _controller: BrasaTransporteBundle:Despachos:lista }
+
+brs_tte_despachos_detalle:
+    path:     /transporte/despachos/detalle/{codigoDespacho}
+    defaults: { _controller: BrasaTransporteBundle:Despachos:detalle }
+    
+brs_tte_despachos_nuevo:
+    path:     /transporte/despachos/nuevo/{codigoDespacho}
+    defaults: { _controller: BrasaTransporteBundle:Despachos:nuevo }   
+
+brs_tte_despachos_agregar_guia:
+    path:     /transporte/despachos/agregar/guia/{codigoDespacho}
+    defaults: { _controller: BrasaTransporteBundle:DespachosAgregarGuia:lista }
+
+brs_tte_facturas_lista:
+    path:     /transporte/facturas/lista
+    defaults: { _controller: BrasaTransporteBundle:Facturas:lista }    
+
+brs_tte_facturas_nuevo:
+    path:     /transporte/facturas/nuevo/{codigoFactura}
+    defaults: { _controller: BrasaTransporteBundle:Facturas:nuevo }      
+
+brs_tte_facturas_detalle:
+    path:     /transporte/facturas/detalle/{codigoFactura}
+    defaults: { _controller: BrasaTransporteBundle:Facturas:detalle }    
+    
+brs_tte_facturas_agregar_guia:
+    path:     /transporte/facturas/agregar/guia/{codigoFactura}
+    defaults: { _controller: BrasaTransporteBundle:FacturasAgregarGuia:lista }
+
+brs_tte_relacionescumplidos_lista:
+    path:     /transporte/relacionescumplidos/lista
+    defaults: { _controller: BrasaTransporteBundle:RelacionesCumplidos:lista }
+
+brs_tte_relacionescumplidos_detalle:
+    path:     /transporte/relacionescumplidos/detalle/{codigoRelacionCumplidos}
+    defaults: { _controller: BrasaTransporteBundle:RelacionesCumplidos:detalle }
+    
+brs_tte_relacionescumplidos_nuevo:
+    path:     /transporte/relacionescumplidos/nuevo/{codigoRelacionCumplidos}
+    defaults: { _controller: BrasaTransporteBundle:RelacionesCumplidos:nuevo }   
+
+brs_tte_relacionescumplidos_agregar_guia:
+    path:     /transporte/relacionescumplidos/agregar/guia/{codigoRelacionCumplidos}
+    defaults: { _controller: BrasaTransporteBundle:RelacionesCumplidos:agregarGuia }
+
+#Reportes
+brs_tte_consultas_pendientes_despacho:
+    path:     /transporte/consultas/pendiente/despacho/
+    defaults: { _controller: BrasaTransporteBundle:Consultas:guiasPendientesDespacho }    
+
+brs_tte_consultas_novedades_pendientes:
+    path:     /transporte/consultas/novedades/pendientes/
+    defaults: { _controller: BrasaTransporteBundle:Consultas:novedadesPendientes }    
+
+brs_tte_consultas_recibos_caja:
+    path:     /transporte/consultas/recibos/caja/
+    defaults: { _controller: BrasaTransporteBundle:Consultas:recibosCaja }    
+
+#Utilidades    
+brs_tte_buscar_cliente:
+    pattern:  /transporte/buscar/cliente/{campoCodigo}/{campoNombre}
+    defaults: { _controller: BrasaTransporteBundle:BuscarCliente:lista } 
+
+brs_tte_buscar_conductor:
+    pattern:  /transporte/buscar/conductor/{campoCodigo}/{campoNombre}
+    defaults: { _controller: BrasaTransporteBundle:BuscarConductor:lista }
+    
+brs_tte_buscar_vehiculo:
+    pattern:  /transporte/buscar/vehiculo/
+    defaults: { _controller: BrasaTransporteBundle:Busquedas:buscarVehiculo }     
+    
+brs_tte_buscar_ruta:
+    pattern:  /transporte/buscar/ruta/
+    defaults: { _controller: BrasaTransporteBundle:Busquedas:buscarRuta }    
+
+brs_tte_novedades_solucionar:
+    pattern:  /transporte/novedades/solucionar/{codigoNovedad}
+    defaults: { _controller: BrasaTransporteBundle:Novedades:solucionarNovedad }              

@@ -1,0 +1,216 @@
+{% extends '::base.html.twig' %}
+{% block title %}Gestión del desempeño detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles de la gestión de desempeño</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-group">
+            {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+            {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+            {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+            {{ form_widget(form.BtnCerrar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+        </div>
+        <br /> <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">Información general</div>
+            <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered">
+                <tr>
+                    <td class="titulo">CÓDIGO:</td>
+                    <td class="td-in-well">{{ arDesempeno.codigoDesempenoPk }}</td>
+                    <td class="titulo">FECHA:</td>
+                    <td class="td-in-well">{{ arDesempeno.fecha|date("Y/m/d") }}</td>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                </tr>
+                <tr>
+                    <td class="titulo">CÓDIGO EMPLEADO:</td>
+                    <td class="td-in-well">{{ arDesempeno.codigoEmpleadoFk }}</td>
+                    <td class="titulo">IDENTIFICACIÓN:</td>
+                    <td class="td-in-well">{{ arDesempeno.empleadoRel.numeroIdentificacion }}</td>
+                    <td class="titulo">EMPLEADO</td>
+                    <td class="td-in-well">{{ arDesempeno.empleadoRel.nombreCorto }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">DEPENDENCIA DEL EVALUADO:</td>
+                    <td class="td-in-well">{{ arDesempeno.dependenciaEvaluado }}</td>
+                    <td class="titulo">CARGO EVALUADO:</td>
+                    <td class="td-in-well">{{ arDesempeno.cargoRel.nombre }}</td>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                </tr>
+                <tr>
+                    <td class="titulo">JEFE QUE EVALUA:</td>
+                    <td class="td-in-well">{{ arDesempeno.jefeEvalua }}</td>
+                    <td class="titulo">CARGO JEFE QUE EVALUA:</td>
+                    <td class="td-in-well">{{ arDesempeno.cargoJefeEvalua }}</td>
+                    <td class="titulo">DEPENDENCIA DEL QUE EVALUA</td>
+                    <td class="td-in-well">{{ arDesempeno.dependenciaEvalua }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">INCONSISTENCIA:</td>
+                    <td class="td-in-well">{% if arDesempeno.inconsistencia == 1 %} SI {% else %} NO {% endif %}</td>
+                    <td class="titulo">ESTADO AUTORIZADO:</td>
+                    <td class="td-in-well">{% if arDesempeno.estadoAutorizado == 1%} SI {% else %} NO {% endif %}</td>
+                    <td class="titulo">ESTADO CERRADO:</td>
+                    <td class="td-in-well">{% if arDesempeno.estadoCerrado == 1%} SI {% else %} NO {% endif %}</td>
+                </tr>
+            </table>
+            </div>                
+        </div>
+        </br> 
+        <div class="alert alert-info" role="alert">Para diligenciar la evaluación de desempeño, debe ingresar uno (1) o cero (0) en las opciones dadas en el formulario</div>
+        </br>
+        <a name="marcador"></a>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#detalle" data-toggle="tab">Detalle</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="detalle">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>CONCEPTO</th>
+                        <th>TIPO CONCEPTO</th>
+                        <th>SIEMPRE 100%</th>
+                        <th>CASI SIEMPRE 75%</th>
+                        <th>ALGUNAS VECES 50%</th>
+                        <th>CASI NUNCA 25%</th>
+                        <th>NUNCA 5%</th>
+                        <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                    </tr>
+                    {% set douSubtotal1 = 0  %}
+                    {% set douSubtotal2 = 0  %}
+                    {% for arDesempenosDetalles in arDesempenosDetalles %}
+                        <tr>                            
+                            <td>
+                                <input type="hidden" name="LblCodigo[]" value="{{ arDesempenosDetalles.codigoDesempenoDetallePk }}">
+                                <span class="badge">{{ arDesempenosDetalles.codigoDesempenoDetallePk }}</span>
+                            </td>
+                            <td>{{ arDesempenosDetalles.desempenoConceptoRel.nombre }}</td>
+                            <td>{{ arDesempenosDetalles.desempenoConceptoRel.desempenoConceptoTipoRel.nombre }}</td>
+                            {% if arDesempeno.estadoCerrado == 0 %}
+                                <td style="text-align: right"><input class="input-grid" type="text" name="TxtSiempre{{ arDesempenosDetalles.codigoDesempenoDetallePk }}" value="{% if arDesempenosDetalles.siempre == false %}0{% else %}{{arDesempenosDetalles.siempre}}{% endif %}" size="5" style="text-align: right; width:50px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                <td style="text-align: right"><input class="input-grid" type="text" name="TxtCasiSiempre{{ arDesempenosDetalles.codigoDesempenoDetallePk }}" value="{% if arDesempenosDetalles.casiSiempre == false %}0{% else %}{{arDesempenosDetalles.casiSiempre}}{% endif %}" size="5" style="text-align: right; width:50px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                <td style="text-align: right"><input class="input-grid" type="text" name="TxtAlgunasVeces{{ arDesempenosDetalles.codigoDesempenoDetallePk }}" value="{% if arDesempenosDetalles.algunasVeces == false %}0{% else %}{{arDesempenosDetalles.algunasVeces}}{% endif %}" size="5" style="text-align: right; width:50px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                <td style="text-align: right"><input class="input-grid" type="text" name="TxtCasiNunca{{ arDesempenosDetalles.codigoDesempenoDetallePk }}" value="{% if arDesempenosDetalles.casiNunca == false %}0{% else %}{{arDesempenosDetalles.casiNunca}}{% endif %}" size="5" style="text-align: right; width:50px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                <td style="text-align: right"><input class="input-grid" type="text" name="TxtNunca{{ arDesempenosDetalles.codigoDesempenoDetallePk }}" value="{% if arDesempenosDetalles.nunca == false %}0{% else %}{{arDesempenosDetalles.nunca}}{% endif %}" size="5" style="text-align: right; width:50px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                            {% else %}
+                                <td style="text-align: right">{{ arDesempenosDetalles.siempre | number_format(0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ arDesempenosDetalles.casiSiempre | number_format(0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ arDesempenosDetalles.algunasVeces | number_format(0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ arDesempenosDetalles.casiNunca | number_format(0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ arDesempenosDetalles.nunca | number_format(0, '.', ',') }}</td>
+                            {% endif %}
+                            
+                            <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arDesempenosDetalles.codigoDesempenoDetallePk }}" /></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th colspan="2">OBSERVACIONES</th>
+                    </tr>    
+                    <tr>    
+                        {% if arDesempeno.estadoAutorizado == 0%}
+                            <td><textarea class="textarea-grid" type="textarea" rows="4" cols="220" name="TextareaObservaciones">{{ arDesempeno.observaciones }}</textarea>
+                        {% else %}  
+                            <td>{{arDesempeno.observaciones}}</td>
+                        {% endif %}    
+                    </tr>
+                </table>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th colspan="2">QUE ASPECTOS MEJORARÍA DE SU COLABORADOR</th>
+                    </tr>    
+                    <tr>    
+                        {% if arDesempeno.estadoAutorizado == 0%}
+                            <td><textarea class="textarea-grid" type="textarea" rows="4" cols="220" name="TextareaAspectosMejorar">{{ arDesempeno.aspectosMejorar }}</textarea>
+                        {% else %}  
+                            <td>{{arDesempeno.aspectosMejorar}}</td>
+                        {% endif %}
+                    </tr>
+                </table>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th colspan="2">RESULTADOS</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left" colspan="2">ÁREAS EVALUADAS</th>
+                    </tr>
+                    <tr>
+                        <td>ÁREA PROFESIONAL</td>
+                        <td style="text-align: right">{{ arDesempeno.areaProfesional }}</td>
+                    </tr>
+                    <tr>
+                        <td>COMPROMISO</td>
+                        <td style="text-align: right">{{ arDesempeno.compromiso }}</td>
+                    </tr>
+                    <tr>
+                        <td>URBANIDAD</td>
+                        <td style="text-align: right">{{ arDesempeno.urbanidad }}</td>
+                    </tr>
+                    <tr>
+                        <td>VALORES</td>
+                        <td style="text-align: right">{{ arDesempeno.valores }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right">SUBTOTAL</th>
+                        <td style="text-align: right">{{ arDesempeno.subtotal1 }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left" colspan="2">COMPETENCIAS</th>
+                    </tr>
+                    <tr>
+                        <td>ORIENTACIÓN AL CLIENTE</td>
+                        <td style="text-align: right">{{ arDesempeno.orientacionCliente }}</td>
+                    </tr>
+                    <tr>    
+                        <td>ORIENTACIÓN A LOS RESULTADOS</td>
+                        <td style="text-align: right">{{ arDesempeno.OrientacionResultados }}</td>
+                    </tr>
+                    <tr>    
+                        <td>CONSTRUCCIÓN Y MANTENIMIENTO DE RELACIONES</td>
+                        <td style="text-align: right">{{ arDesempeno.construccionMantenimientoRelaciones }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right">SUBTOTAL</th>
+                        <td style="text-align: right">{{ arDesempeno.subtotal2 }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right">TOTAL DESEMPEÑO</th>
+                        <th style="text-align: right">{{ arDesempeno.TotalDesempeno }}</th>
+                    </tr>
+                </table>        
+                
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        {% if  arDesempeno.estadoAutorizado == 0 %}                                                    
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_desempeno_detalle_nuevo', {'codigoDesempeno': arDesempeno.codigoDesempenoPk }) }}', 'AgregarConceptoDesempeno', 600, 900)" >Nuevo</a>
+                        {% endif %}                             
+                    </div>
+                    <div class="btn-group">                
+                        {{ form_widget(form.BtnActualizarDetalle, { 'attr': {'class': 'btn btn-success btn-sm'} }) }}               
+                        {{ form_widget(form.BtnEliminarDetalle, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}               
+                    </div>                    
+                </div>        
+                
+                {{ knp_pagination_render(arDesempenosDetalles) }}       
+                
+            </div>                                       
+        </div>
+        
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_desempeno_lista') }}" style="float:left">Volver</a>
+            </div>
+        </div>
+        <br /><br />
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

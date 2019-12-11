@@ -1,0 +1,11 @@
+{% extends 'zikmontFrontEndBundle::layout_app.html.twig' %}
+{% block content %}
+<div class="left_articles"> 
+    <br />
+    <p class="description"><h1>Regenerar Costos</h1></p> 
+    <hr/>
+    <form  action="{{ path('inventario_procesos_regenerar_costos') }}" method="post">                
+        <button class="btn" type="submit" name="OpSubmit">Regenerar Costos</button>       
+    </form>      
+</div>
+{% endblock %}

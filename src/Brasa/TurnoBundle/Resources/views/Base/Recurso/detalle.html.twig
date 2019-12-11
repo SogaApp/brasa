@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle cliente</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">                      
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+            </div>
+        </div>
+        <br /><br />
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arRecurso.codigoRecursoPk }}</td>
+                        <td class="titulo">TIPO:</td>
+                        <td class="td-in-well">{{ arRecurso.recursoTipoRel.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">IDENTIFICACION:</td>
+                        <td class="td-in-well">{{ arRecurso.numeroIdentificacion }}</td>
+                        <td class="titulo">NOMBRE:</td>
+                        <td>{{ arRecurso.nombreCorto }}</td>
+                    </tr>                
+                    <tr>
+                        <td class="titulo">TELEFONO:</td>
+                        <td class="td-in-well">{{ arRecurso.telefono }}</td>
+                        <td class="titulo">CELULAR:</td>
+                        <td>{{ arRecurso.celular }}</td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">DIRECCION:</td>
+                        <td class="td-in-well">{{ arRecurso.direccion }}</td>
+                        <td class="titulo">CORREO:</td>
+                        <td>{{ arRecurso.correo }}</td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">FECHA NACIMIENTO:</td>
+                        <td class="td-in-well">{{ arRecurso.fechaNacimiento | date('Y/m/d') }}</td>
+                        <td class="titulo">APODO:</td>
+                        <td>{{ arRecurso.apodo }}</td>
+                    </tr>  
+                    <tr>
+                        <td class="titulo">USUARIO:</td>
+                        <td class="td-in-well">{{ arRecurso.usuario}}</td>
+                        <td class="titulo"></td>
+                        <td></td>
+                    </tr>  
+                </table>
+            </div>
+        </div>
+
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <a  class="btn btn-default btn-sm" href="{{ path('brs_tur_base_recurso_lista') }}">Volver</a>
+    </div>
+{% endblock %}

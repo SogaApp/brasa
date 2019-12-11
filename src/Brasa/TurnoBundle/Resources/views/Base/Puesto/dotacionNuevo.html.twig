@@ -1,0 +1,48 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Servicio detalle empleado nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nueva dotacion</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtNombre" class="col-sm-3 control-label">Nombre:</label>
+                    <div class="col-sm-9">                  
+                        {{ form_widget(form.TxtNombre , { 'attr': {'class': 'form-control','autofocus':'autofocus', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}
+                    </div>                   
+                </div>                         
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                                                    
+            </div>
+        </div>  
+        <table  class="table table-striped table-bordered table-condensed table-hover">            
+            <tr>
+                <th>CODIGO</th>
+                <th>NOMBRE</th>
+                <th>COSTO</th>
+                <th>CANTIDAD</th>
+                <th></th>
+            </tr>
+            {% for arElementosDotacion in arElementosDotacion %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arElementosDotacion.codigoElementoDotacionPk }}">{{ arElementosDotacion.codigoElementoDotacionPk }} </td>                
+                <td>{{ arElementosDotacion.nombre }}</td>                
+                <td style="text-align: right">{{ arElementosDotacion.costo | number_format(0, '.', ',') }}</td>                
+                <td style="text-align: right"><input style="text-align: right" class="input-grid" type="text" name="TxtCantidad{{ arElementosDotacion.codigoElementoDotacionPk }}" value="0" size="8" style="width:65px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>                        
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arElementosDotacion.codigoElementoDotacionPk }}" /></td>
+            </tr>
+            {% endfor %} 
+        </table>                
+        <div class="modal-footer">            
+                {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

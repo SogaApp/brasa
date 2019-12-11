@@ -1,0 +1,294 @@
+{% extends '::base.html.twig' %}
+{% block title %}Proceso selección detalle - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+{{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+{{ form_errors(form) }}
+<div class="container">
+    <div class="page-header">
+        <h3>Proceso selección</h3>
+    </div>
+    <div class="btn-group">
+        {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+        {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+        {{ form_widget(form.BtnAprobar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+        {% if arSeleccion.estadoAutorizado == 1 %}
+            <a class="btn btn-default btn-sm" id="{{ path('brs_rhu_seleccion_cerrar', { 'codigoSeleccion': arSeleccion.codigoSeleccionPk}) }}" style="float:left">Cerrar</a>
+        {% endif %}
+        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 1,  'numero': arSeleccion.codigoSeleccionPk }) }}', 'Archivos', 500, 700)" >Archivos</a>        
+    </div>
+    <br /> <br />
+    <!-- Encabezado Movimiento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Información selección</div>
+      <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered">
+                <tr>
+                    <td class="titulo">CÓDIGO:</td>
+                    <td class="td-in-well">{{ arSeleccion.codigoSeleccionPk }}</td>
+                    <td class="titulo">TIPO:</td>
+                    <td class="td-in-well">{{ arSeleccion.seleccionTipoRel.nombre }}</td>
+                    <td class="titulo">DIRECCIÓN:</td>
+                    <td class="td-in-well">{{ arSeleccion.direccion }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">NOMBRE:</td>
+                    <td class="td-in-well">{{ arSeleccion.nombreCorto }}</td>
+                    <td class="titulo">CELULAR:</td>
+                    <td class="td-in-well">{{ arSeleccion.celular }}</td>
+                    <td class="titulo">RH:</td>
+                    <td class="td-in-well">{{ arSeleccion.rhRel.tipo }} </td>
+                </tr>
+                <tr>
+                    <td class="titulo">IDENTIFICACIÓN:</td>
+                    <td class="td-in-well">{{ arSeleccion.numeroIdentificacion }}</td>
+                    <td class="titulo">TELÉFONO:</td>
+                    <td class="td-in-well">{{ arSeleccion.telefono }}</td>
+                    <td class="titulo">CIUDAD:</td>
+                    <td class="td-in-well">{{ arSeleccion.ciudadRel.nombre }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">ESTADO CIVIL:</td>
+                    <td class="td-in-well">{{ arSeleccion.estadoCivilRel.nombre }}</td>
+                    <td class="titulo">SEXO:</td>
+                    <td class="td-in-well"{% if arSeleccion.codigoSexoFk == "M" %}> MASCULINO {% else %} FEMENINO {% endif%}</td>
+                    <td class="titulo">CORREO:</td>
+                    <td class="td-in-well">{{ arSeleccion.correo }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">FECHA NACIMIENTO:</td>
+                    <td class="td-in-well">{{ arSeleccion.fechaNacimiento|date("Y/m/d") }}</td>
+                    <td class="titulo">FECHA PRUEBAS:</td>
+                    <td class="td-in-well">{{ arSeleccion.fechaPruebas|date("Y/m/d H:i") }}</td>
+                    <td class="titulo">ESTADO AUTORIZADO:</td>
+                    <td class="td-in-well">{% if arSeleccion.estadoAutorizado == 1%}SI{% else %}NO{% endif %}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">CARGO</td>
+                    <td class="td-in-well">{{ arSeleccion.cargoRel.nombre }}</td>
+                    <td class="titulo">FECHA CIERRE:</td>
+                    <td class="td-in-well">{% if arSeleccion.fechaCierre == null %}{% else %}{{ arSeleccion.fechaCierre|date("Y/m/d") }}{% endif %}</td>
+                    <td class="titulo">ESTADO APROBADO:</td>
+                    <td class="td-in-well">{% if arSeleccion.estadoAprobado == 1%}SI{% else %}NO{% endif %}</td>
+                </tr>
+                <tr>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo">MOTIVO CIERRE:</td>
+                    <td class="td-in-well">{{ arSeleccion.motivoCierreSeleccionRel.nombre | default('')}}</td>
+                    <td class="titulo">ESTADO CERRADO:</td>
+                    <td class="td-in-well">{% if arSeleccion.estadoCerrado == 1%}SI{% else %}NO{% endif %}</td>
+                </tr>
+                <tr>
+                    <td class="titulo" colspan="8">COMENTARIOS: {{ arSeleccion.comentarios }}</td>
+                </tr>
+            </table>
+      </div>
+    </div>
+
+    <!-- Fin Encabezado Movimiento -->
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#entrevista" data-toggle="tab">Entrevista</a></li>
+        <li><a href="#pruebas" data-toggle="tab">Pruebas</a></li>
+        <li><a href="#referencias" data-toggle="tab">Referencias</a></li>
+        <li><a href="#visita" data-toggle="tab">Visita</a></li>
+    </ul>
+    <div class="tab-content">
+    <div class="tab-pane active" id="entrevista">
+                <div id="entrevista" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CÓDIGO</th>
+                            <th>FECHA/HORA</th>
+                            <th>TIPO ENTREVISTA</th>
+                            <th>RESULTADO CUALITATIVO</th>
+                            <th>RESULTADO CUANTITATIVO</th>
+                            <th>ENTREVISTADO POR</th>
+                            <th>COMENTARIOS</th>
+                            <th></th>
+                            <th></th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodosTabla(this,'ChkSeleccionarEntrevista[]');"/></th>
+                        </tr>
+                        {% for arSeleccionEntrevista in arSeleccionEntrevista %}
+                        <tr>
+                            <td>
+                                <input type="hidden" name="LblCodigo[]" value="{{ arSeleccionEntrevista.codigoSeleccionEntrevistaPk }}">
+                                <span class="badge">{{ arSeleccionEntrevista.codigoSeleccionEntrevistaPk }}</span>
+                            </td>
+                            <td>{{ arSeleccionEntrevista.fecha|date('Y-m-d H:i:s A') }}</td>
+                            <td>{{ arSeleccionEntrevista.seleccionEntrevistaTipoRel.nombre }}</td>
+                            <td>{{ arSeleccionEntrevista.resultado }}</td>
+                            <td>{{ arSeleccionEntrevista.resultadoCuantitativo }}</td>
+                            <td>{{ arSeleccionEntrevista.nombreQuienEntrevista }}</td>
+                            <td>{{ arSeleccionEntrevista.comentarios }}</td>
+                            <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 14,  'numero': arSeleccionEntrevista.codigoSeleccionEntrevistaPk}) }}', 'Archivos', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_144_folder_open.png') }}" width=20 height=20></a></td>
+                            <td>{% if arSeleccion.estadoAutorizado == 0 %}<a href="javascript:abrirVentana3('{{ path('brs_rhu_seleccion_agregar_entrevista', {'codigoSeleccion': arSeleccion.codigoSeleccionPk, 'codigoSeleccionEntrevista': arSeleccionEntrevista.codigoSeleccionEntrevistaPk }) }}', 'AgregarSeleccionEntrevista', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20></a>{% endif %}</td>
+                                
+                            <td align="center"><input type="checkbox" name="ChkSeleccionarEntrevista[]" value="{{ arSeleccionEntrevista.codigoSeleccionEntrevistaPk }}" /></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <!-- Botones Menu Items -->
+                    <div class="btn-toolbar" style="float: right">
+                        <div class="btn-group">
+                            {% if arSeleccion.estadoAutorizado == 0 %}
+                                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_seleccion_agregar_entrevista', {'codigoSeleccion': arSeleccion.codigoSeleccionPk, 'codigoSeleccionEntrevista': 0}) }}', 'AgregarSeleccionEntrevista', 600, 900)" >Nuevo</a>
+                            {% endif %}
+                        </div>
+                        <div class="btn-group">
+                            {{ form_widget(form.BtnEliminarEntrevista, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                        </div>
+                    </div>
+                    <!-- Fin Botones Menu Items -->
+                </div>
+    </div>
+    
+        <div class="tab-pane" id="pruebas">
+                <div id="pruebas" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CÓDIGO</th>
+                            <th>TIPO PRUEBA</th>
+                            <th>RESULTADO CUALITATIVO</th>
+                            <th>RESULTADO CUANTITATIVO</th>
+                            <th>PRUEBA ASIGNADA POR</th>
+                            <th>COMENTARIOS</th>
+                            <th></th>
+                            <th></th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodosTabla(this,'ChkSeleccionarPrueba[]');"/></th>
+                        </tr>
+                        {% for arSeleccionPruebas in arSeleccionPruebas %}
+                        <tr>
+                            <td>
+                                <input type="hidden" name="LblCodigo[]" value="{{ arSeleccionPruebas.codigoSeleccionPruebaPk }}">
+                                <span class="badge">{{ arSeleccionPruebas.codigoSeleccionPruebaPk }}</span>
+                            </td>
+                            <td>{{ arSeleccionPruebas.seleccionPruebaTipoRel.nombre }}</td>
+                            <td>{{ arSeleccionPruebas.resultado }}</td>
+                            <td>{{ arSeleccionPruebas.resultadoCuantitativo }}</td>
+                            <td>{{ arSeleccionPruebas.nombreQuienHacePrueba }}</td>
+                            <td>{{ arSeleccionPruebas.comentarios }}</td>
+                            <td>{% if arSeleccion.estadoAutorizado == 0 %}<a href="javascript:abrirVentana3('{{ path('brs_rhu_seleccion_agregar_prueba', {'codigoSeleccion': arSeleccion.codigoSeleccionPk, 'codigoSeleccionPrueba': arSeleccionPruebas.codigoSeleccionPruebaPk }) }}', 'AgregarSeleccionPrueba', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20></a>{% endif %}</td>
+                            <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 2,  'numero': arSeleccionPruebas.codigoSeleccionPruebaPk}) }}', 'Archivos', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_144_folder_open.png') }}" width=20 height=20></a></td>
+                            <td align="center"><input type="checkbox" name="ChkSeleccionarPrueba[]" value="{{ arSeleccionPruebas.codigoSeleccionPruebaPk }}" /></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                    <!-- Botones Menu Items -->
+                    <div class="btn-toolbar" style="float: right">
+                        <div class="btn-group">
+                            {% if arSeleccion.estadoAutorizado == 0 %}
+                                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_seleccion_agregar_prueba', {'codigoSeleccion': arSeleccion.codigoSeleccionPk, 'codigoSeleccionPrueba': 0 }) }}', 'AgregarSeleccionPrueba', 600, 900)">Nuevo</a>
+                            {% endif %}
+                        </div>
+                        <div class="btn-group">
+                            {{ form_widget(form.BtnEliminarPrueba, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                        </div>
+                    </div>
+                    <!-- Fin Botones Menu Items -->
+                </div>
+        </div>                
+        <div class="tab-pane" id="referencias">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="detalles" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CÓDIGO</th>
+                            <th>TIPO REFERENCIA</th>
+                            <th>NOMBRE</th>
+                            <th>CELULAR</th>
+                            <th>TELEFONO</th>
+                            <th>DIRECCION</th>
+                            <th>CIUDAD</th>
+                            <th>VERIFICADA</th>
+                            <th></th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodosTabla(this,'ChkSeleccionarReferencia[]');"/></th>
+                        </tr>
+                        {% for arSeleccionReferencias in arSeleccionReferencias %}
+                        <tr>
+                            <td>
+                                <input type="hidden" name="LblCodigo[]" value="{{ arSeleccionReferencias.codigoSeleccionReferenciaPk }}">
+                                <span class="badge">{{ arSeleccionReferencias.codigoSeleccionReferenciaPk }}</span>
+                            </td>
+                            <td>{{ arSeleccionReferencias.seleccionTipoReferenciaRel.nombre }}</td>
+                            <td>{{ arSeleccionReferencias.nombreCorto }}</td>
+                            <td>{{ arSeleccionReferencias.celular }}</td>
+                            <td>{{ arSeleccionReferencias.telefono }}</td>
+                            <td>{{ arSeleccionReferencias.direccion }}</td>
+                            <td>{{ arSeleccionReferencias.ciudadRel.nombre }}</td>
+                            <td {% if arSeleccionReferencias.estadoVerificada == 1 %}class="success"{% endif %}>{% if arSeleccionReferencias.estadoVerificada == 1 %} SI {% else %} NO {% endif %}</td>
+                            <td>{% if arSeleccion.estadoAutorizado == 0 %}<a href="javascript:abrirVentana3('{{ path('brs_rhu_seleccion_agregar_referencia', {'codigoSeleccion': arSeleccion.codigoSeleccionPk, 'codigoSeleccionReferencia': arSeleccionReferencias.codigoSeleccionReferenciaPk }) }}', 'AgregarSeleccionReferencia', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20></a>{% endif %}</td>
+                            <td align="center"><input type="checkbox" name="ChkSeleccionarReferencia[]" value="{{ arSeleccionReferencias.codigoSeleccionReferenciaPk }}" /></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                    <!-- Botones Menu Items -->
+                    <div class="btn-toolbar" style="float: right">
+                        <div class="btn-group">
+                            {% if arSeleccion.estadoAutorizado == 0 %}
+                                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_seleccion_agregar_referencia', {'codigoSeleccion': arSeleccion.codigoSeleccionPk, 'codigoSeleccionReferencia': 0}) }}', 'AgregarSeleccionReferencia', 600, 900)">Nuevo</a>
+                            {% endif %}
+                        </div>
+                        <div class="btn-group">
+                            {{ form_widget(form.BtnDetalleVerificarReferencia, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                            {{ form_widget(form.BtnEliminarReferencia, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                        </div>
+                    </div>
+
+                    <!-- Fin Botones Menu Items -->
+                </div>
+        </div>
+        <div class="tab-pane" id="visita">
+                <div id="visita" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CÓDIGO</th>
+                            <th>FECHA/HORA</th>
+                            <th>PERSONA REALIZA VISITA</th>
+                            <th>COMENTARIOS</th>
+                            <th></th>
+                            <th></th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodosTabla(this,'ChkSeleccionarVisita[]');"/></th>
+                        </tr>
+                        {% for arSeleccionVisita in arSeleccionVisita %}
+                        <tr>
+                            <td>
+                                <input type="hidden" name="LblCodigo[]" value="{{ arSeleccionVisita.codigoSeleccionVisitaPk }}">
+                                <span class="badge">{{ arSeleccionVisita.codigoSeleccionVisitaPk }}</span>
+                            </td>
+                            <td>{{ arSeleccionVisita.fecha|date('Y-m-d H:i:s A') }}</td>
+                            <td>{{ arSeleccionVisita.nombreQuienVisita }}</td>
+                            <td>{{ arSeleccionVisita.comentarios }}</td>
+                            <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 11,  'numero': arSeleccionVisita.codigoSeleccionVisitaPk}) }}', 'Archivos', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_144_folder_open.png') }}" width=20 height=20></a></td>
+                            <td><a href="javascript:abrirVentana3('{{ path('brs_rhu_seleccion_agregar_visita', {'codigoSeleccion': arSeleccion.codigoSeleccionPk, 'codigoSeleccionVisita': arSeleccionVisita.codigoSeleccionVisitaPk }) }}', 'AgregarSeleccionVisita', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20></a></td>    
+                            <td align="center"><input type="checkbox" name="ChkSeleccionarVisita[]" value="{{ arSeleccionVisita.codigoSeleccionVisitaPk }}" /></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <!-- Botones Menu Items -->
+                    <div class="btn-toolbar" style="float: right">
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_seleccion_agregar_visita', {'codigoSeleccion': arSeleccion.codigoSeleccionPk, 'codigoSeleccionVisita': 0}) }}', 'AgregarSeleccionVisita', 600, 900)" >Nuevo</a>
+                        </div>
+                        <div class="btn-group">
+                            {{ form_widget(form.BtnEliminarVisita, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                        </div>
+                    </div>
+                    <!-- Fin Botones Menu Items -->
+                </div>
+        </div>                
+    </div>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <a  class="btn btn-default btn-sm" href="{{ path('brs_rhu_seleccion_lista') }}">Volver</a>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends '::base.html.twig' %}
+{% block title %}Contabilizar pagos banco - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Contabilizar pago banco</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>TIPO</th>
+                <th>FECHA</th>
+                <th>CUENTA</th>
+                <th>BANCO</th>
+                <th style="text-align: right">VR. PAGO</th>                
+                <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+            </tr>
+            {% for arPagosBanco in arPagosBanco %}
+            <tr>
+                <td>{{ arPagosBanco.codigoPagoBancoPk  }}</td>
+                <td>{{ arPagosBanco.pagoBancoTipoRel.nombre | default('')  }}</td>
+                <td>{{ arPagosBanco.fecha |date('Y/m/d')  }}</td>
+                <td>{{ arPagosBanco.cuentaRel.nombre |default('')  }}</td>
+                <td>{{ arPagosBanco.cuentaRel.bancoRel.nombre |default('')  }}</td>                
+                <td class="td-in-well" align="right">{{ arPagosBanco.vrTotalPago | number_format(0, '.', ',') }}</td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arPagosBanco.codigoPagoBancoPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arPagosBanco) }} 
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arPagosBanco.getTotalItemCount }}</span></div>        
+            </div>
+        </div>                
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnContabilizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                               
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

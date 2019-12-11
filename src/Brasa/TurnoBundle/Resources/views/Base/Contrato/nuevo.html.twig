@@ -1,0 +1,63 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo contrato</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body"> 
+            <div class="form-group form-group-sm">
+                <label for="txtNit" class="col-sm-3 control-label">Cliente:</label>
+                <div class="col-sm-9">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          <input id="txtNit"  name="txtNit"  type="text" class="form-control" value="{{ arContrato.clienteRel.nit |default('') }}"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                          <input id="txtNombreCorto"  name="txtNombreCorto"  type="text" class="form-control" value="{{ arContrato.clienteRel.nombreCorto |default('') }}" readOnly="ReadOnly" />
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_tur_buscar_cliente', { 'campoCodigo': 'txtNit', 'campoNombre': 'txtNombreCorto' }) }}', 'buscarCliente', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>             
+            <div class="form-group form-group-sm">
+                <label for="form_nombre" class="col-sm-3 control-label">Nombre:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                </div>                
+            </div>                          
+            <div class="form-group form-group-sm">
+                <label for="form_soporte" class="col-sm-3 control-label">Soporte:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.soporte, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                </div>                
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_valor" class="col-sm-3 control-label">Valor:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.valor, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                </div>                
+            </div>                 
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-3 control-label">Comentarios:</label>
+                <div class="col-sm-9">
+                   {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                 
+        </div>
+    </div>               
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_tur_base_contrato') }}">Cancelar</a>        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

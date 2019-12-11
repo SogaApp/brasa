@@ -1,0 +1,89 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Certificado ingreso y retenciones - Soga App{% endblock %} 
+{% block content %}
+<div class="container">
+    {{ form_start(formCertificado, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Certificado de ingresos y retenciones</h3>
+    <div>    
+    </div>    
+    <div style="display: ">
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">   
+            <div class="form-group form-group-sm">
+                <label for="form_fechaExpedicion" class="col-sm-2 control-label">Año certificación:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.fechaCertificado, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_fechaExpedicion" class="col-sm-2 control-label">Fecha expedición:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.fechaExpedicion, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_lugarExpedicion" class="col-sm-2 control-label">Lugar expedición:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.LugarExpedicion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div> 
+        </div>
+        <div class="panel-heading">Concepto a los aportes</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_sfp" class="col-sm-2 control-label">Aportes Voluntarios (AFC):</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.afc, { 'attr': {'placeholder': 'valor de AFC'} }) }}
+                </div>
+            </div>    
+        </div>
+        <div class="panel-heading">Certifico que:</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_sfp" class="col-sm-2 control-label">1.</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.certifico1, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_sfp" class="col-sm-2 control-label">2.</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.certifico2, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_sfp" class="col-sm-2 control-label">3.</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.certifico3, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_sfp" class="col-sm-2 control-label">4.</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.certifico4, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_sfp" class="col-sm-2 control-label">5.</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.certifico5, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_sfp" class="col-sm-2 control-label">6.</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formCertificado.certifico6, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+        </div>
+        
+        
+    </div>                   
+    <div class="modal-footer">              
+        {{ form_widget(formCertificado.BtnGenerar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}            
+    </div>    
+    {{ form_end(formCertificado) }}
+    </div>
+</div>
+{% endblock %}

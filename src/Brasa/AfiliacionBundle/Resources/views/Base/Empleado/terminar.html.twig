@@ -1,0 +1,36 @@
+<script>
+    $('#myModal').modal('toggle');
+</script>        
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Terminar contrato</h4>
+      </div>  
+      {{ form_start(formContrato, { 'attr': {'class': 'form-horizontal'} }) }}
+      
+      <div class="modal-body">
+ 
+            
+          
+          
+        <div class="form-group form-group-sm">
+            <label for="form_fechaHasta" class="col-sm-4 control-label">Fecha terminacion:</label>
+            <div class="col-sm-8">
+                    {{ form_widget(formContrato.fechaHasta, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+                   
+        <br />
+                    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>        
+        {{ form_widget(formContrato.BtnGuardar, { 'attr': {'class': 'btn btn-primary'} }) }}            
+      </div>
+      {{ form_end(formContrato) }}
+    </div>
+  </div>
+</div>

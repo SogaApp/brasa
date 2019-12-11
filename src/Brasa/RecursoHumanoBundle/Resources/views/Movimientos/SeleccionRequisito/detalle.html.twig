@@ -1,0 +1,257 @@
+{% extends '::base.html.twig' %}
+{% block title %}Selección requisición detalle - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Requisición de selección</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">                
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                                                
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 19,  'numero': arRequisito.codigoSeleccionRequisitoPk }) }}', 'Archivos', 500, 700)" >Archivos</a>        
+                {% if  arRequisito.estadoCerrado == 1%}
+                    <button class="btn btn-default btn-sm" type="submit" name="OpAbrir" value="1">Abrir</button>                             
+                {% endif %}    
+            </div>
+        </div>
+            
+    <br /><br />
+    <!-- Encabezado Movimiento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Información requisición</div>
+      <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered">
+                <tr>
+                    <td class="titulo">CÓDIGO:</td>
+                    <td class="td-in-well">{{ arRequisito.codigoSeleccionRequisitoPk }}</td>
+                    <td class="titulo">FECHA:</td>
+                    <td class="td-in-well">{{ arRequisito.fecha | date('Y/m/d') }}</td>
+                    <td class="titulo">CERRADO:</td>
+                    <td class="td-in-well" {% if arRequisito.estadoCerrado == 1 %}> SI {% else %}<td class="td-in-well">NO {% endif %}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">NOMBRE:</td>
+                    <td class="td-in-well">{{ arRequisito.nombre }}</td>
+                    <td class="titulo">GRUPO PAGO:</td>
+                    <td class="td-in-well">{{ arRequisito.centroCostoRel().nombre|default('') }}</td>
+                    <td class="titulo">CARGO:</td>
+                    <td class="td-in-well">{{ arRequisito.cargoRel().nombre|default('') }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">CANTIDAD SOLICITADA:</td>
+                    <td class="td-in-well">{{ arRequisito.cantidadSolicitada }}</td>
+                    <td class="titulo">ESTADO CIVIL:</td>
+                    <td class="td-in-well">{{ arRequisito.estadoCivilRel().nombre|default('') }}</td>
+                    <td class="titulo">CIUDAD RESIDENCIA:</td>
+                    <td class="td-in-well">{{ arRequisito.ciudadRel().nombre|default('') }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">NIVEL ESTUDIO:</td>
+                    <td class="td-in-well">{{ arRequisito.estudioTipoRel().nombre|default('') }}</td>
+                    <td class="titulo">EDAD MINIMA:</td>
+                    <td class="td-in-well">{{ arRequisito.edadMinima }}</td>
+                    <td class="titulo">NRO HIJOS:</td>
+                    <td class="td-in-well">{{ arRequisito.numeroHijos }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">SEXO:</td>
+                    {% if arRequisito.codigoSexoFk == "" %}
+                        <td class="td-in-well"></td>
+                    {% endif%}
+                    {% if arRequisito.codigoSexoFk == "M" %}
+                        <td class="td-in-well">MASCULINO</td>
+                    {% endif%}    
+                    {% if arRequisito.codigoSexoFk == "F" %}
+                        <td class="td-in-well">FEMENINO</td>
+                    {% endif%}
+                    {% if arRequisito.codigoSexoFk == "I" %}
+                        <td class="td-in-well">INDIFERENTE</td>
+                    {% endif%}
+                    <td class="titulo">EDAD MAXIMA:</td>
+                    <td class="td-in-well">{{ arRequisito.edadMaxima }}</td>
+                    <td class="titulo">RELIGION:</td>
+                    {% if arRequisito.codigoReligionFk == "" %}
+                        <td class="td-in-well"></td>
+                    {% endif%}
+                    {% if arRequisito.codigoReligionFk == 1 %}
+                        <td class="td-in-well">CATOLICO</td>
+                    {% endif%}    
+                    {% if arRequisito.codigoReligionFk == 2 %}
+                        <td class="td-in-well">CRISTIANO</td>
+                    {% endif%}
+                    {% if arRequisito.codigoReligionFk == 3 %}
+                        <td class="td-in-well">PROTESTANTE</td>
+                    {% endif%}
+                    {% if arRequisito.codigoReligionFk == 4 %}
+                        <td class="td-in-well">INDIFERENTE</td>
+                    {% endif%}
+                </tr>
+                <tr>
+                    <td class="titulo">EXPERIENCIA:</td>
+                    <td class="td-in-well">{{ arRequisito.experienciaRequisicionRel().nombre |default('') }}</td>
+                    <td class="titulo">TIPO VEHICULO</td>
+                    {% if arRequisito.codigoTipoVehiculoFk == 1 %}
+                        <td class="td-in-well">CARRO</td>
+                    {% endif%}    
+                    {% if arRequisito.codigoTipoVehiculoFk == 2 %}
+                        <td class="td-in-well">MOTO</td>
+                    {% endif%}
+                    {% if arRequisito.codigoTipoVehiculoFk == 0 %}
+                        <td class="td-in-well">NO APLICA</td>
+                    {% endif%}
+                    <td class="titulo">LICENCIA CARRO:</td>
+                    {% if arRequisito.codigoLicenciaCarroFk == 1 %}
+                        <td class="td-in-well">SI</td>
+                    {% endif%}    
+                    {% if arRequisito.codigoLicenciaCarroFk == 2 %}
+                        <td class="td-in-well">NO</td>
+                    {% endif%}
+                    {% if arRequisito.codigoLicenciaCarroFk == 0 %}
+                        <td class="td-in-well">NO APLICA</td>
+                    {% endif%}
+                </tr>
+                <tr>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo">DISPONIBILIDAD</td>
+                    {% if arRequisito.codigoDisponibilidadFk == 1 %}
+                        <td class="td-in-well">TIEMPO COMPLETO</td>
+                    {% endif%}    
+                    {% if arRequisito.codigoDisponibilidadFk == 2 %}
+                        <td class="td-in-well">MEDIO TIEMPO</td>
+                    {% endif%}
+                    {% if arRequisito.codigoDisponibilidadFk == 3 %}
+                        <td class="td-in-well">POR HORAS</td>
+                    {% endif%}
+                    {% if arRequisito.codigoDisponibilidadFk == 4 %}
+                        <td class="td-in-well">DESDE CASA</td>
+                    {% endif%}
+                    {% if arRequisito.codigoDisponibilidadFk == 5 %}
+                        <td class="td-in-well">PRACTICAS</td>
+                    {% endif%}
+                    {% if arRequisito.codigoDisponibilidadFk == 0 %}
+                        <td class="td-in-well">NO APLICA</td>
+                    {% endif%}
+                    <td class="titulo">LICENCIA MOTO:</td>
+                    {% if arRequisito.codigoLicenciaMotoFk == 1 %}
+                        <td class="td-in-well">SI</td>
+                    {% endif%}    
+                    {% if arRequisito.codigoLicenciaMotoFk == 2 %}
+                        <td class="td-in-well">NO</td>
+                    {% endif%}
+                    {% if arRequisito.codigoLicenciaMotoFk == 0 %}
+                        <td class="td-in-well">NO APLICA</td>
+                    {% endif%}
+                </tr>
+                <tr>
+                   <td class="titulo">COMENTARIOS:</td>
+                   <td class="td-in-well" colspan="5">{{ arRequisito.comentarios}}</td>
+                </tr>    
+            </table>
+      </div>
+    </div>
+
+    <!-- Fin Encabezado Movimiento -->
+    
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#selecciones" data-toggle="tab">Selecciones</a></li>
+        <li><a href="#aspirantes" data-toggle="tab">Aspirantes</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="selecciones">
+                <!-- Menu Encabezado Movimiento -->
+            <div id="detalles" style="width: 100%"><br>
+            <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>TIPO</th>
+                <th>IDENTIFICACION</th>
+                <th>NOMBRE</th>
+                <th>GRUPO PAGO</th>
+                <th>PRUEBAS</th>
+                <th>TELEFONO</th>
+                <th>CELULAR</th>
+                <th><p data-toggle="tooltip" data-placement="top" title="Pruebas presentadas">P.P</p></th>
+                <th><p data-toggle="tooltip" data-placement="top" title="Aprobado">AP</p></th>                
+                <th><p data-toggle="tooltip" data-placement="top" title="Referencias verificadas">R.V</p></th>
+                <th><p data-toggle="tooltip" data-placement="top" title="Cerrado">CERR</p></th>
+                <th></th>
+            </tr>
+            {% for arSeleccion in arSeleccion %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arSeleccion.codigoSeleccionPk }}">{{ arSeleccion.codigoSeleccionPk }} </td>
+                <td>{{ arSeleccion.seleccionTipoRel.nombre  }}</td>
+                <td>{{ arSeleccion.numeroIdentificacion  }}</td>
+                <td>{{ arSeleccion.nombreCorto  }}</td>
+                <td>{{ arSeleccion.centroCostoRel.nombre  }}</td>
+                <td>{{ arSeleccion.fechaPruebas |date("Y/m/d H:i")  }}</td>
+                <td>{{ arSeleccion.telefono }}</td>
+                <td>{{ arSeleccion.celular }}</td>
+                <td>{% if arSeleccion.presentaPruebas == 1 %} SI {% else %} NO {% endif %}</td>                
+                <td>{% if arSeleccion.estadoAprobado == 1 %} SI {% else %} NO {% endif %}</td>
+                <td>{% if arSeleccion.referenciasVerificadas == 1 %} SI {% else %} NO {% endif %}</td>
+                <td>{% if arSeleccion.estadoCerrado == 1 %} SI {% else %} NO {% endif %}</td>
+                <td style="text-align: center"><a href="{{ path('brs_rhu_seleccion_detalle', { 'codigoSeleccion': arSeleccion.codigoSeleccionPk }) }}" target='_blank'><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>
+                
+            </tr>
+            {% endfor %}
+        </table>
+            </div>
+        </div>
+        <div class="tab-pane" id="aspirantes">
+            <div id="detalles" style="width: 100%"><br>
+                <table class="table table-striped table-bordered table-condensed">
+                <tr>
+                    <th>CÓDIGO</th>
+                    <th>IDENTIFICACION</th>
+                    <th>NOMBRE</th>
+                    <th>APROBADO</th>
+                    <th>COMENTARIOS</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for arRequisicionDetalle in arRequisicionDetalle %}
+                <tr>
+                    <td><input type="hidden" name="LblCodigo[]" value="{{ arRequisicionDetalle.codigoSeleccionRequisicionAspirantePk }}">{{ arRequisicionDetalle.codigoSeleccionRequisicionAspirantePk }} </td>
+                    <td>{{ arRequisicionDetalle.aspiranteRel.numeroIdentificacion  }}</td>
+                    <td>{{ arRequisicionDetalle.aspiranteRel.nombreCorto  }}</td>
+                    <td>{% if arRequisicionDetalle.estadoAprobado == 1 %}SI{% else %}NO{% endif %}</td>
+                    <td>{{ arRequisicionDetalle.comentarios }}</td>
+                    {% if arRequisicionDetalle.estadoAprobado == 0 %}
+                        <td style="text-align: center"><a class="btn btn-default btn-sm" id="{{ path('brs_rhu_descartar_aspirante', { 'codigoSelReqAsp' : arRequisicionDetalle.codigoSeleccionRequisicionAspirantePk}) }}" style="float:center">Descartar</a></td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    
+                    <td align="center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arRequisicionDetalle.codigoSeleccionRequisicionAspirantePk }}" /></td>
+                </tr>
+                {% endfor %}
+                </table>
+            </div>
+            <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcelAspirante, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>    
+            <div class="btn-group">
+                {{ form_widget(form.BtnDesaprobarDetalle, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnAprobarDetalle, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnEliminarDetalle, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+            </div>
+        </div>    
+        </div>
+    </div>            
+                    
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <a  class="btn btn-default btn-sm" href="{{ path('brs_rhu_seleccionrequisito_lista') }}">Volver</a>
+</div>
+{% endblock %}

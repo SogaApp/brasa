@@ -1,0 +1,73 @@
+{% extends '::base.html.twig' %}
+{% block title %}Entidad exámen detalle - Soga App{% endblock %} 
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle entidad exámen</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">Información entidad exámen</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arEntidadExamenes.codigoEntidadExamenPk }}</td>
+                        <td class="titulo">NOMBRE:</td>
+                        <td class="td-in-well" colspan="3">{{ arEntidadExamenes.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">NIT:</td>
+                        <td class="td-in-well">{{ arEntidadExamenes.nit }}</td>
+                        <td class="titulo">DIRECCIÓN:</th>
+                        <td class="td-in-well">{{ arEntidadExamenes.direccion }}</td>
+                        <td class="titulo">TELÉFONO:</td>
+                        <td class="td-in-well">{{ arEntidadExamenes.telefono }}</td>
+                    </tr>                    
+                </table>
+            </div>
+        </div>
+        
+            <table class="table table-striped table-bordered table-condensed">
+                <tr>
+                    <th>CÓDIGO</th>
+                    <th>TIPO EXÁMEN</th>
+                    <th style="text-align: right">PRECIO</th>
+                    <th></th>
+                </tr>
+                {% for arEntidadExamenDetalle in arEntidadExamenDetalle %}
+                <tr>
+                    <td>
+                        <input type="hidden" name="LblCodigoGuia[]" value="{{ arEntidadExamenDetalle.codigoExamenListaPrecioPk }}">
+                        <span class="badge">{{ arEntidadExamenDetalle.codigoExamenListaPrecioPk }}</span>
+                    </td>
+                    <td>{{ arEntidadExamenDetalle.examenTipoRel.nombre }}</td>
+                    <td style="text-align: right"><input class="input-grid" type="text" name="TxtPrecio[]" value="{{ arEntidadExamenDetalle.precio  }}" size="20" style="text-align: right; width:85px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                    
+                    <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arEntidadExamenDetalle.codigoExamenListaPrecioPk }}" /></td>
+                </tr>
+                {% endfor %}
+            </table>
+         
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_entidadexamen_listar') }}" style="float:left">Volver</a>
+            </div>
+        </div>  
+        <div class="btn-toolbar" style="float: right">                           
+            <div class="btn-group">                
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_base_entidadexamen_detalle_nuevo', {'codigoEntidadExamenPk': arEntidadExamenes.codigoEntidadExamenPk}) }}', 'AgregarNuevo', 600, 900)">Agregar tipo exámen</a>
+            </div>
+            <div class="btn-group">                
+                {{ form_widget(form.BtnActualizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+            <div class="btn-group">                
+                {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}                
+            </div>
+        </div>             
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

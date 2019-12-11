@@ -1,0 +1,211 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Contrato nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo contrato</h3>
+    {% if intEstado == 1 %}
+        {% set div = 'none' %}
+    {% else %}
+        {% set div = 'show' %}
+    {% endif %}
+    {% if intEstado == 2 %}
+        {% set div = 'none' %}
+    {% else %}
+        {% set div = 'show' %}
+    {% endif %}
+    <div style="display: {{div}};">
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">   
+            <div class="form-group form-group-sm">
+                <label for="form_contratoTipoRel" class="col-sm-3 control-label">Tipo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.contratoTipoRel, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>            
+            <div class="form-group form-group-sm">
+                <label for="form_centroCostoRel" class="col-sm-3 control-label">Grupo pago:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_ciudadContratoRel" class="col-sm-3 control-label">Ciudad contratación:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.ciudadContratoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_ciudadLaboraRel" class="col-sm-3 control-label">Ciudad labora:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.ciudadLaboraRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label for="form_tipoTiempoRel" class="col-sm-3 control-label">Tiempo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.tipoTiempoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                          
+            <div class="form-group form-group-sm">
+                <label for="form_cargoRel" class="col-sm-3 control-label">Cargo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.cargoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_cargoDescripcion" class="col-sm-3 control-label">Descripcion cargo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.cargoDescripcion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_fechaDesde" class="col-sm-3 control-label">Fecha inicio:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.fechaDesde) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_fechaHasta" class="col-sm-3 control-label">Fecha Hasta:</label>
+                <div class="col-sm-4">
+                    {{ form_widget(form.fechaHasta) }} 
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label for="form_vrSalario" class="col-sm-3 control-label">Salario:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.vrSalario, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_salarioIntegral" class="col-sm-3 control-label">Salario integral:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.salarioIntegral) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_salarioTipoRel" class="col-sm-3 control-label">Tipo salario:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.salarioTipoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>  
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Limitar hora extra:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.limitarHoraExtra) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_horarioTrabajo" class="col-sm-3 control-label">Horario trabajo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.horarioTrabajo, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>       
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Grupo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.contratoGrupoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Comentarios:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                 
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion seguridad social</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_ssoTipoCotizanteRel" class="col-sm-3 control-label">Tipo cotizante:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.ssoTipoCotizanteRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_ssoSubtipoCotizanteRel" class="col-sm-3 control-label">Subtipo cotizante:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.ssoSubtipoCotizanteRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>            
+            <div class="form-group form-group-sm">
+                <label for="form_clasificacionRiesgoRel" class="col-sm-3 control-label">Clasificacion riesgo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.clasificacionRiesgoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>             
+            <div class="form-group form-group-sm">
+                <label for="form_tipoSaludRel" class="col-sm-3 control-label">Tipo salud:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.tipoSaludRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>            
+            <div class="form-group form-group-sm">
+                <label for="form_entidadSaludRel" class="col-sm-3 control-label">Salud:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.entidadSaludRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_tipoPensionRel" class="col-sm-3 control-label">Tipo pension:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.tipoPensionRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_entidadPensionRel" class="col-sm-3 control-label">Pensión:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.entidadPensionRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>               
+            <div class="form-group form-group-sm">
+                <label for="form_entidadCajaRel" class="col-sm-3 control-label">Caja compensación:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.entidadCajaRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_entidadCesantiaRel" class="col-sm-3 control-label">Cesantia:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.entidadCesantiaRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+        </div>
+    </div>     
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion turnos</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Turno fijo ordinario:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.turnoFijoOrdinario) }}
+                </div>
+            </div>            
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Secuencia:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.secuencia, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Devengado pactado:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.vrDevengadoPactado, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+        </div>
+    </div>                 
+    <div class="modal-footer">              
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}            
+    </div>    
+    {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

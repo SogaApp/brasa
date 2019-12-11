@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+{% block title %}Seguridad social aportes lista - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Lista periodos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <table  class="table table-striped table-bordered table-condensed table-hover">            
+            <tr>
+                <th>CÓDIGO</th>
+                <th>AÑO</th>
+                <th>AÑO PAGO</th>
+                <th>MES</th>
+                <th>MES PAGO</th>
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th>GENERADO</th>
+                <th>CERRADO</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for arSsoPeriodos in arSsoPeriodos %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arSsoPeriodos.codigoPeriodoPk }}">{{ arSsoPeriodos.codigoPeriodoPk }} </td>
+                <td>{{ arSsoPeriodos.anio  }}</td>
+                <td>{{ arSsoPeriodos.anioPago  }}</td>
+                <td>{{ arSsoPeriodos.mes  }}</td>
+                <td>{{ arSsoPeriodos.mesPago  }}</td>
+                <td>{{ arSsoPeriodos.fechaDesde |date("Y/m/d")  }}</td>
+                <td>{{ arSsoPeriodos.fechaHasta |date("Y/m/d")  }}</td>
+                <td {% if arSsoPeriodos.estadoGenerado == 1 %}class="success"{% endif %}>{% if arSsoPeriodos.estadoGenerado == 1 %} SI {% else %} NO {% endif %}</td>                                
+                <td {% if arSsoPeriodos.estadoCerrado == 1 %}class="success"{% endif %}>{% if arSsoPeriodos.estadoCerrado == 1 %} SI {% else %} NO {% endif %}</td>                                
+                <td>
+                    {% if arSsoPeriodos.estadoGenerado == 0 %}
+                        <button class="btn btn-default btn-xs" type="submit" name="OpGenerar" value="{{ arSsoPeriodos.codigoPeriodoPk }}">Generar</button> 
+                    {% else %}
+                        <button class="btn btn-danger btn-xs" type="submit" name="OpDesgenerar" value="{{ arSsoPeriodos.codigoPeriodoPk }}">Desgenerar</button> 
+                    {% endif %} 
+                </td>
+                <td>
+                    {% if arSsoPeriodos.estadoCerrado == 0 %}
+                        <button class="btn btn-default btn-xs" type="submit" name="OpCerrar" value="{{ arSsoPeriodos.codigoPeriodoPk }}">Cerrar</button> 
+                    {% endif %} 
+                </td>
+                <td style="text-align: center">{% if arSsoPeriodos.estadoGenerado == 1 %}<a href="{{ path('brs_rhu_ss_periodo_detalle', { 'codigoPeriodo': arSsoPeriodos.codigoPeriodoPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a>{% endif %}</td>                
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arSsoPeriodos.codigoPeriodoPk }}" /></td>
+            </tr>
+            {% endfor %}                        
+        </table>
+        
+        {{ knp_pagination_render(arSsoPeriodos) }}    
+
+
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar" style="float:right">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_ss_periodo_nuevo', { 'codigoPeriodo': 0 }) }}', 'AgregarNuevoPeriodo', 600, 900)" style="float:left">Nuevo</a>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-danger btn-sm" type="submit" name="OpEliminar" value="{{ 1 }}">Eliminar</button>
+            </div>
+        </div> 
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}   
+    
+</div>
+{% endblock %}

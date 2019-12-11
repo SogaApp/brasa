@@ -1,0 +1,84 @@
+{% extends '::base.html.twig' %}
+{% block title %}Pago concepto lista - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+    <div class="page-header">
+        <h3>Listado pago conceptos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <table class="table table-striped table-bordered table-condensed table-hover">
+        <tr>
+            <th>CÓDIGO</th>
+            <th>{{ knp_pagination_sortable(arPagoConceptos, 'NOMBRE', 'codigo') }}</th>
+            <th>SALARIO</th>
+            <th>%</th>
+            <th></th>
+            <th>VR</th>
+            <th>PREST</th>
+            <th>IBP</th>
+            <th>IBC</th>
+            <th></th>
+            <th>ADICIÓN</th>
+            <th>TTE</th>
+            <th>PEN</th>
+            <th>SAL</th>
+            <th>P.IND</th>
+            <th>P.VAC</th>
+            <th>C.ADM</th>
+            <th>C.OPE</th>
+            <th>C.COM</th>
+            <th>T.ADIC</th>
+            <th>COD.INT</th>
+            <th></th>
+            <th></th>
+        </tr>
+            {%for arPagoConceptos in arPagoConceptos %}
+               <tr>
+                <td>{{arPagoConceptos.codigoPagoConceptoPk}}</td>
+                <td>{{arPagoConceptos.nombre}}</td>
+                <td>{% if arPagoConceptos.componeSalario == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{% if arPagoConceptos.componePorcentaje == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{{arPagoConceptos.porPorcentaje}}</td>
+                <td>{% if arPagoConceptos.componeValor == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{% if arPagoConceptos.prestacional == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{% if arPagoConceptos.generaIngresoBasePrestacion == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{% if arPagoConceptos.generaIngresoBaseCotizacion == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{{arPagoConceptos.operacion}}</td>
+                <td>{% if arPagoConceptos.conceptoAdicion == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{% if arPagoConceptos.conceptoAuxilioTransporte == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{% if arPagoConceptos.conceptoPension == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{% if arPagoConceptos.conceptoSalud == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{% if arPagoConceptos.provisionIndemnizacion == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{% if arPagoConceptos.provisionVacacion == 1%} SI {% else %}NO{% endif%}</td>
+                <td>{{arPagoConceptos.codigoCuentaFK}}{% if arPagoConceptos.TipoCuenta == 1%}D{% else %}C{% endif%}</td>
+                <td>{{arPagoConceptos.codigoCuentaOperacionFK}}{% if arPagoConceptos.TipoCuentaOperacion == 1%}D{% else %}C{% endif%}</td>
+                <td>{{arPagoConceptos.codigoCuentaComercialFK}}{% if arPagoConceptos.TipoCuentaComercial == 1%}D{% else %}C{% endif%}</td>
+                <td>{{arPagoConceptos.TipoAdicional}}</td>
+                <td>{{arPagoConceptos.codigoInterface}}</td>
+                <td><a href="{{ path('brs_rhu_base_pago_concepto_nuevo',{'codigoPagoConcepto': arPagoConceptos.codigoPagoConceptoPk})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arPagoConceptos.codigoPagoConceptoPk }}" /></td>
+            {%endfor%}
+            </tr>
+    </table>
+    <div class="btn-group" style="float: left">
+        <div class="btn btn-default btn-sm">Pago Conceptos <span class="badge">{{ arPagoConceptos.getTotalItemCount }}</span></div>
+    </div>
+    <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+        {{ knp_pagination_render(arPagoConceptos) }}
+    </div>
+    <div class="btn-toolbar" style="float: right">
+        <div class="btn-group">
+            {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_pago_concepto_nuevo', {'codigoPagoConcepto': 0}) }}">Nuevo</a>
+        </div>
+        <div class="btn-group">
+            {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}</td>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

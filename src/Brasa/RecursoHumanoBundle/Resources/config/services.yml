@@ -1,0 +1,4 @@
+services:
+#    brasa_recurso_humano.example:
+#        class: Brasa\RecursoHumanoBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

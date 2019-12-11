@@ -1,0 +1,147 @@
+{% extends '::base.html.twig' %}
+{% block title %}Incapacidades lista - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Lista incapacidades</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Empleado:</label>
+                <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          {{ form_widget(form.txtNumeroIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">
+                            {{ form_widget(form.txtNombreCorto, { 'attr': {'class': 'form-control', 'readOnly': 'ReadOnly'} }) }}
+                          <span class="input-group-btn">
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado') }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Numero Eps:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.TxtNumeroEps, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Tipo:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.incapacidadTipoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Transcripcion:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.estadoTranscripcion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                    </div>
+                    <label class="col-sm-2 control-label">Legalizada:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.estadoLegalizado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>NUMERO</th>
+                <th>TIPO</th>
+                <th>EPS</th>
+                <th>DOCUMENTO</th>
+                <th>EMPLEADO</th>
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th style="text-align: right">DÍAS</th>
+                <th>COB</th>
+                <th>PRO</th>
+                <th>TRA</th>
+                <th>LEG</th>
+                <th>DIAS</th>
+                <th>COBRO</th>
+                <th>USUARIO</th>
+                <th style="text-align: center"></th>
+                <th></th>
+            </tr>
+            {% for arIncapacidades in arIncapacidades %}
+            <tr>
+                <td>{{ arIncapacidades.numeroEps }}</td>
+                <td>{{ arIncapacidades.incapacidadTipoRel.abreviatura |default('') }}</td>
+                <td>{{ arIncapacidades.entidadSaludRel.nombre |default('') }}</td>
+                <td>{{ arIncapacidades.empleadoRel.numeroIdentificacion }}</td>
+                <td>{{ arIncapacidades.empleadoRel.nombreCorto  }}</td>
+                <td>{{ arIncapacidades.fechaDesde |date("Y/m/d")  }}</td>
+                <td>{{ arIncapacidades.fechaHasta |date("Y/m/d")  }}</td>
+                <td style="text-align: right">{{ arIncapacidades.cantidad | number_format(0, '.', ',') }}</td>
+                <td>{% if arIncapacidades.estadoCobrar == 1 %} SI {% else %} NO {% endif %}</td>
+                <td>{% if arIncapacidades.estadoProrroga == 1 %} SI {% else %} NO {% endif %}</td>
+                <td>{% if arIncapacidades.estadoTranscripcion == 1 %} SI {% else %} NO {% endif %}</td>
+                <td>{% if arIncapacidades.estadoLegalizado == 1 %} SI {% else %} NO {% endif %}</td>
+                <td style="text-align: right">{{ arIncapacidades.diasCobro | number_format(0, '.', ',') }}</td>                                            
+                <td style="text-align: right">{{ arIncapacidades.vrCobro | number_format(0, '.', ',') }}</td>
+                <td>{{ arIncapacidades.codigoUsuario  }}</td>
+                <td style="text-align: center"><a href="{{ path('brs_rhu_movimiento_incapacidad_nuevo', {'codigoIncapacidad': arIncapacidades.codigoIncapacidadPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arIncapacidades.codigoIncapacidadPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Botones Menu Items -->
+        <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Incapacidades <span class="badge">{{ arIncapacidades.getTotalItemCount }}</span></div>
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arIncapacidades) }}
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Enlaces <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('brs_rhu_base_empleados_lista') }}" target="_blank">Empleados</a></li>
+                  <li class="divider"></li>
+                  <li><a href="{{ path('brs_rhu_base_centros_costos_lista') }}" target="_blank">Centros costos</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.BtnPdf, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_incapacidad_nuevo', {'codigoIncapacidad': 0}) }}">Nuevo</a>
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.BtnLegalizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+            </div>
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

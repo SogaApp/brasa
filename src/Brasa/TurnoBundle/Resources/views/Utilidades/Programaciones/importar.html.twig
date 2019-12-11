@@ -1,0 +1,118 @@
+{% extends '::base.html.twig' %}
+{% block title %}Importar programacion - Soga App{% endblock %}
+{% block content %}
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>    
+<div class="container">
+    <div class="page-header">
+        <h3>Importar programaciones</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+    
+        <div class="panel panel-default">
+            <div class="panel-heading">Cargar archivo</div>
+            <div class="panel-body">
+                <div>                      
+                    <div class="form-group form-group-sm">
+                        <label for="form_numeroIdentificacón" class="col-sm-2 control-label">Cargar:</label>
+                        <div class="col-sm-10">
+                            {{ form_widget(form.attachment, { 'attr': {'class': 'btn btn-sm btn-default'} }) }}            
+                        </div>
+                    </div>                                
+                </div>                                            
+            </div>
+        </div>                   
+        <div class="modal-footer">        
+                {{ form_widget(form.BtnCargar, { 'attr': {'class': 'btn btn-sm btn-primary'} }) }}            
+        </div> 
+        <table width="100%" class="table table-condensed table-bordered">
+            <tr>           
+                <th>RECURSO</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+                <th>11</th>
+                <th>12</th>
+                <th>13</th>
+                <th>14</th>
+                <th>15</th>
+                <th>16</th>
+                <th>17</th>
+                <th>18</th>
+                <th>19</th>
+                <th>20</th>
+                <th>21</th>
+                <th>22</th>
+                <th>23</th>
+                <th>24</th>
+                <th>25</th>
+                <th>26</th>
+                <th>27</th>
+                <th>28</th>
+                <th>29</th>
+                <th>30</th>
+                <th>31</th>
+            </tr>
+            {% for arProgramacionesImportar in arProgramacionesImportar %}               
+                <tr>                    
+                    <td>{{ arProgramacionesImportar.codigoRecursoFk }}</td>
+                    <td>{{ arProgramacionesImportar.dia1  }}</td>
+                    <td>{{ arProgramacionesImportar.dia2  }}</td>
+                    <td>{{ arProgramacionesImportar.dia3  }}</td>
+                    <td>{{ arProgramacionesImportar.dia4  }}</td>
+                    <td>{{ arProgramacionesImportar.dia5  }}</td>
+                    <td>{{ arProgramacionesImportar.dia6  }}</td>
+                    <td>{{ arProgramacionesImportar.dia7  }}</td>
+                    <td>{{ arProgramacionesImportar.dia8  }}</td>
+                    <td>{{ arProgramacionesImportar.dia9  }}</td>
+                    <td>{{ arProgramacionesImportar.dia10  }}</td>
+                    <td>{{ arProgramacionesImportar.dia11  }}</td>
+                    <td>{{ arProgramacionesImportar.dia12  }}</td>
+                    <td>{{ arProgramacionesImportar.dia13  }}</td>
+                    <td>{{ arProgramacionesImportar.dia14  }}</td>
+                    <td>{{ arProgramacionesImportar.dia15  }}</td>
+                    <td>{{ arProgramacionesImportar.dia16  }}</td>
+                    <td>{{ arProgramacionesImportar.dia17  }}</td>
+                    <td>{{ arProgramacionesImportar.dia18  }}</td>
+                    <td>{{ arProgramacionesImportar.dia19  }}</td>
+                    <td>{{ arProgramacionesImportar.dia20  }}</td>
+                    <td>{{ arProgramacionesImportar.dia21  }}</td>
+                    <td>{{ arProgramacionesImportar.dia22  }}</td>
+                    <td>{{ arProgramacionesImportar.dia23  }}</td>
+                    <td>{{ arProgramacionesImportar.dia24  }}</td>
+                    <td>{{ arProgramacionesImportar.dia25  }}</td>
+                    <td>{{ arProgramacionesImportar.dia26  }}</td>
+                    <td>{{ arProgramacionesImportar.dia27  }}</td>
+                    <td>{{ arProgramacionesImportar.dia28  }}</td>
+                    <td>{{ arProgramacionesImportar.dia29  }}</td>
+                    <td>{{ arProgramacionesImportar.dia30  }}</td>
+                    <td>{{ arProgramacionesImportar.dia31  }}</td>                                         
+                </tr>
+            {% endfor %}
+        </table>  
+        <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arProgramacionesImportar.getTotalItemCount }}</span></div>                        
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arProgramacionesImportar) }}       
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">                
+            </div>
+        </div>        
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

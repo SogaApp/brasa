@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+{% block title %}Desempeño concepto tipo nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">    
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo tipo de concepto de gestión de desempeño</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.nombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>      
+    </div>
+    </div>
+    <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_desempeno_concepto_tipo_listar') }}">Cancelar</a>
+            {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>    
+{% endblock %}

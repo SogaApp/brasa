@@ -1,0 +1,105 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Aspirante historial - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+{{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+{{ form_errors(form) }}
+<div class="container">
+    <div class="page-header">
+        <h3>Aspirante historial</h3>
+    </div>
+    
+    <!-- Encabezado Movimiento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Información</div>
+      
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#requisiciones" data-toggle="tab">Requisiciones</a></li>
+        <li><a href="#selecciones" data-toggle="tab">Selecciones</a></li>
+        <li><a href="#contratos" data-toggle="tab">Contratos</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="requisiciones">
+                <!-- Menu Encabezado Movimiento -->
+            <div id="detalles" style="width: 100%"><br>
+            <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>REQUISICIÓN</th>
+                <th>APROBADO</th>
+                <th>MOTIVO</th>
+                <th>FECHA DESCARTADO</th>
+                <th>COMENTARIOS</th>
+            </tr>
+            {% for arRequisicionAplicada in arRequisicionAplicada %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arRequisicionAplicada.codigoSeleccionRequisicionAspirantePk }}">{{ arRequisicionAplicada.codigoSeleccionRequisicionAspirantePk }} </td>
+                <td>{{ arRequisicionAplicada.seleccionRequisitoRel.nombre  }}</td>
+                <td>{% if arRequisicionAplicada.estadoAprobado == 1%}SI{% else %}NO{% endif %}</td>
+                <td>{{ arRequisicionAplicada.motivoDescarteRequisicionAspiranteRel.nombre | default('') }}</td>
+                <td>{% if arRequisicionAplicada.fechaDescarte != null %}{{ arRequisicionAplicada.fechaDescarte | date('Y-m-d') }}{% endif %}</td>
+                <td>{{ arRequisicionAplicada.comentarios  }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+            </div>
+        </div>
+    
+    
+    <div class="tab-pane" id="selecciones">
+        <div id="pruebas" style="width: 100%"><br>
+            <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>APROBADO</th>
+                <th>CERRADO</th>
+                <th>FECHA CIERRE</th>
+                <th>MOTIVO</th>
+                <th>COMENTARIOS</th>
+            </tr>
+            {% for arSelecciones in arSelecciones %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arSelecciones.codigoSeleccionPk }}">{{ arSelecciones.codigoSeleccionPk }} </td>
+                <td>{% if arSelecciones.estadoAprobado == 1%}SI{% else %}NO{% endif %}</td>
+                <td>{% if arSelecciones.estadoCerrado == 1%}SI{% else %}NO{% endif %}</td>
+                <td>{% if arSelecciones.fechaCierre == null %}{% else %}{{arSelecciones.fechaCierre | date('Y-m-d')}}{% endif %}</td>
+                <td>{{ arSelecciones.motivoCierreSeleccionRel.nombre | default('')  }}</td>
+                <td>{{ arSelecciones.comentarios  }}</td>
+            </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane" id="contratos">
+        <div id="pruebas" style="width: 100%"><br>
+            <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th>MOTIVO TERMINACION</th>
+            </tr>
+            {% for arContratos in arContratos %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arContratos.codigoContratoPk }}">{{ arContratos.codigoContratoPk }} </td>
+                <td>{{ arContratos.fechaDesde | date('Y-m-d')}}</td>
+                <td>{{ arContratos.fechaHasta | date('Y-m-d')}}</td>
+                <td>{{ arContratos.motivoTerminacionRel.motivo | default('')  }}</td>
+            </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>        
+    </div>  
+    <!-- Fin Encabezado Movimiento -->
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

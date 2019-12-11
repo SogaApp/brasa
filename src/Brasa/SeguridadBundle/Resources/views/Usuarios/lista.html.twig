@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Usuarios</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                    <label for="form_TxtNumero" class="col-sm-2 control-label">Numero:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.TxtNumero, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>USUARIO</th>
+                <th>NOMBRE</th>
+                <th>CORREO</th>
+                <th>ROL</th>
+                <th>ESTADO</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for arUsuarios in arUsuarios %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arUsuarios.id }}">{{ arUsuarios.id }} </td>
+                <td>{{ arUsuarios.username  }}</td>
+                <td>{{ arUsuarios.nombreCorto  }}</td>
+                <td>{{ arUsuarios.email }}</td>
+                <td>{{ arUsuarios.rolRel.nombre }}</td>
+                <td>{{ arUsuarios.isActive == 1 ?'SI':'NO' }}</td>
+                <td style="text-align: center"><a class="btn btn-default btn-xs" id="{{ path('brs_seg_admin_usuario_cambiar_clave', { 'codigoUsuario': arUsuarios.id}) }}" style="float:left">Cambiar clave</a></td>                                                
+                <td style="text-align: center"><a href="{{ path('brs_seg_admin_usuario_nuevo',{'codigoUsuario': arUsuarios.id})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                
+                <td style="text-align: center"><a href="{{ path('brs_seg_admin_usuario_detalle', { 'codigoUsuario': arUsuarios.id }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arUsuarios.id }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arUsuarios) }}
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arUsuarios.getTotalItemCount }}</span></div>
+            </div>
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_seg_admin_usuario_nuevo', {'codigoUsuario': 0}) }}">Nuevo</a>
+            </div>
+        </div>
+
+
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

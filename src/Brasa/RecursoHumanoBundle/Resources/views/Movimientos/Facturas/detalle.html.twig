@@ -1,0 +1,232 @@
+{% extends '::base.html.twig' %}
+{% block title %}Factura detalle - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Factura detalle</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-group">                        
+            {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                            
+        </div>
+    <br /><br />
+    <!-- Encabezado Movimiento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Información general factura</div>
+      <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered ">
+                <tr>
+                    <td class="titulo">CODIGO:</td>
+                    <td>{{ arFactura.codigoFacturaPk }}</td>
+                    <td class="titulo">FECHA:</td>
+                    <td class="td-in-well">{{ arFactura.fecha|date("Y/m/d") }}</td>
+                    <td class="titulo">BRUTO:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrBruto | number_format(0, '.', ',') }}</td>                   
+                </tr>
+                <tr>
+                    <td class="titulo">NUMERO:</td>
+                    <td class="td-in-well">{{ arFactura.numero }}</td>
+                    <td class="titulo">VENCE:</td>
+                    <td class="td-in-well">{{ arFactura.fechaVence|date("Y/m/d") }}</td>
+                    <td class="titulo">(-)RETENCION FUENTE:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrRetencionFuente | number_format(0, '.', ',') }}</td>                   
+                </tr>
+                <tr>
+                    <td class="titulo">TERCERO:</td>
+                    <td class="td-in-well">{{ arFactura.terceroRel.nombreCorto }}</td>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo">RETENCION CREE:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrRetencionCREE | number_format(0, '.', ',') }}</td>
+                </tr>    
+                <tr>
+                    <td class="titulo">GRUPO PAGO:</td>
+                    <td class="td-in-well">{{ arFactura.centroCostoRel.nombre }}</td>
+                    <td class="titulo">BASE AIU:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrBaseAIU | number_format(0, '.', ',') }}</td>
+                    <td class="titulo">(+)IVA:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrIva | number_format(0, '.', ',') }}</td>
+                </tr>                 
+                <tr>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo">ADMINISTRACION:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrTotalAdministracion | number_format(0, '.', ',') }}</td>
+                    <td class="titulo">(-)RETENCION IVA:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrRetencionIva | number_format(0, '.', ',') }}</td>
+                </tr> 
+                <tr>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo">INGRESO MISION:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrIngresoMision | number_format(0, '.', ',')}}</td>
+                    <td class="titulo">TOTAL NETO:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrNeto | number_format(0, '.', ',') }}</td>
+                </tr>                 
+                <tr>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo">EXAMENES:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrExamen | number_format(0, '.', ',')}}</td>
+                    <td class="titulo"></td>
+                    <td class="td-in-well-numerico" align="right"></td>
+                </tr>
+                <tr>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo">SELECCION:</td>
+                    <td class="td-in-well-numerico" align="right">$ {{ arFactura.vrSeleccion | number_format(0, '.', ',')}}</td>
+                    <td class="titulo"></td>
+                    <td class="td-in-well-numerico" align="right"></td>
+                </tr>                
+                <tr>
+                    <td class="titulo">COMENTARIOS:</td>
+                    <td colspan="7"></td>
+                </tr>
+            </table>
+      </div>
+    </div>
+    <!-- Fin Encabezado Movimiento -->
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#servicios" data-toggle="tab">Servicios</a></li>
+        <li><a href="#examenes" data-toggle="tab">Examenes</a></li>
+        <li><a href="#seleccion" data-toggle="tab">Seleccion</a></li>
+        <li><a href="#conceptos" data-toggle="tab">Conceptos</a></li>
+    </ul>    
+    <div class="tab-content">
+        <div class="tab-pane active" id="servicios">
+            <div id="servicios" style="width: 100%"><br>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>PAGO</th>
+                        <th style="text-align: right">IBC</th>
+                        <th style="text-align: right">T. A</th>
+                        <th style="text-align: right">V. A</th>
+                        <th style="text-align: right">AUX. TRANS</th>
+                        <th style="text-align: right">ARP</th>
+                        <th style="text-align: right">EPS</th>
+                        <th style="text-align: right">PENSION</th>
+                        <th style="text-align: right">CAJA</th>
+                        <th style="text-align: right">CESANTIAS</th>
+                        <th style="text-align: right">VACACIONES</th>
+                        <th style="text-align: right">ADMON</th>
+                        <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                    </tr>
+
+                    {% for arFacturaDetalles in arFacturaDetalles %}
+                        <tr> 
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arFacturaDetalles.codigoFacturaDetallePk }}">{{ arFacturaDetalles.codigoFacturaDetallePk }}</td>                                  
+                            <td style="text-align: right">{{ arFacturaDetalles.codigoPagoFk }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrIngresoBaseCotizacion | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrAdicionalTiempo | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrAdicionalValor | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrAuxilioTransporte | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrArp | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrEps | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrPension | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrCaja | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrCesantias | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrVacaciones | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arFacturaDetalles.VrAdministracion | number_format(0, '.', ',') }}</td>
+                            <td><input type="checkbox" name="ChkSeleccionarServicio[]" value="{{ arFacturaDetalles.codigoFacturaDetallePk }}" /></td>
+                        </tr>
+                    {% endfor %} 
+                </table>
+                <!-- Fin Botones Menu Items -->
+                <div class="btn-toolbar" style="float:right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_facturas_detalle_nuevo_servicio', {'codigoFactura': arFactura.codigoFacturaPk}) }}', 'nuevoDetalleServicio', 600, 1000)" >Nuevo</a>
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarDetalleServicio, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}                        
+                    </div>
+                </div>            
+            </div>
+        </div>
+        <div class="tab-pane" id="examenes">
+            <div id="examenes" style="width: 100%"><br>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>FECHA</th>
+                        <th>IDENTIFICACION</th>
+                        <th>NOMBRE</th>
+                        <th>VALOR</th>
+                        <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                    </tr>
+
+                    {% for arExamenes in arExamenes %}
+                        <tr> 
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arExamenes.codigoExamenPk }}">{{ arExamenes.codigoExamenPk }}</td>  
+                            <td>{{ arExamenes.fecha |date("Y/m/d")  }} </td>
+                            <td>{{ arExamenes.identificacion  }}</td>
+                            <td>{{ arExamenes.nombreCorto  }}</td>                        
+                            <td style="text-align: right">{{ arExamenes.VrTotal | number_format(0, '.', ',') }}</td>
+                            <td><input type="checkbox" name="ChkSeleccionarExamen[]" value="{{ arExamenes.codigoExamenPk }}" /></td>
+                        </tr>
+                    {% endfor %}                                
+                </table>                
+                <div class="btn-toolbar" style="float:right">                    
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_facturas_detalle_nuevo_examen', {'codigoFactura': arFactura.codigoFacturaPk}) }}', 'nuevoDetalleExamen', 600, 1000)" >Nuevo</a>
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarDetalleExamen, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}                        
+                    </div>
+                </div>                  
+            </div>
+        </div>
+        <div class="tab-pane" id="seleccion">
+            <div id="seleccion" style="width: 100%"><br>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>FECHA</th>
+                        <th>IDENTIFICACION</th>
+                        <th>NOMBRE</th>
+                        <th>VALOR</th>
+                        <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                    </tr>
+
+                    {% for arSelecciones in arSelecciones %}
+                        <tr> 
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arSelecciones.codigoSeleccionPk }}">{{ arSelecciones.codigoSeleccionPk }}</td>  
+                            <td>{{ arSelecciones.fecha |date("Y/m/d")  }} </td>
+                            <td>{{ arSelecciones.numeroIdentificacion  }}</td>
+                            <td>{{ arSelecciones.nombreCorto  }}</td>                        
+                            <td style="text-align: right">{{ arSelecciones.VrServicio | number_format(0, '.', ',') }}</td>
+                            <td><input type="checkbox" name="ChkSeleccionarSeleccion[]" value="{{ arSelecciones.codigoSeleccionPk }}" /></td>
+                        </tr>
+                    {% endfor %}                                
+                </table>                
+                <div class="btn-toolbar" style="float:right">                    
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_facturas_detalle_nuevo_seleccion', {'codigoFactura': arFactura.codigoFacturaPk}) }}', 'nuevoDetalleExamen', 600, 1000)" >Nuevo</a>
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarDetalleSeleccion, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}                        
+                    </div>
+                </div>                 
+            </div>
+        </div>
+        <div class="tab-pane" id="conceptos">
+            <div id="conceptos" style="width: 100%"><br>
+            </div>
+        </div>                    
+    </div>                        
+
+    <div class="btn-group">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_facturas_lista') }}" style="float:left">Volver</a>
+    </div>
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

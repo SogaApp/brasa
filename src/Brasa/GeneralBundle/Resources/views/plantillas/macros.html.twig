@@ -1,0 +1,88 @@
+{% macro textboxtercero(valor,span,requerido,autofocus,id) %}
+    <input id="{{id}}"  name="{{id}}"  type="{{ tipo | default('text') }}" class="span{{span}}" value="{{ valor }}" {{ requerido ? 'required="required"' :'true' }} placeholder="el Tercero" {{ autofocus ? 'autofocus="required"' :'true' }}/>
+{% endmacro %}
+
+{% macro textboxitem(valor,span,requerido,autofocus) %}    
+    <div class="form-group">
+        <label for="TxtDescripcion" class="col-sm-1 control-label">Item</label>
+        <div class="col-sm-10">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="input-group">
+                <input type="text" class="form-control" id="TxtDescripcion" name="TxtDescripcion" value="" placeholder="Descripcion"/>
+              <span class="input-group-btn">
+                <input type="text" class="btn btn-default" id="TxtCodigoItem" name="TxtCodigoItem" value=""/>
+                <a class="btn btn-default" href="javascript:abrirVentana3('{{ path('brs_inv_buscar_item') }}', 'BuscarItem', 600, 900)">Buscar</a>
+              </span>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+        </div>
+    </div>    
+{% endmacro %}
+{% macro textboxcuentas(valor,span,requerido,autofocus,id, style, name) %}
+
+    <script type="text/javascript">
+        $().ready(function() {
+            $("#{{id}}").autocomplete("{{path('buscarcuentas')}}", {
+                width: 400,
+                selectFirst: false
+            });
+        })
+    </script> 
+
+    <input id="{{id}}"  name="{{name}}" style="{{style}}" type="{{ tipo | default('text') }}" class="span{{span}}" value="{{ valor }}" {{ requerido ? 'required="required"' :'false' }} placeholder="Cuenta" {{ autofocus ? 'autofocus="required"' :'false' }}/>
+
+{% endmacro %}
+
+{% macro textboxbanco(valor,span,requerido,autofocus,id, style, name) %}   
+    <script type="text/javascript">
+   $().ready(function() {
+        $("#{{id}}").autocomplete("{{path('buscarbancos')}}", {
+                width: 400,
+                selectFirst: false
+        });                        
+        $('#{{id}}').change(function() {            
+            // Asignacion del texto seleccionado
+            $("#{{id}}").result(log).next().click(function() {
+                $(this).prev().search();
+            });
+            
+        });
+   })
+    </script> 
+
+    <input id="{{id}}"  name="{{name}}" style="{{style}}" type="{{ tipo | default('text') }}" class="span{{span}}" value="{{ valor }}" {{ requerido ? 'required="required"' :'true' }} placeholder="Banco" {{ autofocus ? 'autofocus="required"' :'true' }}/>
+
+{% endmacro %}    
+    
+{% macro textboximpuestos(valor,span,requerido,autofocus,id, style, name) %}
+
+    <script type="text/javascript">
+        $().ready(function() {
+            $("#{{id}}").autocomplete("{{path('buscarimpuestos')}}", {
+                width: 400,
+                selectFirst: false
+            });
+        })
+    </script> 
+
+    <input id="{{id}}"  name="{{name}}" style="{{style}}" type="{{ tipo | default('text') }}" class="span{{span}}" value="{{ valor }}" {{ requerido ? 'required="required"' :'false' }} placeholder="Imp" {{ autofocus ? 'autofocus="required"' :'false' }}/>
+
+{% endmacro %}
+    
+{% macro cboTipoRegistro(valor,span,requerido,autofocus,id, style, name) %}   
+    <select id="{{id}}" name="{{name}}" style="{{style}}" {{ requerido ? 'required="required"' :'false' }} {{ autofocus ? 'autofocus="required"' :'false' }}>                       
+        <option value="0" {% if valor == 0 %} selected {% endif %}></option>
+        <option value="1" {% if valor == 1 %} selected {% endif %}>Debito</option>
+        <option value="2" {% if valor == 2 %} selected {% endif %}>Credito</option>
+    </select>
+{% endmacro %}   
+    
+{% macro cboTipoBool(valor,span,requerido,autofocus,id, style, name) %}   
+    <select id="{{id}} "class="span{{span}}" name="{{name}}" style="{{style}}" {{ requerido ? 'required="required"' :'false' }} {{ autofocus ? 'autofocus="required"' :'false' }}>                       
+        <option value="0" {% if valor == 0 %} selected {% endif %}></option>
+        <option value="1" {% if valor == 1 %} selected {% endif %}>SI</option>
+        <option value="2" {% if valor == 2 %} selected {% endif %}>NO</option>
+    </select>
+{% endmacro %}     

@@ -1,0 +1,571 @@
+{% extends '::base.html.twig' %}
+{% block title %}Empleado detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles del empleado</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+
+        <div class="btn-group">
+            {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 3,  'numero': arEmpleado.codigoEmpleadoPk }) }}', 'Archivos', 500, 700)" >Archivos</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm">Utilidades</button>
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">                    
+                    <li><a href="javascript:abrirVentana3('{{ path('brs_rhu_base_empleados_cargar_foto', {'codigoEmpleado': arEmpleado.codigoEmpleadoPk }) }}', 'AgregarFoto', 600, 900)" >Agregar foto empleado</a></li>
+                </ul>
+            </div>            
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_base_certificadoIngreso_generar', { 'codigoEmpleado': arEmpleado.codigoEmpleadoPk }) }}', 'Certificado', 600, 1000)" >Generar certificado de ingresos y retenciones</a>
+        </div>
+        <br /> <br />        
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">Información empleado</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arEmpleado.codigoEmpleadoPk }}</td>
+                        <td class="titulo">LIBRETA MILITAR:</td>
+                        {% if arEmpleado.codigoTipoLibreta == 1 %}<td class="td-in-well">1° CLASE</td>{% endif %}
+                        {% if arEmpleado.codigoTipoLibreta == 2 %}<td class="td-in-well">2° CLASE</td>{% endif %}
+                        {% if arEmpleado.codigoTipoLibreta == 0 %}<td class="td-in-well">NO APLICA</td>{% endif %}
+                        <td class="titulo">DIRECCIÓN:</td>
+                        <td class="td-in-well">{{ arEmpleado.direccion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">NOMBRE:</td>
+                        <td class="td-in-well">{{ arEmpleado.nombreCorto }}</td>
+                        <td class="titulo">CELULAR:</td>
+                        <td class="td-in-well">{{ arEmpleado.celular }}</td>
+                        <td class="titulo">BARRIO:</td>
+                        <td class="td-in-well">{{ arEmpleado.barrio }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">IDENTIFICACIÓN:</td>
+                        <td class="td-in-well">{{ arEmpleado.numeroIdentificacion }}</td>
+                        <td class="titulo">TELEFONO:</td>
+                        <td class="td-in-well">{{ arEmpleado.telefono }}</td>
+                        <td class="titulo">CIUDAD:</td>
+                        <td class="td-in-well">{{ arEmpleado.ciudadRel.nombre|default('SIN CONTRATO') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ESTADO CIVIL:</td>
+                        <td class="td-in-well">{{ arEmpleado.estadoCivilRel.nombre }}</td>
+                        <td class="titulo">SEXO:</td>
+                        <td class="td-in-well">{% if arEmpleado.codigoSexoFk == "M" %} MASCULINO {% else %} FEMENINO{% endif %}</td>
+                        <td class="titulo">RH:</td>
+                        <td class="td-in-well">{{ arEmpleado.rhRel.tipo | default('')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">FECHA NACIMIENTO:</td>
+                        <td class="td-in-well">{{ arEmpleado.fechaNacimiento|date("Y/m/d") }}</td>
+                        <td class="titulo">CLASIFICACION RIESGO:</td>
+                        <td class="td-in-well">{{ arEmpleado.clasificacionRiesgoRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">CORREO:</td>
+                        <td class="td-in-well">{{ arEmpleado.correo }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">TIPO PENSIÓN:</td>
+                        <td class="td-in-well">{{ arEmpleado.tipoPensionRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">TIPO SALUD:</td>
+                        <td class="td-in-well">{{ arEmpleado.tipoSaludRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">DISCAPACIDAD</td>
+                        <td class="td-in-well">{% if arEmpleado.discapacidad == 1 %} SI {% else %} NO{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ENTIDAD PENSIÓN:</td>
+                        <td>{{ arEmpleado.entidadPensionRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">CARGO:</td>
+                        <td class="td-in-well">{{ arEmpleado.cargoRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">DESCRIPCIÓN CARGO:</td>
+                        <td class="td-in-well">{{ arEmpleado.cargoDescripcion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ENTIDAD SALUD:</td>
+                        <td class="td-in-well">{{ arEmpleado.entidadSaludRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">AUXILIO TRANSPORTE:</td>
+                        <td class="td-in-well">{% if arEmpleado.auxilioTransporte == 1 %} SI {% else %} NO{% endif %}</td>
+                        <td class="titulo">PADRE FAMILIA:</td>
+                        <td class="td-in-well">{% if arEmpleado.padreFamilia == 1 %} SI {% else %} NO{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CAJA COMPENSACIÓN:</td>
+                        <td class="td-in-well">{{ arEmpleado.entidadCajaRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">NÚMERO CUENTA:</td>
+                        <td class="td-in-well">{{ arEmpleado.cuenta }}</td>
+                        <td class="titulo">CABEZA FAMILIA:</td>
+                        <td class="td-in-well">{% if arEmpleado.cabezaHogar == 1 %} SI {% else %} NO{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ENTIDAD CENSANTIA:</td>
+                        <td class="td-in-well">{{ arEmpleado.entidadCesantiaRel.nombre |default('') }}</td>
+                        <td class="titulo">TIPO CUENTA:</td>
+                        <td class="td-in-well">{% if arEmpleado.tipocuenta == "S" %}AHORRO{% else %}{% if arEmpleado.tipoCuenta == "D" %}CORRIENTE{% else %}SIN TIPO CUENTA{% endif%}{% endif %}</td>
+                        <td class="titulo">AUXILIO TRANSPORTE:</td>
+                        <td class="td-in-well">{% if arEmpleado.auxilioTransporte == 1 %} SI {% else %} NO{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">HORARIO:</td>
+                        <td><a href="{{ path('brs_rhu_base_horario_listar') }}" target="_blanck" >{{ arEmpleado.horarioRel.nombre|default('SIN HORARIO')  }}</a></td>
+                        <td class="titulo">BANCO</td>
+                        <td class="td-in-well">{{ arEmpleado.bancoRel.nombre | default('') }}</td>
+                        <td class="titulo">DV</td>
+                        <td class="td-in-well">{{ arEmpleado.digitoVerificacion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">TIPO EMPLEADO:</td>
+                        <td>{{ arEmpleado.empleadoTipoRel.nombre|default('') }}</td>
+                        <td class="titulo">ZONA:</td>
+                        <td class="td-in-well">{{ arEmpleado.zonaRel.nombre|default('') }}</td>
+                        <td class="titulo">SUB ZONA:</td>
+                        <td class="td-in-well">{{ arEmpleado.subZonaRel.nombre|default('') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo" >COMENTARIOS: </td>
+                        <td class="td-in-well" colspan="7">{{ arEmpleado.comentarios }}</td>
+                    </tr>
+                    {% if strRutaImagen != '' %}
+                    <tr>
+                        <td class="titulo" ><img src="{{ strRutaImagen }}" width=150 height=150></a></td>
+                        <td class="td-in-well" colspan="7"></td>
+                    </tr>                    
+                    {% endif %}
+                </table>
+            </div>
+        </div>                   
+                    
+        <a name="marcador"></a>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#contrato" data-toggle="tab">Contratos</a></li>
+            <li><a href="#credito" data-toggle="tab">Créditos</a></li>
+            <li><a href="#adicionales" data-toggle="tab">Ad. pago</a></li>
+            <li><a href="#incapacidades" data-toggle="tab">Incapacidades</a></li>
+            <li><a href="#licencias" data-toggle="tab">Licencias</a></li>
+            <li><a href="#procesosDisciplinarios" data-toggle="tab">Procesos disciplinarios</a></li>
+            <li><a href="#vacaciones" data-toggle="tab">Vacaciones</a></li>
+            <li><a href="#estudios" data-toggle="tab">Estudios</a></li>            
+            <li><a href="#familia" data-toggle="tab">Familia</a></li>
+            <li><a href="#dotacion" data-toggle="tab">Dotación</a></li>
+            <li><a href="#examenes" data-toggle="tab">Examenes</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="contrato">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(arContratos, 'CÓDIGO', 'e.codigoContratoPk') }}</th>
+                        <th>TIPO</th>
+                        <th>FECHA</th>
+                        <th>NÚMERO</th>
+                        <th>GRUPO PAGO</th>
+                        <th>TIEMPO</th>
+                        <th>DESDE</th>
+                        <th>HASTA</th>
+                        <th>SALARIO</th>
+                        <th>CARGO</th>
+                        <th>D. CARGO</th>
+                        <th>C. RIESGO</th>
+                        <th>VIGENTE</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    {% for arContratos in arContratos %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arContratos.codigoContratoPk }}">{{ arContratos.codigoContratoPk }} </td>
+                            <td>{{ arContratos.contratoTipoRel.nombre|default('SIN TIPO')  }}</td>
+                            <td>{{ arContratos.fecha |date("Y/m/d")  }}</td>
+                            <td>{{ arContratos.numero  }}</td>
+                            <td>{{ arContratos.centroCostoRel.nombre  }}</td>
+                            <td>{{ arContratos.tipoTiempoRel.nombre  }}</td>
+                            <td>{{ arContratos.fechaDesde |date("Y/m/d")  }}</td>
+                            <td>{% if arContratos.codigoContratoClaseFk == 2 or arContratos.estadoActivo == 0 %} {{ arContratos.fechaHasta |date("Y/m/d")  }} {% else %} INDEFINIDO {% endif %}</td>
+                            <td style="text-align: right">{% if permisoVerSalario == false %} {% else %} {{ arContratos.vrSalario | number_format(0, '.', ',') }}{% endif %}</td>
+                            <td>{{ arContratos.cargoRel.nombre|default('SIN CONTRATO')  }}</td>
+                            <td>{{ arContratos.cargoDescripcion  }}</td>
+                            <td>{{ arContratos.clasificacionRiesgoRel.nombre|default('SIN CONTRATO') }}</td>
+                            <td>{% if arContratos.estadoActivo == 1 %} SI {% else %} NO {% endif %}</td>
+                            {% if arContratos.indefinido == 1 %}
+                                <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_rhu_contratos_nuevo', { 'codigoContrato': arContratos.codigoContratoPk,  'codigoEmpleado': arContratos.codigoEmpleadoFk}) }}', 'AgregarContrato', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20></a></td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            <td style="text-align: center"><a href="{{ path('brs_rhu_base_contratos_detalles', { 'codigoContrato': arContratos.codigoContratoPk }) }}" target="_blank"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>
+                            <td><input type="checkbox" name="ChkSeleccionarContrato[]" value="{{ arContratos.codigoContratoPk }}" /></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                {{ knp_pagination_render(arContratos) }}       
+                
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        {% if arEmpleado.codigoCentroCostoFk != "" %}<a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_contratos_nuevo', { 'codigoContrato': 0,  'codigoEmpleado': arEmpleado.codigoEmpleadoPk}) }}', 'NuevoContrato', 600, 900)" >Nuevo</a>{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="credito">
+                <br />
+                <table  class="table table-striped table-bordered table-condensed table-hover">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(arCreditos, 'CÓDIGO', 'e.codigoCreditoPk') }}</th>
+                        <th>TIPO</th>
+                        <th>FECHA INICIO</th>
+                        <th style="text-align: right">VR. CREDITO</th>
+                        <th style="text-align: right">VR. CUOTA</th>
+                        <th style="text-align: right">VR. SEGURO</th>
+                        <th style="text-align: right">CUOTAS</th>
+                        <th style="text-align: right">C. ACTUAL</th>
+                        <th style="text-align: center">PAGADO</th>                        
+                        <th style="text-align: center">SUSPENDIDO</th>
+                    </tr>
+                    {% for arCreditos in arCreditos %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arCreditos.codigoCreditoPk }}">{{ arCreditos.codigoCreditoPk }} </td>
+                            <td>{{ arCreditos.creditoTipoRel.nombre  }}</td>
+                            <td>{{ arCreditos.fechaInicio |date("Y/m/d")  }}</td>
+                            <td style="text-align: right">{{ arCreditos.VrPagar | number_format(2, '.', ',') }}</td>
+                            <td style="text-align: right">{{ (arCreditos.VrCuota) | number_format(2, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arCreditos.Seguro | number_format(2, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arCreditos.numeroCuotas | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arCreditos.numeroCuotaActual | number_format(0, '.', ',') }}</td>
+                            <td {% if arCreditos.estadopagado == 1 %}class="success">SI{% else %}<td class="danger"> NO {% endif %}</td>                            
+                            <td {% if arCreditos.estadoSuspendido == 1 %}class="success">SI{% else %}<td class="danger"> NO {% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: left">
+                    {{ knp_pagination_render(arCreditos) }}
+                </div>
+                
+            </div>
+                
+            <div class="tab-pane" id="adicionales">
+                <br />
+                <table  class="table table-striped table-bordered table-condensed table-hover">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(arAdicionalesPago, 'CÓDIGO', 'CÓDIGO') }}</th>
+                        <th>CÓDIGO PROG PAGO</th>
+                        <th>CONCEPTO</th>
+                        <th>DETALLE</th>
+                        <th>CANTIDAD</th>
+                        <th style="text-align: right">VALOR</th>
+                        <th>PERMANENTE</th>
+                        <th>APLICA DÍA LAB</th>
+                        <th>PRESTACIONAL</th>
+                    </tr>
+                    {% for arAdicionalesPago in arAdicionalesPago %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arAdicionalesPago.codigoPagoAdicionalPk }}">{{ arAdicionalesPago.codigoPagoAdicionalPk }} </td>
+                            <td>{{ arAdicionalesPago.codigoProgramacionPagoFk  }}</td>
+                            <td>{{ arAdicionalesPago.pagoConceptoRel.nombre  }}</td>
+                            <td>{{ arAdicionalesPago.detalle  }}</td>
+                            <td>{{ arAdicionalesPago.cantidad }}</td>
+                            <td style="text-align: right">{{ arAdicionalesPago.valor | number_format(2, '.', ',') }}</td>
+                            <td {% if arAdicionalesPago.permanente == 1 %}class="success">SI{% else %}<td class="danger"> NO {% endif %}</td>
+                            <td {% if arAdicionalesPago.aplicaDiaLaborado == 1 %}class="success">SI{% else %}<td class="danger"> NO {% endif %}</td>
+                            <td {% if arAdicionalesPago.prestacional == 1 %}class="success">SI{% else %}<td class="danger"> NO {% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: left">
+                    {{ knp_pagination_render(arAdicionalesPago) }}
+                </div>
+                
+            </div>
+                
+            <div class="tab-pane" id="incapacidades">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(arIncapacidades, 'CÓDIGO', 'e.codigoIncapacidadPk') }}</th>
+                        <th>TIPO</th>
+                        <th>DIAGNÓSTICO</th>
+                        <th>DESDE</th>
+                        <th>HASTA</th>
+                        <th>DÍAS</th>                        
+                        <th>TRANSCRIPCIÓN</th>
+                        <th>COBRAR</th>
+                        <th>PRORROGA</th>
+                        <th>VALOR</th>
+                    </tr>
+                    {% for arIncapacidades in arIncapacidades %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arIncapacidades.codigoIncapacidadPk }}">{{ arIncapacidades.codigoIncapacidadPk }} </td>
+                            <td>{{ arIncapacidades.incapacidadTipoRel.nombre  }}</td>
+                            <td>{{ arIncapacidades.incapacidadDiagnosticoRel.nombre  }}</td>
+                            <td>{{ arIncapacidades.fechaDesde |date("Y/m/d")  }}</td>
+                            <td>{{ arIncapacidades.fechaHasta |date("Y/m/d")  }}</td>
+                            <td style="text-align: right">{{ arIncapacidades.cantidad | number_format(0, '.', ',') }}</td>                            
+                            <td>{% if arIncapacidades.estadoTranscripcion == 1 %}SI {% else %}NO {% endif %}</td>
+                            <td>{% if arIncapacidades.estadoCobrar == 1 %}SI {% else %}NO {% endif %}</td>
+                            <td>{% if arIncapacidades.estadoProrroga == 1 %}SI {% else %}NO {% endif %}</td>
+                            <td style="text-align: right">{{ arIncapacidades.vrIncapacidad | number_format(0, '.', ',') }}</td>                                                       
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: left">
+                    {{ knp_pagination_render(arIncapacidades) }}
+                </div>
+            </div>
+
+            <div class="tab-pane" id="licencias">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(arLicencias, 'CÓDIGO', 'e.codigoLicenciaPk') }}</th>
+                        <th>TIPO</th>
+                        <th>DESDE</th>
+                        <th>HASTA</th>
+                        <th>DÍAS</th>
+                        <th>AFECTA AUXILIO</th>                        
+                        <th>COMENTARIOS</th>
+                    </tr>
+                    {% for arLicencias in arLicencias %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arLicencias.codigoLicenciaPk }}">{{ arLicencias.codigoLicenciaPk }} </td>
+                            <td>{{ arLicencias.licenciaTipoRel.nombre  }}</td>
+                            <td>{{ arLicencias.fechaDesde |date("Y/m/d")  }}</td>
+                            <td>{{ arLicencias.fechaHasta |date("Y/m/d")  }}</td>
+                            <td style="text-align: right">{{ arLicencias.cantidad | number_format(0, '.', ',') }}</td>
+                            <td>{% if arLicencias.afectaTransporte == 1 %} SI {% else %} NO {% endif %}</td>                            
+                            <td>{{ arLicencias.comentarios }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: left">
+                    {{ knp_pagination_render(arLicencias) }}
+                </div>
+            </div>
+
+           <div class="tab-pane" id="procesosDisciplinarios">
+                <br />
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>{{ knp_pagination_sortable(arDisciplinarios, 'CÓDIGO', 'e.codigoDisciplinarioPk') }}</th>
+                            <th>FECHA</th>
+                            <th>CENTRO CENTRO</th>
+                            <th>IDENTIFICACIÓN</th>
+                            <th>NOMBRE</th>
+                            <th>CARGO</th>
+                            <th>PROCESO</th>
+                            <th>CAUSAL</th>
+                        </tr>
+                        {% for arDisciplinarios in arDisciplinarios %}
+                            <tr>
+                                <td><input type="hidden" name="LblCodigo[]" value="{{ arDisciplinarios.codigoDisciplinarioPk }}">{{ arDisciplinarios.codigoDisciplinarioPk }} </td>
+                                <td>{{ arDisciplinarios.fecha |date("Y/m/d")  }}</td>
+                                <td>{{ arDisciplinarios.centroCostoRel.nombre  }}</td>
+                                <td>{{ arDisciplinarios.empleadoRel.numeroIdentificacion  }}</td>
+                                <td>{{ arDisciplinarios.empleadoRel.nombreCorto  }}</td>
+                                <td>{{ arDisciplinarios.empleadoRel.cargoDescripcion  }}</td>
+                                <td>{{ arDisciplinarios.disciplinarioTipoRel.nombre  }}</td>
+                                <td>{{ arDisciplinarios.asunto  }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <div class="btn-toolbar" style="float: left">
+                        {{ knp_pagination_render(arDisciplinarios) }}
+                    </div>
+                    
+            </div>
+
+            <div class="tab-pane" id="vacaciones">
+                <br />                
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>P. DESDE</th>
+                        <th>P. HASTA</th>
+                        <th>D. DESDE</th>
+                        <th>D. HASTA</th>
+                        <th>DIAS</th>
+                        <th>DIAS P.</th>
+                        <th>DIAS D.</th>
+                        <th>VR. DEDUCCIONES</th>
+                        <th>TOTAL</th>
+                        <th></th>
+                    </tr>
+                    {% for arVacaciones in arVacaciones %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arVacaciones.codigoVacacionPk }}">{{ arVacaciones.codigoVacacionPk }} </td>
+                            <td>{{ arVacaciones.fechaDesdePeriodo |date("Y/m/d")  }}</td>
+                            <td>{{ arVacaciones.fechaHastaPeriodo |date("Y/m/d")  }}</td>
+                            <td>{{ arVacaciones.fechaDesdeDisfrute |date("Y/m/d")  }}</td>
+                            <td>{{ arVacaciones.fechaHastaDisfrute |date("Y/m/d")  }}</td>
+                            <td style="text-align: right">{{ arVacaciones.diasVacaciones  }}</td>
+                            <td style="text-align: right">{{ arVacaciones.diasPagados  }}</td>
+                            <td style="text-align: right">{{ arVacaciones.diasDisfrutados  }}</td>
+                            <td style="text-align: right">{{ arVacaciones.vrDeduccion | number_format(2, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arVacaciones.vrVacacion | number_format(2, '.', ',') }}</td>                            
+                            <td><input type="checkbox" name="ChkSeleccionarVacacion[]" value="{{ arVacaciones.codigoVacacionPk }}" /></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: left">
+                    {{ knp_pagination_render(arVacaciones) }}
+                </div>
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tab-pane" id="estudios">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(arEmpleadoEstudios, 'CÓDIGO', 'e.codigoEmpleadoEstudioPk') }}</th>
+                        <th>ESTUDIO</th>
+                        <th>INSTITUCIÓN</th>                        
+                        <th>CIUDAD</th>
+                        <th>TÍTULO OBTENIDO</th>
+                        <th>CURSO</th>
+                        <th>VENCIMIENTO ESTUDIO/CURSO</th>
+                        <th>VENCIMIENTO ACREDITACIÓN</th>
+                        <th style="text-align: center"></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    {% for arEmpleadoEstudios in arEmpleadoEstudios %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arEmpleadoEstudios.codigoEmpleadoEstudioPk }}">{{ arEmpleadoEstudios.codigoEmpleadoEstudioPk }} </td>
+                            <td>{{ arEmpleadoEstudios.empleadoEstudioTipoRel.nombre  }}</td>
+                            <td>{{ arEmpleadoEstudios.institucion  }}</td>                            
+                            <td>{{ arEmpleadoEstudios.ciudadRel.nombre  }}</td>
+                            <td>{{ arEmpleadoEstudios.titulo  }}</td>
+                            <td>{{ arEmpleadoEstudios.estudioTipoAcreditacionRel.nombre | default('')  }}</td>
+                            <td>{% if arEmpleadoEstudios.fechaVencimientoCurso != null %}{{ arEmpleadoEstudios.fechaVencimientoCurso |date('Y-m-d')}}{% else %}NO REQUIERE{% endif %}</td>
+                            <td>{% if arEmpleadoEstudios.fechaVencimientoAcreditacion != null %}{{ arEmpleadoEstudios.fechaVencimientoAcreditacion |date('Y-m-d')}}{% else %}NO REQUIERE{% endif %}</td>
+                            <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 9,  'numero': arEmpleadoEstudios.codigoEmpleadoEstudioPk}) }}', 'Archivos', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_144_folder_open.png') }}" width=20 height=20></a></td>                            
+                            <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_rhu_base_empleado_estudio_nuevo', {'codigoEmpleado':  arEmpleado.codigoEmpleadoPk, 'codigoEmpleadoEstudio': arEmpleadoEstudios.codigoEmpleadoEstudioPk }) }}', 'AgregarEstudio', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20></a></td>
+                            <td><input type="checkbox" name="ChkSeleccionarEmpleadoEstudio[]" value="{{ arEmpleadoEstudios.codigoEmpleadoEstudioPk }}" /></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: left">
+                    {{ knp_pagination_render(arEmpleadoEstudios) }}
+                </div>
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_base_empleado_estudio_nuevo', {'codigoEmpleado': arEmpleado.codigoEmpleadoPk, 'codigoEmpleadoEstudio': 0 }) }}', 'AgregarProcesoEstudio', 900, 1000)" >Nuevo</a>
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarEmpleadoEstudio, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="familia">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(arEmpleadoFamilia, 'CÓDIGO', 'e.codigoEmpleadoFamiliaPk') }}</th>
+                        <th>PARENTESCO</th>
+                        <th>NOMBRES Y APELLIDOS</th>
+                        <th>EPS</th>
+                        <th>CAJA COMPENSACIÓN</th>
+                        <th>FECHA NACIMIENTO</th>
+                        <th>OCUPACIÓN</th>
+                        <th>TELÉFONO</th>
+                        <th style="text-align: center"></th>
+                        <th></th>
+                    </tr>
+                    {% for arEmpleadoFamilia in arEmpleadoFamilia%}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arEmpleadoFamilia.codigoEmpleadoFamiliaPk }}">{{ arEmpleadoFamilia.codigoEmpleadoFamiliaPk }} </td>
+                            <td>{{ arEmpleadoFamilia.empleadoFamiliaParentescoRel.nombre | default('') }}</td>
+                            <td>{{ arEmpleadoFamilia.nombres  }}</td>
+                            <td>{{ arEmpleadoFamilia.entidadSaludRel.nombre | default('') }}</td>
+                            <td>{{ arEmpleadoFamilia.entidadCajaRel.nombre | default('') }}</td>
+                            <td>{{ arEmpleadoFamilia.fechaNacimiento | date('Y/m/d')  }}</td>
+                            <td>{{ arEmpleadoFamilia.ocupacion  }}</td>
+                            <td>{{ arEmpleadoFamilia.telefono  }}</td>
+                            <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_rhu_base_empleado_familia_nuevo', {'codigoEmpleado':  arEmpleado.codigoEmpleadoPk, 'codigoEmpleadoFamilia': arEmpleadoFamilia.codigoEmpleadoFamiliaPk }) }}', 'AgregarFamilia', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20></a></td>
+                            <td><input type="checkbox" name="ChkSeleccionarEmpleadoFamilia[]" value="{{ arEmpleadoFamilia.codigoEmpleadoFamiliaPk }}" /></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: left">
+                    {{ knp_pagination_render(arEmpleadoFamilia) }}
+                </div>
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_base_empleado_familia_nuevo', {'codigoEmpleado': arEmpleado.codigoEmpleadoPk, 'codigoEmpleadoFamilia': 0 }) }}', 'AgregarProcesoFamilia', 600, 900)" >Nuevo</a>
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarEmpleadoFamilia, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="dotacion">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(arDotacion, 'CÓDIGO', 'e.codigoEmpleadoDotacionPk') }}</th>
+                        <th>FECHA</th>
+                        <th>TIPO DOTACIÓN</th>
+                        <th>NÚMERO INTERNO REFERENCIA</th>
+                        <th>COMENTARIOS</th>
+                        <th style="text-align: center"></th>
+                    </tr>
+                    {% for arDotacion in arDotacion%}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arDotacion.codigoDotacionPk }}">{{ arDotacion.codigoDotacionPk }} </td>
+                            <td>{{ arDotacion.fecha | date('Y/m/d')  }}</td>
+                            <td>{{ arDotacion.dotacionTipoRel.nombre  }}</td>
+                            <td>{{ arDotacion.codigoInternoReferencia  }}</td>
+                            <td>{{ arDotacion.comentarios  }}</td>                            
+                            <td style="text-align: center"><a href="{{ path('brs_rhu_dotacion_detalle', { 'codigoDotacion': arDotacion.codigoDotacionPk }) }}" target="_blank"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>                                                        
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: left">
+                    {{ knp_pagination_render(arDotacion) }}
+                </div>
+            </div>
+                    
+            <div class="tab-pane" id="examenes">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(arEmpleadoEstudios, 'CÓDIGO', 'e.codigoEmpleadoEstudioPk') }}</th>
+                        <th>EXAMEN</th>
+                        <th>VENCIMIENTO</th>                                                
+                    </tr>
+                    {% for arExamenes in arExamenes %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arExamenes.codigoExamenPk }}">{{ arExamenes.codigoExamenPk }} </td>                            
+                            <td>{{ arExamenes.examenClaseRel.nombre }}</td>                                                        
+                            <td>{{ arExamenes.fecha |date("Y/m/d")  }}</td>                                                        
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: left">
+                    {{ knp_pagination_render(arExamenes) }}
+                </div>
+            </div>                    
+                    
+        </div>
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_empleados_lista') }}" style="float:left">Volver</a>
+            </div>
+        </div>
+        <br /><br />
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

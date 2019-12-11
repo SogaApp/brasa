@@ -1,0 +1,50 @@
+{% extends '::base.html.twig' %}
+{% block title %}Adicionales al pago - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Adicionales al pago  ({{ nombreModalidad }})</h3>            
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+        <table class="table table-striped table-bordered table-condensed">
+            <tr>                       
+                <th>FECHA</th>
+                <th></th>
+                <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+            </tr>
+            {% for arPagosAdicionalesPeriodos in arPagosAdicionalesPeriodos %}                
+            <tr>                
+                <input type="hidden" name="LblCodigoGuia[]" value="{{ arPagosAdicionalesPeriodos.codigoPagoAdicionalPeriodoPk }}">                                
+                <td>{{ arPagosAdicionalesPeriodos.fecha |date('Y/m/d')}}</td>                                        
+                <td><a href="{{ path('brs_rhu_pagos_adicionales_lista', { 'modalidad': 2, 'periodo': arPagosAdicionalesPeriodos.codigoPagoAdicionalPeriodoPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22 title="Detalles del registro"></a></td>
+                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arPagosAdicionalesPeriodos.codigoPagoAdicionalPeriodoPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arPagosAdicionalesPeriodos.getTotalItemCount }}</span></div>                        
+            </div>           
+            <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arPagosAdicionalesPeriodos) }}       
+            </div>
+        </div>
+
+        <div class="btn-toolbar" style="float:right">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_pago_adicional_periodo_nuevo', {'codigoPagoAdicionalPeriodo': 0}) }}">Nuevo</a>                
+            </div>             
+             <div class="btn-group">
+                {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}                        
+            </div>
+        </div>   
+    {{ form_end(form) }}
+</div>
+{% endblock %}

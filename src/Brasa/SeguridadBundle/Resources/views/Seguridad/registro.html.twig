@@ -1,0 +1,33 @@
+
+{% block stylesheets %}            
+<link href="{{ asset('bundles/soga/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ asset('bundles/soga/css/signin.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}                 
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Inicio de sesion Soga!</title>
+    </head>
+    <body>
+        <div class="container">
+            <form class="form-signin" role="form" action="{{ path('registro') }}" method="post">
+                <h2 class="form-signin-heading">Registro</h2>                
+                <input type="email" class="form-control" placeholder="Usuario" id="username" name="TxtUsuario" required autofocus>
+                <input type="password" class="form-control" placeholder="Contraseña" id="password" name="TxtPassword" required>                
+                
+                <input type="text" class="form-control" placeholder="Nombre Corto" id="nombrecorto" name="TxtNombreCorto" required/><br/>
+                
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Crear</button>                          
+                <a class="btn btn-lg btn-default btn-block" href="{{ path('login') }}">Inicio sesion</a>
+                <center>       
+            </form>
+        </div>
+    </body>
+</html>

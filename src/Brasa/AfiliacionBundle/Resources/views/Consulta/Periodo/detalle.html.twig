@@ -1,0 +1,204 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Consulta de periodo detalle</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div     class="form-group form-group-sm">
+                    <label for="txtNit" class="col-sm-2 control-label">Cliente:</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                          <div class="col-lg-2">
+                            <div class="input-group">
+                              {{ form_widget(form.TxtNit, { 'attr': {'class': 'form-control'} }) }}                              
+                            </div>
+                          </div>
+                          <div class="col-lg-10">
+                            <div class="input-group">     
+                              {{ form_widget(form.TxtNombreCliente, { 'attr': {'class': 'form-control', 'readOnly': 'ReadOnly'} }) }}                              
+                              <span class="input-group-btn">                                        
+                                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_afi_buscar_cliente', { 'campoCodigo': 'form_TxtNit', 'campoNombre': 'form_TxtNombreCliente' }) }}', 'buscarCliente', 600, 900)">Buscar</a>
+                              </span>
+                            </div>
+                          </div>    
+                        </div>
+                    </div>
+                </div>                 
+                    
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtNumero" class="col-sm-2 control-label">Numero:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.TxtNumero, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_estadoFacturado" class="col-sm-2 control-label">Facturado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoFacturado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }} 
+                    </div>  
+                    <label for="form_asesorRel" class="col-sm-2 control-label">Asesor:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.asesorRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">
+                      {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }} 
+                    </div>                
+                </div>    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>{{ knp_pagination_sortable(arPeriodoDetalles, 'CÓDIGO', 'p.codigoPeriodoDetallePk') }}</th>
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th>EMPLEADO</th>
+                <th>ING</th>
+                <th>DIAS</th>
+                <th>SALARIO</th>
+                <th>PENSION</th>
+                <th>SALUD</th>                
+                <th>CAJA</th>
+                <th>RIESGOS</th>
+                <th>ADMON</th>
+                <th>TOTAL</th>                
+                <th>FAC</th>
+                <th>REC</th>
+                <th>FECHA.REC</th>
+
+            </tr>
+            {% set cliente = '' %}
+            {% set cliente2 = '' %}
+            {% set douTotal = 0  %}
+            {% set douTotalGeneral = 0  %}
+            {% set contador = 0  %}
+            {% for arPeriodoDetalles in arPeriodoDetalles %}
+                {% if contador == 0 %}                    
+                    {% set cliente = arPeriodoDetalles.periodoRel.codigoClienteFk %}  
+                    {% set cliente2 = arPeriodoDetalles.periodoRel.codigoClienteFk %} 
+                {% endif %}    
+                {% if cliente2 !=  arPeriodoDetalles.periodoRel.codigoClienteFk %}
+                    <tr> 
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>                
+                        <td></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right">{{ douTotal | number_format(2, '.', ',') }}</td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+
+
+                    </tr>
+                    {% set cliente2 =  arPeriodoDetalles.periodoRel.codigoClienteFk %}
+                    {% set douTotal = 0 %}
+                {% endif %}                 
+                
+                {% if cliente != arPeriodoDetalles.periodoRel.codigoClienteFk or contador == 0 %}
+                    <tr> 
+                        <td id="suptipo" colspan="4">{{ arPeriodoDetalles.periodoRel.clienteRel.nombreCorto }}</td>
+                        <td id="suptipo" colspan="1">{{ arPeriodoDetalles.periodoRel.clienteRel.telefono }}</td>
+                        <td id="suptipo" colspan="2">{{ arPeriodoDetalles.periodoRel.clienteRel.email }}</td>
+                        <td id="suptipo" colspan="7">{{ arPeriodoDetalles.periodoRel.clienteRel.asesorRel.nombre }}</th>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+
+
+                    </tr>
+                {% set cliente = arPeriodoDetalles.periodoRel.codigoClienteFk %}
+                
+                {% endif %}    
+            <tr>
+                <td>{{ arPeriodoDetalles.codigoPeriodoDetallePk  }}</td>
+                <td>{{ arPeriodoDetalles.fechaDesde |date('Y/m/d') }}</td>
+                <td>{{ arPeriodoDetalles.fechaHasta |date('Y/m/d') }}</td>
+                <td>{{ arPeriodoDetalles.empleadoRel.nombreCorto }}</td>
+                <td>{% if arPeriodoDetalles.ingreso == 1 %} SI {% else %} NO {% endif %}</td>
+                <td style="text-align: right">{{ arPeriodoDetalles.dias | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPeriodoDetalles.salario | number_format(0, '.', ',') }}</td>
+                <td>{{ arPeriodoDetalles.contratoRel.entidadPensionRel.nombre }}</td>
+                <td>{{ arPeriodoDetalles.contratoRel.entidadSaludRel.nombre }}</td>
+                <td>{{ arPeriodoDetalles.contratoRel.entidadCajaRel.nombre }}</td>
+                <td>{{ arPeriodoDetalles.contratoRel.clasificacionRiesgoRel.nombre }}</td>
+                <td style="text-align: right">{{ arPeriodoDetalles.administracion | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arPeriodoDetalles.total | number_format(0, '.', ',') }}</td>  
+                <td>{% if arPeriodoDetalles.periodoRel.estadoFacturado == 1 %} SI {% else %} NO {% endif %}</td>
+                {% set douTotalGeneral = douTotalGeneral + arPeriodoDetalles.total %}
+                {% set arrRecibo = validarRecibo(arPeriodoDetalles.codigoPeriodoFk) %}
+                <td>{{ arrRecibo[0] }}</td>
+                <td>{{ arrRecibo[1] }}</td>
+
+                {% set douTotal = douTotal + arPeriodoDetalles.total %}
+            </tr>
+
+              {% set contador = contador + 1 %}
+            {% endfor %}
+            
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>                
+                <td></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right">{{ douTotalGeneral | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right"></td>
+            </tr>    
+        </table>
+        <!-- Botones Menu Items -->
+        <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arPeriodoDetalles.getTotalItemCount }}</span></div>
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arPeriodoDetalles) }}
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

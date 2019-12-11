@@ -1,0 +1,166 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Programacion detalle editar - Soga App{% endblock %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <script type="text/javascript">
+        //https://librosweb.es/libro/ajax/capitulo_7/la_primera_aplicacion.html
+        function validarTurno(control) {
+            var codigoTurno = control.value;
+            if (codigoTurno !== '') {
+                var codigoProgramacionDetalle = control.name.substring(9);
+                var dia = parseInt(control.name.substring(6, 8));
+                if (window.XMLHttpRequest) {
+                    peticion_http = new XMLHttpRequest();
+                }
+                peticion_http.onreadystatechange = function () {
+                    if (peticion_http.readyState == 4) {
+                        if (peticion_http.status == 200) {
+                            var respuesta = peticion_http.responseText;
+                            //alert(respuesta);
+                            if (respuesta == '1') {
+                                alert('El recurso ya tiene programado otro turno igual en el periodo');
+                                control.value = '';
+                            }
+                        }
+                    }
+                }
+                // Realizar peticion HTTP
+                var url = "{{path('brs_tur_validar_turno', {'codigoProgramacionDetalle': 'pd', 'dia': 'd0', 'codigoTurno': 'ct' })}}";
+                url = url.replace('pd', codigoProgramacionDetalle);
+                url = url.replace('d0', dia);
+                url = url.replace('ct', codigoTurno);
+                peticion_http.open('GET', url, true);
+                peticion_http.send(null);
+            }
+        }
+    </script>    
+    <div class="container">
+        <div class="page-header">
+            <h3>Editar programacion del recurso: {{ arRecurso.nombreCorto }}</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}                     
+
+        <table style='table-layout:fixed' class="table table-striped table-bordered table-condensed">
+            <tr>               
+                    {% for arrDiaSemana in arrDiaSemana %}
+                    <th>{{ arrDiaSemana.dia }}{{ arrDiaSemana.diaSemana }}</th>
+                    {% endfor %} 
+                    <th>PD</th>
+            </tr>            
+            {% set intCodigoCliente = '' %}
+            {% set deshabilitar15 = '' %}
+            {% set deshabilitar30 = '' %}           
+            {% for arProgramacionDetalle in arProgramacionDetalle %}
+                {% if arProgramacionDetalle.periodoBloqueo >= '15' %}
+                    {% set deshabilitar15 = 'readonly' %} 
+                {% else %}
+                    {% set deshabilitar15 = '' %}                    
+                {% endif %} 
+                {% if arProgramacionDetalle.periodoBloqueo >= '30' %}
+                    {% set deshabilitar30 = 'readonly' %}   
+                {% else %}
+                    {% set deshabilitar30 = '' %}                    
+                {% endif %}                 
+               {% if intCodigoCliente != arProgramacionDetalle.programacionRel.codigoClienteFk %}
+                    <tr> 
+                        <td id="suptipo" colspan="32"><b>{{ arProgramacionDetalle.programacionRel.clienteRel.nombreCorto | default('') }}</b></td>
+                    </tr>
+                    {% set intCodigoCliente = arProgramacionDetalle.programacionRel.codigoClienteFk %}                    
+                    {% set intCodigoPuesto = '' %}
+                {% endif %} 
+                {% if intCodigoPuesto != arProgramacionDetalle.codigoPuestoFk %}
+                    <tr> 
+                        <td colspan="2">{{ arProgramacionDetalle.codigoProgramacionDetallePk }}</td>
+                        <td id="suptipo" colspan="30">{{ arProgramacionDetalle.puestoRel.nombre | default('') }}</td>
+                    </tr>                    
+                    {% set intCodigoPuesto = arProgramacionDetalle.codigoPuestoFk %}
+                {% endif %}                 
+                    <tr>
+                    <input type="hidden" name="LblCodigo[]" value="{{ arProgramacionDetalle.codigoProgramacionDetallePk }}">                                                                   
+                    {% if arProgramacionDetalle.programacionRel.estadoAutorizado == 0 %}                                    
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia01D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia1  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia02D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia2  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia03D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia3  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia04D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia4  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia05D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia5  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia06D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia6  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia07D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia7  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia08D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia8  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia09D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia9  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia10D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia10  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia11D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia11  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia12D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia12  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia13D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia13  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia14D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia14  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia15D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia15  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar15 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia16D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia16  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia17D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia17  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia18D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia18  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia19D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia19  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia20D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia20  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia21D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia21  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia22D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia22  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia23D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia23  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia24D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia24  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia25D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia25  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia26D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia26  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia27D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia27  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia28D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia28  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia29D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia29  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia30D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia30  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia31D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia31  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" {{ deshabilitar30 }}/></td>
+                    {% else %}
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia01D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia1  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia02D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia2  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia03D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia3  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia04D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia4  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia05D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia5  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia06D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia6  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia07D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia7  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia08D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia8  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia09D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia9  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia10D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia10  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia11D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia11  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia12D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia12  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia13D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia13  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia14D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia14  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia15D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia15  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia16D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia16  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia17D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia17  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia18D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia18  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia19D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia19  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia20D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia20  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia21D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia21  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia22D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia22  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia23D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia23  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia24D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia24  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia25D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia25  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia26D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia26  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia27D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia27  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia28D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia28  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia29D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia29  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia30D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia30  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia31D{{ arProgramacionDetalle.codigoProgramacionDetallePk }}" value="{{ arProgramacionDetalle.dia31  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value = this.value.toUpperCase();" onBlur="validarTurno(this)" readonly/></td>
+                    {% endif %} 
+                    <td>{{ arProgramacionDetalle.codigoPedidoDetalleFk  }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>        
+        </div>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}        
+    </div>
+{% endblock %}

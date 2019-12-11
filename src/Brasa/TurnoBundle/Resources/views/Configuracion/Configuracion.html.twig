@@ -1,0 +1,153 @@
+{% extends '::base.html.twig' %}
+{% block title %}Configuración nómina - Soga App{% endblock %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">    
+        {{ form_start(formConfiguracion, { 'attr': {'class': 'form-horizontal'} }) }}
+        {{ form_errors(formConfiguracion) }}
+        <h3>Configuración</h3>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#configuracion" data-toggle="tab">Configuración</a></li>
+            <li><a href="#consecutivo" data-toggle="tab">Consecutivo</a></li>
+            <li><a href="#nomina" data-toggle="tab">Nomina</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="configuracion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Información de la configuración</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="form_informacionLegalFactura" class="col-sm-3 control-label">Informacion legal factura:</label>
+                            <div class="col-sm-9">
+                                {{ form_widget(formConfiguracion.informacionLegalFactura, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label for="form_informacionPagoFactura" class="col-sm-3 control-label">Informacion pago factura:</label>
+                            <div class="col-sm-9">
+                                {{ form_widget(formConfiguracion.informacionPagoFactura, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>   
+                        <div class="form-group">
+                            <label for="form_informacionContactoFactura" class="col-sm-3 control-label">Informacion contacto factura:</label>
+                            <div class="col-sm-9">
+                                {{ form_widget(formConfiguracion.informacionContactoFactura, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form_informacionResolucionDianFactura" class="col-sm-3 control-label">Informacion dian factura:</label>
+                            <div class="col-sm-9">
+                                {{ form_widget(formConfiguracion.informacionResolucionDianFactura, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>                            
+                        <div class="form-group">
+                            <label for="form_informacionResolucionSupervigilanciaFactura" class="col-sm-3 control-label">Informacion supervigilancia factura:</label>
+                            <div class="col-sm-9">
+                                {{ form_widget(formConfiguracion.informacionResolucionSupervigilanciaFactura, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>                                                        
+                    </div>
+                </div>  
+            </div>
+            <div class="tab-pane" id="consecutivo">
+                <div id="consecutivo" style="width: 100%">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Información de los consecutivos</div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered table-condensed table-hover">
+                                <tr>
+                                    <th>CÓDIGO</th>
+                                    <th>NOMBRE</th>
+                                    <th>CONSECUTIVO</th>
+                                </tr>
+                                {% for arConsecutivo in arConsecutivo %}
+                                    <tr>
+
+                                        <td>
+                                            <input type="hidden" name="LblCodigo[]" value="{{ arConsecutivo.codigoConsecutivoPk }}">
+                                            <span class="badge">{{ arConsecutivo.codigoConsecutivoPk }}</span>
+                                        </td>
+                                        <td>{{ arConsecutivo.nombre }}</td>
+                                        <td style="text-align: left"><input class="input-grid" type="text" name="TxtConsecutivo{{ arConsecutivo.codigoConsecutivoPk }}" value="{{ arConsecutivo.consecutivo }}" size="5" style="text-align: right; width:50px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>            
+                </div> 
+            </div>
+            <div class="tab-pane" id="nomina">
+                <div id="nomina" style="width: 100%">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Información nomina</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Concepto HD:</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(formConfiguracion.codigoConceptoHorasDescansoFk, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Concepto HD:</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(formConfiguracion.codigoConceptoHorasDiurnasFk, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Concepto HN:</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(formConfiguracion.codigoConceptoHorasNocturnasFk, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Concepto HFD:</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(formConfiguracion.codigoConceptoHorasFestivasDiurnasFk, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Concepto HFN:</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(formConfiguracion.codigoConceptoHorasFestivasNocturnasFk, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Concepto HEOD:</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(formConfiguracion.codigoConceptoHorasExtrasOrdinariasDiurnasFk, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Concepto HEON:</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(formConfiguracion.codigoConceptoHorasExtrasOrdinariasNocturnasFk, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Concepto HEFD:</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(formConfiguracion.codigoConceptoHorasExtrasFestivasDiurnasFk, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Concepto HEFN:</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(formConfiguracion.codigoConceptoHorasExtrasFestivasNocturnasFk, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>                                
+                        </div>
+                    </div>            
+                </div> 
+            </div>
+            <div class="modal-footer">      
+                {{ form_widget(formConfiguracion.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            </div>                    
+        </div>
+        {{ form_end(formConfiguracion) }}
+    </div>      
+{% endblock %}

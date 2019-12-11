@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+{% block title %}Información interna nuevo - Soga App{% endblock %}
+{% block content %}
+    
+<div class="container">    
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo información interna empleado</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Identificación:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.numeroIdentificacion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>  
+            <div class="form-group form-group-sm">    
+                <label class="col-sm-3 control-label">Información interna tipo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.informacionInternaTipoRel, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">    
+                <label class="col-sm-3 control-label">Fecha:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.fecha, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">    
+                <label class="col-sm-3 control-label">Comentarios:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>  
+    </div>
+    </div>
+    <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_empleado_informacion_interna_lista') }}">Cancelar</a>
+            {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>    
+{% endblock %}

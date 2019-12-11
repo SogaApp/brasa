@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+{% block title %}Pago adicional detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles de pago adicional</h3>
+        </div>
+
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Información de las vacaciones</div>
+            <div class="panel-body">    
+                <table widtd="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arPagoAdicional.codigoPagoAdicionalPk }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo">VALOR:</td>
+                        <td class="td-in-well" align="right">{{ arPagoAdicional.valor | number_format(0, '.', ',')}}</td>                        
+                    </tr> 
+                    <tr>
+                        <td class="titulo">FECHA CREACION:</td>
+                        <td class="td-in-well">{{ arPagoAdicional.fechaCreacion | date('Y/m/d H:i') }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well" align="right"></td>                        
+                    </tr>     
+                    <tr>
+                        <td class="titulo">FECHA ULTIMA EDICION:</td>
+                        <td class="td-in-well">{{ arPagoAdicional.fechaUltimaEdicion | date('Y/m/d H:i') }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well" align="right"></td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">USUARIO ULTIMA EDICION:</td>
+                        <td class="td-in-well">{{ arPagoAdicional.codigoUsuarioUltimaEdicion }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well" align="right"></td>                        
+                    </tr>                     
+                    <tr>
+                        <td class="titulo" >DETALLE: </td>
+                        <td class="td-in-well" colspan="7">{{ arPagoAdicional.detalle }}</td>
+                    </tr>                    
+                </table>
+            </div>
+        </div>                                     
+                   
+                    
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

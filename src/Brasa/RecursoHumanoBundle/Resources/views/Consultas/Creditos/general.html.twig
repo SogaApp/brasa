@@ -1,0 +1,108 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta créditos empleados - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <script type="text/javascript">
+            $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+        </script>
+        <h3>Consulta creditos general</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">                                                          
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Identificacion:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                       
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }} 
+                    </div>                
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }} 
+                    </div>                
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrarCredito, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                    
+            </div>
+        </div> 
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>TIPO</th>
+                <th>FECHA INICIO</th>
+                <th>IDENTIFICACIÓN</th>
+                <th>EMPLEADO</th>
+                <th style="text-align: right">VR. CREDITO</th>
+                <th style="text-align: right">VR. CUOTA</th>
+                <th style="text-align: right">VR. SALDO</th>
+                <th>CUOTAS</th>
+                <th>C. ACTUAL</th>
+                <th>APROBADO</th>
+                <th>SUSPENDIDO</th>
+            </tr>
+            {% set douTotalSaldo = 0  %}
+            {% for arCreditos in arCreditos %}
+            <tr>
+                
+                <td>{{ arCreditos.codigoCreditoPk  }}</td>
+                <td>{{ arCreditos.creditoTipoRel.nombre  }}</td>
+                <td>{{ arCreditos.fechaInicio |date("Y/m/d")  }}</td>
+                <td>{{ arCreditos.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arCreditos.empleadoRel.nombreCorto  }}</td>
+                <td style="text-align: right">{{ arCreditos.vrPagar | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCreditos.vrCuota | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCreditos.saldo | number_format(2, '.', ',') }}</td>
+                <td>{{ arCreditos.numeroCuotas  }}</td>
+                <td>{{ arCreditos.numeroCuotaActual  }}</td>
+                <td style="text-align: right" {% if arCreditos.aprobado == 0 %} class="danger"> NO {% else %} <td class="success">SI {% endif %}</td>
+                <td style="text-align: right" {% if arCreditos.estadoSuspendido == 0 %} class="success"> NO {% else %} <td class="danger">SI {% endif %}</td>
+                {% set douTotalSaldo = douTotalSaldo + arCreditos.saldo %}
+            </tr>
+            {% endfor %}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>                
+                <td></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right">{{ douTotalSaldo | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: right"></td>
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arCreditos) }} 
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arCreditos.getTotalItemCount }}</span></div>        
+            </div>
+        </div>                
+        <div class="btn-toolbar" style="float: right">                 
+            <div class="btn-group">                
+                {{ form_widget(form.BtnPDFCredito, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+                {{ form_widget(form.BtnExcelCredito, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

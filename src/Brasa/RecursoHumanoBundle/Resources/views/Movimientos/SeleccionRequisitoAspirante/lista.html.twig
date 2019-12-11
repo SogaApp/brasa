@@ -1,0 +1,101 @@
+{% extends '::base.html.twig' %}
+{% block title %}Selección requisito lista - Soga App{% endblock %}
+{% block content %}
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Lista requisición aspirante</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+
+                <div class="form-group form-group-sm">
+                    <label for="form_TxtNombre" class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.TxtNombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_cargoRel" class="col-sm-2 control-label">Cargo:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.cargoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }} 
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }} 
+                    </div>
+                </div>    
+                <div class="form-group form-group-sm">
+                    <label for="form_estadoAbierto" class="col-sm-2 control-label">Abierto:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.estadoAbierto, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>{{ knp_pagination_sortable(arRequisitos, 'CÓDIGO', 'sq.codigoSeleccionRequisitoPk') }}</th>
+                <th>FECHA</th>
+                <th>NOMBRE</th>
+                <th>GRUPO PAGO</th>
+                <th>CARGO</th>
+                <th>CANTIDAD SOLICITADA</th>
+                <th><p data-toggle="tooltip" data-placement="top" title="Abierto">ABIERTO</p></th>
+                <th style="text-align: center"></th>
+                <th></th>
+            </tr>
+            {% for arRequisitos in arRequisitos %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arRequisitos.codigoSeleccionRequisitoPk }}">{{ arRequisitos.codigoSeleccionRequisitoPk }} </td>
+                <td>{{ arRequisitos.fecha | date("Y/m/d")  }}</td>
+                <td>{{ arRequisitos.nombre  }}</td>                                
+                <td>{{ arRequisitos.centroCostoRel.nombre|default('SIN GRUPO PAGO')  }}</td>
+                <td>{{ arRequisitos.cargoRel.nombre|default('SIN CARGO')  }}</td>
+                <td>{{ arRequisitos.cantidadSolicitida  }}</td>
+                <td>{% if arRequisitos.estadoAbierto == 0 %} SI {% else %} NO {% endif %}</td>
+                <td style="text-align: center"><a href="{{ path('brs_rhu_requisicionaspirante_detalle', { 'codigoSeleccionRequisito': arRequisitos.codigoSeleccionRequisitoPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22 title="Detalles del registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arRequisitos.codigoSeleccionRequisitoPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Botones Menu Items -->
+        <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Requisiciones <span class="badge">{{ arRequisitos.getTotalItemCount }}</span></div>                        
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arRequisitos) }}       
+        </div>
+        <div class="btn-toolbar" style="float: right">
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

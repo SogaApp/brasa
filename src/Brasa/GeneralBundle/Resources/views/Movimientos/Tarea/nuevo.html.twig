@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+{% block title %}Tarea nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo tarea</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_usuarioTareaFk" class="col-sm-2 control-label">Responsable:</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.usuarioTareaFk, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>             
+            <div class="form-group form-group-sm">
+                <label for="form_fechaProgramada" class="col-sm-2 control-label">Fecha:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.fechaProgramada) }}
+                </div>
+            </div>      
+            <div class="form-group form-group-sm">
+                <label for="form_hora" class="col-sm-2 control-label">Hora:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.hora) }}
+                </div>
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label for="form_asunto" class="col-sm-2 control-label">Asunto:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.asunto, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}
+                </div>
+            </div>   
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-2 control-label">Comentarios:</label>
+                <div class="col-sm-10">
+                            {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                 
+        </div>
+    </div>                   
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_gen_movimiento_tarea') }}">Cancelar</a>        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>   
+    {{ form_end(form) }}
+</div>
+{% endblock %}

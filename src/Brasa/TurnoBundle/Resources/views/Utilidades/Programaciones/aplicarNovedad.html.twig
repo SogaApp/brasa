@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+{% block title %}Aplicar novedades - Soga App{% endblock %}
+{% block content %}
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>    
+<div class="container">
+    <div class="page-header">
+        <h3>Aplicar novedades a turnos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">  
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }}
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }}
+                    </div>
+                </div>                    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CODIGO</th>
+                <th>NÚMERO INCAPACIDAD</th>
+                <th>NÚMERO EPS</th>
+                <th>IDENTIFICACIÓN</th>
+                <th>EMPLEADO</th>                                                
+                <th>CENTRO COSTO</th>
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th style="text-align: right">DÍAS</th>
+                <th>COBRAR</th>
+                <th>PRORROGA</th>
+                <th>TRANSCRIPCIÓN</th>                
+                <th></th>                
+            </tr>
+            {% for arIncapacidades in arIncapacidades %}
+            <tr>                
+                <td>{{ arIncapacidades.codigoIncapacidadPk  }}</td>  
+                <td>{{ arIncapacidades.numero }}</td>
+                <td>{{ arIncapacidades.numeroEps }}</td>
+                <td>{{ arIncapacidades.empleadoRel.numeroIdentificacion }}</td>
+                <td>{{ arIncapacidades.empleadoRel.nombreCorto  }}</td>
+                <td>{{ arIncapacidades.centroCostoRel.nombre |default('')  }}</td>
+                <td>{{ arIncapacidades.fechaDesde |date("Y/m/d")  }}</td>
+                <td>{{ arIncapacidades.fechaHasta |date("Y/m/d")  }}</td>                                                
+                <td style="text-align: right">{{ arIncapacidades.cantidad | number_format(0, '.', ',') }}</td>                                            
+                <td>{% if arIncapacidades.estadoCobrar == 1 %} SI {% else %} NO {% endif %}</td>
+                <td>{% if arIncapacidades.estadoProrroga == 1 %} SI {% else %} NO {% endif %}</td>
+                <td>{% if arIncapacidades.estadoTranscripcion == 1 %} SI {% else %} NO {% endif %}</td>    
+                <td><input type="checkbox" name="ChkSeleccionarIncapacidad[]" value="{{ arIncapacidades.codigoIncapacidadPk }}" /></td>
+            </tr>
+            
+            {% endfor %}
+        </table>
+
+        <!-- Botones Menu Items -->
+        <div class="btn-group" style="float: left">
+            <div class="btn btn-default btn-sm">Registros <span class="badge">{% if arIncapacidades is not null %} {{ arIncapacidades.getTotalItemCount }} {%endif%}</span></div>                        
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {% if arIncapacidades is not null %}{{ knp_pagination_render(arIncapacidades) }} {%endif%}      
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">                                
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+            <div class="btn-group">                                
+                {{ form_widget(form.BtnAplicar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>            
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

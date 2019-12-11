@@ -1,0 +1,134 @@
+{% extends '::base.html.twig' %}
+{% block title %}Adicionales al pago - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Adicionales al pago  ({{ nombreModalidad }})</h3>            
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">                
+                <div     class="form-group form-group-sm">
+                    <label for="txtNumeroIdentificacion" class="col-sm-2 control-label">Empleado:</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                          <div class="col-lg-2">
+                            <div class="input-group">
+                              {{ form_widget(form.txtNumeroIdentificacion, { 'attr': {'class': 'form-control'} }) }}                              
+                            </div>
+                          </div>
+                          <div class="col-lg-10">
+                            <div class="input-group">     
+                              {{ form_widget(form.txtNombreCorto, { 'attr': {'class': 'form-control', 'readOnly': 'ReadOnly'} }) }}                              
+                              <span class="input-group-btn">                                        
+                                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado', { 'codigo': 'txtNumeroIdentificacion', 'nombre': 'txtNombreCorto' }) }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>                
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Aplica día laborado:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.aplicarDiaLaborado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>                    
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-2 control-label">Concepto:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.pagoConceptoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Inactivo:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.estadoInactivo, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>                      
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-condensed">
+            <tr>                       
+                <th>FECHA</th>
+                <th>CONCEPTO</th>
+                <th>DETALLE</th>
+                <th>GRUPO PAGO</th>
+                <th>CODIGO</th>
+                <th>DOCUMENTO</th>
+                <th>EMPLEADO</th>
+                <th>CANT</th>
+                <th>VALOR</th>
+                <th>ADL</th>
+                <th>ADL_SD</th>
+                <th>ACT</th>
+                <th>USUARIO</th>
+                <th></th>
+                <th></th>
+                <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+            </tr>
+            {% for arPagosAdicionales in arPagosAdicionales %}                
+            <tr {% if arPagosAdicionales.empleadoRel.codigoCentroCostoFk == null %} class = "danger" {% endif %}>                
+                <input type="hidden" name="LblCodigoGuia[]" value="{{ arPagosAdicionales.codigoPagoAdicionalPk }}">                                
+                <td>{{ arPagosAdicionales.fecha |date('Y/m/d')}}</td>                        
+                <td>{{ arPagosAdicionales.pagoConceptoRel.nombre}}</td>                        
+                <td>{{ arPagosAdicionales.detalle }}</td>
+                <td>{{ arPagosAdicionales.empleadoRel.centroCostoRel.nombre | default('Sin definir') }}</td>
+                <td>{{ arPagosAdicionales.codigoEmpleadoFk }}</td>
+                <td>{{ arPagosAdicionales.empleadoRel.numeroIdentificacion }}</td>
+                <td>{{ arPagosAdicionales.empleadoRel.nombreCorto|default('Sin nombre') }}</td>
+                <td style="text-align: right">{{ arPagosAdicionales.cantidad | number_format(1, '.', ',') }}</td>                            
+                <td style="text-align: right">{{ arPagosAdicionales.valor | number_format(2, '.', ',') }}</td>                                                                        
+                <td>{% if arPagosAdicionales.aplicaDiaLaborado == 1 %} SI {% else %} NO {% endif %}</td>                        
+                <td>{% if arPagosAdicionales.aplicaDiaLaboradoSinDescanso == 1 %} SI {% else %} NO {% endif %}</td>                        
+                <td>{% if arPagosAdicionales.estadoInactivo == 1 %} NO {% else %} SI {% endif %}</td>                        
+                <td>{{ arPagosAdicionales.codigoUsuario }}</td> 
+                <td style="text-align: center"><a href="{{ path('brs_rhu_pagos_adicionales_agregar_valoradicionaleditar', { 'tipo': arPagosAdicionales.tipoAdicional, 'codigoPagoAdicional': arPagosAdicionales.codigoPagoAdicionalPk, 'modalidad': modalidad, 'periodo': periodo }) }}" ><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                                
+                <td><a href="{{ path('brs_rhu_movimiento_pago_adicional_detalle', { 'codigoPagoAdicional': arPagosAdicionales.codigoPagoAdicionalPk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22 title="Detalles del registro"></a></td>                
+                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arPagosAdicionales.codigoPagoAdicionalPk }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arPagosAdicionales.getTotalItemCount }}</span></div>                        
+            </div>
+            <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arPagosAdicionales) }}       
+            </div>
+        </div>
+
+        <div class="btn-toolbar" style="float:right">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_programaciones_pago_cargar_adicionales_pago', {'periodo': periodo }) }}', 'CargarPagosAdicionales', 600, 900)" >Cargar</a>
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>    
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_pagos_adicionales_agregar_valoradicional', { 'tipo': 1, 'modalidad': modalidad, 'periodo': periodo }) }}" >Nueva bonificacion</a>                        
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_pagos_adicionales_agregar_valoradicional', { 'tipo': 2, 'modalidad': modalidad, 'periodo': periodo }) }}" >Nuevo descuento</a>
+             </div>
+             <div class="btn-group">                
+                {{ form_widget(form.BtnInactivar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                                        
+                {{ form_widget(form.BtnRetirarConcepto, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}                        
+            </div>
+        </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

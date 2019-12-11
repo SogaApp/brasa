@@ -1,0 +1,3 @@
+buscarcuentas:
+  pattern: /buscarcuentas
+  defaults: { _controller: BrasaContabilidadBundle:Contabilidad:buscarCuentas}

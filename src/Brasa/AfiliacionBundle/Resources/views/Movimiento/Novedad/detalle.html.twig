@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+{% block title %}Incapacidad detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+    <div class="page-header">
+        <h3>Lista novedades</h3>
+    </div>       	       
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 16,  'numero': arNovedad.codigoNovedadPk }) }}', 'Archivos', 500, 700)" >Archivos</a><br>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading">Información de novedad</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arNovedad.codigoNovedadPk }}</td>
+                        <td class="titulo">TIPO DE NOVEDAD:</td>
+                        <td align="right">{{ arNovedad.novedadTipoRel.nombre }}</td>                                               
+                    </tr>
+                    <tr>
+                        <td class="titulo">IDENTIFICACION:</td>
+                        <td class="td-in-well">{{ arNovedad.empleadoRel.numeroIdentificacion }}</td>
+                        <td class="titulo">DESDE:</td>
+                        <td align="right">{{ arNovedad.fechaDesde|date("Y/m/d") }}</td>                                               
+                    </tr>
+                    <tr>
+                        <td class="titulo">NOMBRE:</td>
+                        <td class="td-in-well">{{ arNovedad.empleadoRel.nombreCorto }}</td>
+                        <td class="titulo">HASTA:</td>
+                        <td align="right">{{ arNovedad.fechaHasta|date("Y/m/d") }}</td>                                               
+                    </tr>                                        
+                </table>
+            </div>
+        </div>
+        <br>
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_afi_movimiento_novedad') }}" style="float:left">Volver</a>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

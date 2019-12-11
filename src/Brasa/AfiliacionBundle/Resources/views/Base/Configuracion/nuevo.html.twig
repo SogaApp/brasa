@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <div class="container">
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+        {{ form_errors(form) }}
+        <h3>Configuracion</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">Informacion general</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                    <div class="form-group form-group-sm">
+                        {{ form(form) }}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

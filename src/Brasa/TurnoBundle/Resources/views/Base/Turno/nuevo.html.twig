@@ -1,0 +1,134 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo turno</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_codigoTurnoPk" class="col-sm-3 control-label">Codigo:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.codigoTurnoPk, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_nombre" class="col-sm-3 control-label">Nombre:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_horaDesde" class="col-sm-3 control-label">Hora desde:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.horaDesde, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_horaHasta" class="col-sm-3 control-label">Hora hasta:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.horaHasta, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_horas" class="col-sm-3 control-label">Horas:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.horas, { 'attr': {'class': 'form-control'} }) }}
+                    <p style="font-size: 0.8em;">* Horas para la programacion.</p>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_horasNomina" class="col-sm-3 control-label">Horas nomina:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.horasNomina, { 'attr': {'class': 'form-control'} }) }}
+                    <p style="font-size: 0.8em;">* Horas para el pago de nomina.</p>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_horasDiurnas" class="col-sm-3 control-label">Horas diurnas:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.horasDiurnas, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_horasNocturnas" class="col-sm-3 control-label">Horas nocturnas:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.horasNocturnas, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Complementario:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.complementario) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_novedad" class="col-sm-3 control-label">Novedad:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.novedad) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_descanso" class="col-sm-3 control-label">Descanso:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.descanso) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_incapacidad" class="col-sm-3 control-label">Incapacidad:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.incapacidad) }}
+                </div>
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_licencia" class="col-sm-3 control-label">Licencia:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.licencia) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Licencia no remunerada:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.licenciaNoRemunerada) }}
+                </div>
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label for="form_vacacion" class="col-sm-3 control-label">Vacacion:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.vacacion) }}
+                </div>
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Ingreso:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.ingreso) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Retiro:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.retiro) }}
+                </div>
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Induccion:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.induccion) }}
+                </div>
+            </div>                 
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-3 control-label">Comentarios:</label>
+                <div class="col-sm-9">
+                   {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_tur_base_turno') }}">Cancelar</a>
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

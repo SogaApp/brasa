@@ -1,0 +1,157 @@
+{% extends '::base.html.twig' %}
+{% block title %}Aspirante detalle - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+{{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+{{ form_errors(form) }}
+<div class="container">
+    <div class="page-header">
+        <h3>Aspirante</h3>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_aspirante_aplicar', {'codigoAspirante': arAspirante.codigoAspirantePk }) }}', 'Archivos', 500, 700)" >Aplicar</a>
+        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 18,  'numero': arAspirante.codigoAspirantePk }) }}', 'Archivos', 500, 700)" >Archivos</a>        
+    </div>
+    <br /> <br />
+    <!-- Encabezado Movimiento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Información aspirante</div>
+      <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered">
+                <tr>
+                    <td class="titulo">CÓDIGO:</td>
+                    <td class="td-in-well">{{ arAspirante.codigoAspirantePk }}</td>
+                    <td class="titulo">FECHA:</td>
+                    <td class="td-in-well">{{ arAspirante.fecha|date("Y/m/d") }}</td>
+                    <td class="titulo">CIUDAD:</td>
+                    <td class="td-in-well">{{ arAspirante.ciudadRel.nombre }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">NOMBRE:</td>
+                    <td class="td-in-well">{{ arAspirante.nombreCorto }}</td>
+                    <td class="titulo">CELULAR:</td>
+                    <td class="td-in-well">{{ arAspirante.celular }}</td>
+                    <td class="titulo">DIRECCIÓN:</td>
+                    <td class="td-in-well">{{ arAspirante.direccion }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">IDENTIFICACIÓN:</td>
+                    <td class="td-in-well">{{ arAspirante.numeroIdentificacion }}</td>
+                    <td class="titulo">TELÉFONO:</td>
+                    <td class="td-in-well">{{ arAspirante.telefono }}</td>
+                    <td class="titulo">BARRIO:</td>
+                    <td class="td-in-well">{{ arAspirante.barrio }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">LIBRETA MILITAR:</td>
+                        {% if arAspirante.codigoTipoLibreta == 1 %}<td class="td-in-well">1° CLASE</td>{% endif %}
+                        {% if arAspirante.codigoTipoLibreta == 2 %}<td class="td-in-well">2° CLASE</td>{% endif %}
+                        {% if arAspirante.codigoTipoLibreta == 0 %}<td class="td-in-well">NO APLICA</td>{% endif %}
+                    <td class="titulo">CIUDAD EXPEDICION:</td>
+                    <td class="td-in-well">{{ arAspirante.ciudadExpedicionRel.nombre }}</td>
+                    <td class="titulo">RH:</td>
+                    <td class="td-in-well">{{ arAspirante.rhRel.tipo }} </td>
+                </tr>
+                <tr>
+                    <td class="titulo">FECHA NACIMIENTO:</td>
+                    <td class="td-in-well">{{ arAspirante.fechaNacimiento|date("Y/m/d") }}</td>
+                    <td class="titulo">CIUDAD NACIMIENTO:</td>
+                    <td class="td-in-well">{{ arAspirante.ciudadNacimientoRel.nombre }}</td>
+                    <td class="titulo">CORREO:</td>
+                    <td class="td-in-well">{{ arAspirante.correo }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">ESTADO CIVIL</td>
+                    <td class="td-in-well">{{ arAspirante.estadoCivilRel.nombre }}</td>
+                    <td class="titulo">SEXO:</td>
+                    <td class="td-in-well">{% if arAspirante.codigoSexoFk == "M" %} MASCULINO {% else %} FEMENINO {% endif%}</td>
+                    <td class="titulo">DISPONIBILIDAD</td>
+                    {% if arAspirante.codigoDisponibilidadFk == 1 %}
+                        <td class="td-in-well">TIEMPO COMPLETO</td>
+                    {% endif%}    
+                    {% if arAspirante.codigoDisponibilidadFk == 2 %}
+                        <td class="td-in-well">MEDIO TIEMPO</td>
+                    {% endif%}
+                    {% if arAspirante.codigoDisponibilidadFk == 3 %}
+                        <td class="td-in-well">POR HORAS</td>
+                    {% endif%}
+                    {% if arAspirante.codigoDisponibilidadFk == 4 %}
+                        <td class="td-in-well">DESDE CASA</td>
+                    {% endif%}
+                    {% if arAspirante.codigoDisponibilidadFk == 5 %}
+                        <td class="td-in-well">PRACTICAS</td>
+                    {% endif%}
+                    {% if arAspirante.codigoDisponibilidadFk == 0 %}
+                        <td class="td-in-well">NO APLICA</td>
+                    {% endif%}
+                    
+                </tr>
+                <tr>
+                    <td class="titulo" >BLOQUEADO:</td>
+                    <td class="td-in-well">{% if arAspirante.bloqueado == 1 %} SI {% else %} NO {% endif%}</td>
+                    <td class="titulo" >ESTATURA:</td>
+                    <td class="td-in-well">{{ arAspirante.estatura }}</td>
+                    <td class="titulo" >PESO:</td>
+                    <td class="td-in-well">{{ arAspirante.peso }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo" >CARGO QUE ASPIRA:</td>
+                    <td class="td-in-well">{{ arAspirante.cargoAspira }}</td>
+                    <td class="titulo" >RECOMENDADO POR:</td>
+                    <td class="td-in-well">{{ arAspirante.recomendado }}</td>
+                    <td class="titulo" >OPERACION:</td>
+                    <td class="td-in-well">{{ arAspirante.operacion }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo" ></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo" ></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo" >REINTEGRO:</td>
+                    <td class="td-in-well">{% if arAspirante.reintegro == 1 %} SI {% else %} NO {% endif%}</td>
+                </tr>
+                <tr>
+                    <td class="titulo" colspan="8">COMENTARIOS: {{ arAspirante.comentarios }}</td>
+                </tr>
+            </table>
+      </div>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#requisiciones" data-toggle="tab">Requisiciones aplicadas</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="requisiciones">
+                <!-- Menu Encabezado Movimiento -->
+            <div id="detalles" style="width: 100%"><br>
+            <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>REQUISICIÓN</th>
+                <th>APROBADO</th>
+                <th></th>
+            </tr>
+            {% for arRequisicionAplicada in arRequisicionAplicada %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arRequisicionAplicada.codigoSeleccionRequisicionAspirantePk }}">{{ arRequisicionAplicada.codigoSeleccionRequisicionAspirantePk }} </td>
+                <td>{{ arRequisicionAplicada.seleccionRequisitoRel.nombre  }}</td>
+                <td>{% if arRequisicionAplicada.estadoAprobado == 1%}SI{% else %}NO{% endif %}</td>
+                <td style="text-align: center"><a href="{{ path('brs_rhu_seleccionrequisito_detalle', { 'codigoSeleccionRequisito': arRequisicionAplicada.codigoSeleccionRequisitoFk }) }}"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" target="_blank" width=22 height=22 title="Detalles del registro"></a></td>
+                
+            </tr>
+            {% endfor %}
+        </table>
+            </div>
+        </div>
+    </div>            
+    <!-- Fin Encabezado Movimiento -->
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <a  class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_aspirante_lista') }}">Volver</a>
+</div>
+{% endblock %}

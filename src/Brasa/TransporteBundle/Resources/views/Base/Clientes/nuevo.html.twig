@@ -1,0 +1,89 @@
+{% extends '::base.html.twig' %}
+{% block title %}Clientes nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">    
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo cliente</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Lista precio:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.listaPrecioRel, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Nit:</label>
+            <div class="col-sm-9">
+                {% if form_errors(form.nit) %}
+                    {{ form_widget(form.nit, { 'attr': {'class': 'form-control'} }) }}
+                    <div class="alert alert-danger" role="alert">{{ form_errors(form.nit)}}</div>
+                {% else %}
+                    {{ form_widget(form.nit, { 'attr': {'class': 'form-control'} }) }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Nombre completo:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.nombreCorto, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>    
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Liquidar automáticamente flete:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.liquidarAutomaticamenteFlete, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Liquidar automáticamente manejo:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.liquidarAutomaticamenteManejo, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Porcentaje manejo:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.porcentajeManejo, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Valor manejo minimo unidad:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.vrManejoMinimoUnidad, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Valor manejo mínimo despacho:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.vrManejoMinimoDespacho, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Descuentos kilos:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.descuentoKilos, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>    
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Cantidad peso mínimo unidad:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.ctPesoMinimoUnidad, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">Paga manejo corriente:</label>
+            <div class="col-sm-9">
+                    {{ form_widget(form.PagaManejoCorriente, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+            </div>
+        </div>    
+    </div>
+    <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_tte_base_clientes_lista') }}">Cancelar</a>
+            {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>    
+{% endblock %}

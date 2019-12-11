@@ -1,0 +1,38 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Programacion detalle resumen - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">Información del pedido</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">PEDIDO:</td>
+                        <td class="td-in-well">{{ arPedidoDetalle.pedidoRel.numero }}</td>
+                        <td class="titulo">FECHA:</td>
+                        <td class="td-in-well">{{ arPedidoDetalle.pedidoRel.fecha | date('Y/m/d') }}</td>
+                    </tr>                                               
+                    <tr>
+                        <td class="titulo">HORAS:</td>
+                        <td class="td-in-well">{{ arPedidoDetalle.horas }}</td>
+                        <td class="titulo">HORAS PROGRAMADAS:</td>
+                        <td class="td-in-well">{{ arPedidoDetalle.horasProgramadas }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">HORAS DIURNAS:</td>
+                        <td class="td-in-well">{{ arPedidoDetalle.horasDiurnas }}</td>
+                        <td class="titulo">HORAS DIURNAS PROGRAMADAS:</td>
+                        <td class="td-in-well">{{ arPedidoDetalle.horasDiurnasProgramadas }}</td>
+                    </tr>    
+                    <tr>
+                        <td class="titulo">HORAS NOCTURNAS:</td>
+                        <td class="td-in-well">{{ arPedidoDetalle.horasNocturnas }}</td>
+                        <td class="titulo">HORAS NOCTURNAS PROGRAMADAS:</td>
+                        <td class="td-in-well">{{ arPedidoDetalle.horasNocturnasProgramadas }}</td>
+                    </tr>                    
+                </table>                    
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

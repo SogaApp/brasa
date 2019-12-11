@@ -1,0 +1,61 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Precio detalle nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo detalle precio</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">   
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Ciudad destino:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.ciudadDestinoRel, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">producto:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.productoRel, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Valor kilo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.vrKilo, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Valor unidad:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.vrUnidad, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Cantidad kilos limite:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.ctKilosLimite, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Valor kilos limite:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.vrKilosLimite, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Valor kilo adicional:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.vrKiloAdicional, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+        </div>
+    </div>                   
+    <div class="modal-footer">      
+            <a class="btn btn-default btn-sm" onclick="window.close()">Cancelar</a>        
+            {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

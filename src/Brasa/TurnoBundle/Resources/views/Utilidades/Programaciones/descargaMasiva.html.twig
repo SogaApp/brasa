@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+{% block title %}Comprobantes de pago masivo - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Generar comprobantes pdf</h3>
+        </div>
+
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+        {{ form_errors(form) }}
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">Información a generar</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaDesde" class="col-sm-4 control-label">Fecha desde:</label>
+                    <div class="col-sm-8">
+                            {{ form_widget(form.fechaDesde) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaHasta" class="col-sm-4 control-label">Fecha hasta:</label>
+                    <div class="col-sm-8">
+                            {{ form_widget(form.fechaHasta) }}
+                    </div>
+                </div>                    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnGenerar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>    
+            </div>        
+        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

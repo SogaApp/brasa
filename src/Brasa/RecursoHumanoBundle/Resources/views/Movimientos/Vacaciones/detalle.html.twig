@@ -1,0 +1,166 @@
+{% extends '::base.html.twig' %}
+{% block title %}Vacación detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles de las vacaciones</h3>
+        </div>
+
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnLiquidar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnGenerarPago, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {% if arVacaciones.estadoPagoGenerado == 1 %}
+                    <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_vacacion_modificar', {'codigoVacacion': arVacaciones.codigoVacacionPk }) }}', 'Archivos', 600, 900)" >Modificar</a>
+                {% endif %}    
+            </div>
+        </div>
+        <br /><br />
+        <div class="panel panel-default">
+            <div class="panel-heading">Información de las vacaciones</div>
+            <div class="panel-body">
+                <table widtd="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arVacaciones.codigoVacacionPk }}</td>
+                        <td class="titulo">FECHA:</td>
+                        <td class="td-in-well">{{ arVacaciones.fecha |date("Y/m/d") }}</td>
+                        <td class="titulo">SALARIO ACTUAL:</td>
+                        <td class="td-in-well" align="right">{{ arVacaciones.vrSalarioActual | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">EMPLEADO:</td>
+                        <td class="td-in-well">{{ arVacaciones.empleadoRel.nombreCorto }}</td>
+                        <td class="titulo">IDENTIFICACIÓN:</td>
+                        <td class="td-in-well">{{ arVacaciones.empleadoRel.numeroIdentificacion }}</td>
+                        <td class="titulo">SALARIO PROMEDIO:</td>
+                        <td class="td-in-well" align="right">{{ arVacaciones.vrSalarioPromedio | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">PERIODO DESDE:</td>
+                        <td class="td-in-well">{{ arVacaciones.fechaDesdePeriodo |date("Y/m/d") }}</td>
+                        <td class="titulo">DÍAS VACACIONES:</td>
+                        <td class="td-in-well">{{ arVacaciones.diasVacaciones }}</td>
+                        <td class="titulo">PROM. RECARGO NOCTURNO:</td>
+                        <td class="td-label" align="right">{{ arVacaciones.vrPromedioRecargoNocturno | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">PERIODO HASTA:</td>
+                        <td class="td-in-well">{{ arVacaciones.fechaHastaPeriodo |date("Y/m/d") }}</td>
+                        <td class="titulo">DÍAS PAGADOS:</td>
+                        <td class="td-in-well">{{ arVacaciones.diasPagados }}</td>
+                        <td class="titulo">VR. SALUD</td>
+                        <td class="td-label" align="right">{{ arVacaciones.vrSalud | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">DISFRUTE DESDE:</td>
+                        <td class="td-in-well">{{ arVacaciones.fechaDesdeDisfrute |date("Y/m/d") }}</td>
+                        <td class="titulo">DÍAS DISFRUTADOS:</td>
+                        <td class="td-in-well">{{ arVacaciones.diasDisfrutados }}</td>
+                        <td class="titulo">VR. PENSIÓN:</td>
+                        <td class="td-label" align="right">{{ arVacaciones.vrPension | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">DISFRUTE HASTA</td>
+                        <td class="td-in-well">{{ arVacaciones.fechaHastaDisfrute |date("Y/m/d") }}</td>
+                        <td class="titulo">DÍAS DISFRUTADOS (REALES):</td>
+                        <td class="td-in-well">{{ arVacaciones.diasDisfrutadosReales }}</td>
+                        <td class="titulo">TOTAL VACACIONES:</td>
+                        <td class="td-in-well" align="right">{{ arVacaciones.vrVacacionBruto | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">GRUPO PAGO:</td>
+                        <td class="td-in-well">{{ arVacaciones.centroCostoRel.nombre }}</td>
+                        <td class="titulo">USUARIO:</td>
+                        <td class="td-in-well">{{ arVacaciones.codigoUsuario }}</td>
+                        <td class="titulo">OTRAS DEDUCCIONES:</td>
+                        <td class="td-in-well" align="right">{{ arVacaciones.vrDeduccion | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo">AUTORIZADO:</td>
+                        <td> {% if arVacaciones.estadoAutorizado == 1 %}SI{% else %} NO {% endif %}</td>
+                        <td class="titulo">BONIFICACIONES:</td>
+                        <td class="td-in-well" align="right">{{ arVacaciones.vrBonificacion | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo">PAGADO:</td>
+                        <td> {% if arVacaciones.estadoPagoGenerado == 1 %}SI{% else %} NO {% endif %}</td>
+                        <td class="titulo">A PAGAR:</td>
+                        <td class="td-in-well" align="right">{{ arVacaciones.vrVacacion | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo" >COMENTARIOS: </td>
+                        <td class="td-in-well" colspan="7">{{ arVacaciones.comentarios }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <ul class="nav nav-tabs">
+            <li  class="active"><a href="#adicionales" data-toggle="tab">Adicionales <span class="badge">{{ arVacacionAdicionales.getTotalItemCount }}</span></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="adicionales">
+                <br/>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>CREDITO</th>
+                        <th>COD</th>
+                        <th>CONCEPTO</th>
+                        <th>BONIFICACION</th>
+                        <th>DEDUCCION</th>
+                        <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodosTabla(this,'ChkSeleccionar[]');"/></th>
+                    </tr>
+                    {% for arVacacionAdicionales in arVacacionAdicionales %}
+                        <tr>
+                            <td>
+                                <input type="hidden" name="LblCodigoGuia[]" value="{{ arVacacionAdicionales.codigoVacacionAdicionalPk }}">
+                                <span class="badge">{{ arVacacionAdicionales.codigoVacacionAdicionalPk }}</span>
+                            </td>
+                            <td>{{ arVacacionAdicionales.codigoCreditoFk | default('') }}</td>
+                            <td>{{ arVacacionAdicionales.codigoPagoConceptoFk }}</td>
+                            <td>{{ arVacacionAdicionales.pagoConceptoRel.nombre | default('') }}</td>
+                            <td style="text-align: right">{{ arVacacionAdicionales.vrBonificacion | number_format(0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ arVacacionAdicionales.vrDeduccion | number_format(0, '.', ',') }}</td>
+                            <td align="center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arVacacionAdicionales.codigoVacacionAdicionalPk }}" /></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float:left">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_vacacion') }}" style="float:left">Volver</a>
+                    </div>
+                </div>
+
+                <div class="btn-toolbar" style="float: right">
+                    {% if arVacaciones.estadoAutorizado == 0 %}
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_vacacion_detalle_credito', {'codigoVacacion': arVacaciones.codigoVacacionPk}) }}', 'AgregarNuevo', 600, 900)">Nuevo credito</a>
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_vacacion_detalle_descuento', {'codigoVacacion': arVacaciones.codigoVacacionPk}) }}', 'AgregarNuevo', 600, 900)">Nueva deduccion</a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_vacacion_detalle_bonificacion', {'codigoVacacion': arVacaciones.codigoVacacionPk}) }}', 'AgregarNuevo', 600, 900)">Nueva bonificacion</a>
+                    </div>
+                    {% endif %}
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarAdicional, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

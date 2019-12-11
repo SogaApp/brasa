@@ -1,0 +1,74 @@
+{% extends '::base.html.twig' %}
+{% block title %}Visita detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles visita</h3>
+        </div>
+
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">                
+                {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnCerrar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 8,  'numero': arVisita.codigoVisitaPk }) }}', 'Archivos', 500, 700)" >Archivos</a>
+            </div>
+        </div>            
+        <br /><br />
+        <div class="panel panel-default">
+            <div class="panel-heading">Información de la visita</div>
+            <div class="panel-body">    
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arVisita.codigoVisitaPk }}</td>
+                        <td class="titulo">FECHA:</th>
+                        <td class="td-in-well">{{ arVisita.fecha |date("Y/m/d") }}</td>
+                        <td class="titulo">HORA:</td>
+                        <td class="td-in-well">{{ arVisita.fecha |date("H:i:s") }}</td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">IDENTIFICACIÓN:</td>
+                        <td class="td-in-well">{{ arVisita.empleadoRel.numeroIdentificacion }}</td>
+                        <td class="titulo">EMPLEADO:</td>
+                        <td class="td-in-well">{{ arVisita.empleadoRel.nombreCorto }}</td>
+                        <td class="titulo">GRUPO PAGO:</td>
+                        <td class="td-in-well">{{ arVisita.empleadoRel.centroCostoRel.nombre | default('')}}</td>                                                
+                    </tr>
+                    <tr>
+                        <td class="titulo">TIPO:</td>
+                        <td class="td-in-well">{{ arVisita.visitaTipoRel.nombre | default('') }}</td></td>
+                        <td class="titulo">REALIZA VISITA:</td>
+                        <td class="td-in-well">{{ arVisita.nombreQuienVisita }}</td>
+                        <td class="titulo">USUARIO:</td>
+                        <td class="td-in-well">{{ arVisita.codigoUsuario }}</td>                                                
+                    </tr>
+                    <tr>
+                        <td class="titulo">VALIDAR VENCIMIENTO:</td>
+                        <td class="td-in-well">{% if arVisita.validarVencimiento == 1 %} SI {% else %} NO {% endif %}</td>
+                        <td class="titulo">AUTORIZADO:</td>
+                        <td class="td-in-well">{% if arVisita.estadoAutorizado == 1 %} SI {% else %} NO {% endif %}</td>
+                        <td class="titulo">CERRADO:</td>
+                        <td class="td-in-well">{% if arVisita.estadoCerrado == 1 %} SI {% else %} NO {% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo" >COMENTARIOS: </td>
+                        <td class="td-in-well" colspan="6">{{ arVisita.comentarios }}</td>                                                                       
+                    </tr>                    
+                </table>
+            </div>
+        </div>                    
+        
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_visita') }}" style="float:left">Volver</a>
+            </div>
+        </div>  
+                     
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

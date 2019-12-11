@@ -1,0 +1,40 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Selección agregar visita - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <h3>Nueva visita</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion visita</div>
+        <div class="panel-body">    
+            <div class="form-group form-group-sm">
+                <label for="form_fecha" class="col-sm-3 control-label">Fecha/hora visita:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.fecha) }}                        
+                </div>                
+            </div>
+            <div class="form-group">
+                <label for="form_nombreQuienVisita" class="col-sm-3 control-label">Persona que visita:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.nombreQuienVisita, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-3 control-label">Comentarios:</label>
+                <div class="col-sm-9">
+                            {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>             
+        </div>
+    </div>                   
+    <div class="modal-footer">        
+            {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-sm btn-primary'} }) }}
+            {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-sm btn-primary'} }) }}
+    </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

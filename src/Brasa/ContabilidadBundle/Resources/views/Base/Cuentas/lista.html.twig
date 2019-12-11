@@ -1,0 +1,73 @@
+{% extends '::base.html.twig' %}
+{% block title %}Cuentas lista - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+    <div class="page-header">    
+        <h3>Listado cuentas</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                    <label for="form_TxtCodigoCuenta" class="col-sm-2 control-label">Código cuenta:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.TxtCodigoCuenta, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_TxtNombreCuenta" class="col-sm-2 control-label">Nombre cuenta:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.TxtNombreCuenta, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                    </div>
+                </div>    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    <table class="table table-striped table-bordered table-condensed table-hover">
+        <tr>
+            
+            <th>CÓDIGO</th>
+            <th>NOMBRE</th>
+            <th>PERMITE MOVIMIENTOS</th>
+            <th>EXIGE NIT</th>
+            <th>EXIGE CENTRO COSTO</th>
+            <th>PORCENTAJE RETENCIÓN</th>
+            <th></th>
+            <th></th>
+        </tr>
+        
+            {%for arCuentas in arCuentas %}
+               <tr>
+                <td>{{arCuentas.codigoCuentaPk}}</td>
+                <td>{{arCuentas.nombreCuenta}}</td>
+                <td>{% if arCuentas.permiteMovimientos == 1 %} SI {% else %}NO{% endif %}</td>
+                <td>{% if arCuentas.exigeNit == 1 %} SI {% else %}NO{% endif %}</td>
+                <td>{% if arCuentas.exigeCentroCostos == 1 %} SI {% else %}NO{% endif %}</td>
+                <td>{{arCuentas.porcentajeRetencion}}</td>
+                <td><a href="{{ path('brs_ctb_base_cuentas_nuevo',{'codigoCuenta': arCuentas.codigoCuentaPk})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arCuentas.codigoCuentaPk }}" /></td>
+            {%endfor%}
+            </tr>            
+    </table>
+    {{ knp_pagination_render(arCuentas) }}
+    <div class="btn-toolbar" style="float: right">              
+        <div class="btn-group">                
+            {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_ctb_base_cuentas_nuevo', {'codigoCuenta': 0}) }}">Nuevo</a>
+        </div>
+        <div class="btn-group">
+            {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}</td>                   
+        </div>
+    </div>     
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

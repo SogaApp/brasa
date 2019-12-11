@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+{% block title %}Carta detalle - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Carta</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 13,  'numero': arCarta.codigoCartaPk }) }}', 'Archivos', 500, 700)" >Archivos</a>
+            </div>
+        </div>
+        <br /><br />
+    <!-- Encabezado Movimiento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Información Carta</div>
+      <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered">
+                <tr>
+                    <td class="titulo">CÓDIGO:</td>
+                    <td>{{ arCarta.codigoCartaPk }}</td>
+                    <td class="titulo">PROCESO:</td>
+                    <td>{{ arCarta.CartaTipoRel.nombre }}</td>
+                    <td class="titulo">FECHA CREACIÓN</td>
+                    <td>{{ arCarta.fecha | date('Y/m/d') }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">EMPLEADO:</td>
+                    <td>{{ arCarta.empleadoRel.nombreCorto }}</td>
+                    <td class="titulo">IDENTIFICACIÓN:</td>
+                    <td>{{ arCarta.empleadoRel.numeroIdentificacion }}</td>
+                    <td class="titulo">FECHA OPCIONAL</td>
+                    <td>{% if arCarta.fechaOpcional == null%}{% else %}{{ arCarta.fechaOpcional | date('Y/m/d') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">COMENTARIOS:</td>
+                    <td colspan="5" >{{ arCarta.comentarios }}</td>
+                </tr>
+            </table>
+      </div>
+    </div>
+
+    <!-- Fin Encabezado Movimiento -->
+    
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <a  class="btn btn-default btn-sm" href="{{ path('brs_rhu_carta_lista') }}">Volver</a>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Pedido detalle compuesto nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo detalle pedido compuesto</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body"> 
+            <div class="form-group form-group-sm">
+                <label for="form_conceptoServicioRel" class="col-sm-3 control-label">Servicio:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.conceptoServicioRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>             
+            <div class="form-group form-group-sm">
+                <label for="form_modalidadServicioRel" class="col-sm-3 control-label">Modalidad:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.modalidadServicioRel, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label for="form_periodoRel" class="col-sm-3 control-label">Periodo:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.periodoRel, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>  
+            <div class="form-group form-group-sm">
+                <label for="form_diasDesde" class="col-sm-3 control-label">Dia desde:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.diaDesde, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_diasHasta" class="col-sm-3 control-label">Dia hasta:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.diaHasta, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                                       
+            <div class="form-group form-group-sm">
+                <label for="form_liquidarDiasReales" class="col-sm-3 control-label">Liquidar dias reales:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.liquidarDiasReales) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_dia31" class="col-sm-3 control-label">Habilitar dia 31:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.dia31) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_cantidad" class="col-sm-3 control-label">Cantidad:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.cantidad, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_lunes" class="col-sm-3 control-label"></label>
+                <div class="col-sm-9">
+                    Lun{{ form_widget(form.lunes) }}  Mar{{ form_widget(form.martes) }} Mie{{ form_widget(form.miercoles) }}
+                    Jue{{ form_widget(form.jueves) }} Vie{{ form_widget(form.viernes) }} Sab{{ form_widget(form.sabado) }} 
+                    Dom{{ form_widget(form.domingo) }} Fes{{ form_widget(form.festivo) }}
+                </div>                
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Detalle:</label>
+                <div class="col-sm-9">
+                   {{ form_widget(form.detalle, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                 
+        </div>
+    </div>               
+    <div class="modal-footer">        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

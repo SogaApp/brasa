@@ -1,0 +1,129 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta empleados detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles del empleado</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Información empleado</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arEmpleado.codigoEmpleadoPk }}</td>
+                        <td class="titulo">LIBRETA MILITAR:</td>
+                        {% if arEmpleado.codigoTipoLibreta == 1 %}<td class="td-in-well">1° CLASE</td>{% endif %}
+                        {% if arEmpleado.codigoTipoLibreta == 2 %}<td class="td-in-well">2° CLASE</td>{% endif %}
+                        {% if arEmpleado.codigoTipoLibreta == 0 %}<td class="td-in-well">NO APLICA</td>{% endif %}
+                        <td class="titulo">DIRECCIÓN:</td>
+                        <td class="td-in-well">{{ arEmpleado.direccion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">NOMBRE:</td>
+                        <td class="td-in-well">{{ arEmpleado.nombreCorto }}</td>
+                        <td class="titulo">CELULAR:</td>
+                        <td class="td-in-well">{{ arEmpleado.celular }}</td>
+                        <td class="titulo">BARRIO:</td>
+                        <td class="td-in-well">{{ arEmpleado.barrio }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">IDENTIFICACIÓN:</td>
+                        <td class="td-in-well">{{ arEmpleado.numeroIdentificacion }}</td>
+                        <td class="titulo">TELEFONO:</td>
+                        <td class="td-in-well">{{ arEmpleado.telefono }}</td>
+                        <td class="titulo">CIUDAD:</td>
+                        <td class="td-in-well">{{ arEmpleado.ciudadRel.nombre|default('SIN CONTRATO') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ESTADO CIVIL:</td>
+                        <td class="td-in-well">{{ arEmpleado.estadoCivilRel.nombre }}</td>
+                        <td class="titulo">SEXO:</td>
+                        <td class="td-in-well">{% if arEmpleado.codigoSexoFk == "M" %} MASCULINO {% else %} FEMENINO{% endif %}</td>
+                        <td class="titulo">RH:</td>
+                        <td class="td-in-well">{{ arEmpleado.rhRel.tipo }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">FECHA NACIMIENTO:</td>
+                        <td class="td-in-well">{{ arEmpleado.fechaNacimiento|date("Y/m/d") }}</td>
+                        <td class="titulo">CLASIFICACION RIESGO:</td>
+                        <td class="td-in-well">{{ arEmpleado.clasificacionRiesgoRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">CORREO:</td>
+                        <td class="td-in-well">{{ arEmpleado.correo }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">TIPO PENSIÓN:</td>
+                        <td class="td-in-well">{{ arEmpleado.tipoPensionRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">TIPO SALUD:</td>
+                        <td class="td-in-well">{{ arEmpleado.tipoSaludRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">DISCAPACIDAD</td>
+                        <td class="td-in-well">{% if arEmpleado.discapacidad == 1 %} SI {% else %} NO{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ENTIDAD PENSIÓN:</td>
+                        <td>{{ arEmpleado.entidadPensionRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">CARGO:</td>
+                        <td class="td-in-well">{{ arEmpleado.cargoRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">DESCRIPCIÓN CARGO:</td>
+                        <td class="td-in-well">{{ arEmpleado.cargoDescripcion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ENTIDAD SALUD:</td>
+                        <td class="td-in-well">{{ arEmpleado.entidadSaludRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">AUXILIO TRANSPORTE:</td>
+                        <td class="td-in-well">{% if arEmpleado.auxilioTransporte == 1 %} SI {% else %} NO{% endif %}</td>
+                        <td class="titulo">PADRE FAMILIA:</td>
+                        <td class="td-in-well">{% if arEmpleado.padreFamilia == 1 %} SI {% else %} NO{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CAJA COMPENSACIÓN:</td>
+                        <td class="td-in-well">{{ arEmpleado.entidadCajaRel.nombre|default('SIN CONTRATO') }}</td>
+                        <td class="titulo">NÚMERO CUENTA:</td>
+                        <td class="td-in-well">{{ arEmpleado.cuenta }}</td>
+                        <td class="titulo">CABEZA FAMILIA:</td>
+                        <td class="td-in-well">{% if arEmpleado.cabezaHogar == 1 %} SI {% else %} NO{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ENTIDAD CENSANTIA:</td>
+                        <td class="td-in-well">{{ arEmpleado.entidadCesantiaRel.nombre |default('') }}</td>
+                        <td class="titulo">TIPO CUENTA:</td>
+                        <td class="td-in-well">{% if arEmpleado.tipocuenta == "S" %}AHORRO{% else %}{% if arEmpleado.tipoCuenta == "D" %}CORRIENTE{% else %}SIN TIPO CUENTA{% endif%}{% endif %}</td>
+                        <td class="titulo">AUXILIO TRANSPORTE:</td>
+                        <td class="td-in-well">{% if arEmpleado.auxilioTransporte == 1 %} SI {% else %} NO{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">HORARIO:</td>
+                        <td><a href="{{ path('brs_rhu_base_horario_listar') }}" target="_blanck" >{{ arEmpleado.horarioRel.nombre|default('SIN HORARIO')  }}</a></td>
+                        <td class="titulo">BANCO</td>
+                        <td class="td-in-well">{{ arEmpleado.bancoRel.nombre | default('') }}</td>
+                        <td class="titulo">DV</td>
+                        <td class="td-in-well">{{ arEmpleado.digitoVerificacion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">TIPO EMPLEADO:</td>
+                        <td>{{ arEmpleado.empleadoTipoRel.nombre|default('') }}</td>
+                        <td class="titulo">ZONA:</td>
+                        <td class="td-in-well">{{ arEmpleado.zonaRel.nombre|default('') }}</td>
+                        <td class="titulo">SUB ZONA:</td>
+                        <td class="td-in-well">{{ arEmpleado.subZonaRel.nombre|default('') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo" >COMENTARIOS: </td>
+                        <td class="td-in-well" colspan="7">{{ arEmpleado.comentarios }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div> 
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_consulta_empleado') }}" style="float:left">Volver</a>
+            </div>
+        </div>
+        <br /><br />
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

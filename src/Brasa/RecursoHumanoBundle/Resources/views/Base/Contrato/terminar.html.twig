@@ -1,0 +1,69 @@
+<script>
+    $('#myModal').modal('toggle');
+</script>        
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Terminar contrato</h4>
+      </div>  
+      {{ form_start(formContrato, { 'attr': {'class': 'form-horizontal'} }) }}
+      {% if mensaje != "" %}
+      <div class="alert alert-danger" role="alert">{{mensaje}}</div>
+      {% endif  %}
+      <div class="modal-body">
+ 
+            <table width="100%" class="table table-condensed table-bordered">                
+                <tr>
+                    <td class="titulo">ULTIMO PAGO:</td>
+                    <td>{{ arContrato.fechaUltimoPago|date("Y/m/d") }}</td>
+                </tr>                                 
+                <tr>
+                    <td class="titulo">ULT. PAGO VACACION:</td>
+                    <td>{{ arContrato.fechaUltimoPagoVacaciones|date("Y/m/d") }}</td>
+                </tr>                 
+                <tr>
+                    <td class="titulo">ULT. PAGO PRIMA:</td>
+                    <td>{{ arContrato.fechaUltimoPagoPrimas|date("Y/m/d") }}</td>
+                </tr>                
+                <tr>
+                    <td class="titulo">ULT. PAGO CESANTIAS:</td>
+                    <td>{{ arContrato.fechaUltimoPagoCesantias|date("Y/m/d") }}</td>
+                </tr>                
+            </table>
+          
+          
+        <div class="form-group form-group-sm">
+            <label for="form_fechaTerminacion" class="col-sm-4 control-label">Fecha terminacion:</label>
+            <div class="col-sm-8">
+                    {{ form_widget(formContrato.fechaTerminacion, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="form_motivoRetiro" class="col-sm-4 control-label">Motivo retiro:</label>
+            <div class="col-sm-8">
+                    {{ form_widget(formContrato.terminacionContratoRel, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Comentario:</label>
+            <div class="col-sm-8">
+                    {{ form_widget(formContrato.comentarioTerminacion, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>            
+        <br />
+        <blockquote>
+          <p>Recuerde que no puede terminar un contrato antes de la fecha del ultimo pago.</p>
+          <footer>Requiere <cite title="Source Title">permiso especial</cite></footer>
+        </blockquote>            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>        
+        {{ form_widget(formContrato.BtnGuardar, { 'attr': {'class': 'btn btn-primary'} }) }}            
+      </div>
+      {{ form_end(formContrato) }}
+    </div>
+  </div>
+</div>

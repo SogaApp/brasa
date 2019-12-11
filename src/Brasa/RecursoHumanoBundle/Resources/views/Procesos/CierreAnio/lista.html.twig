@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+{% block title %}Cierre de año - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Cierres año</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <table  class="table table-striped table-bordered table-condensed table-hover">            
+            <tr>
+                <th>INCONSISTENCIAS</th>
+            </tr>
+            {% set foo = 1 %}
+            {% for arrInconsistencias in arrInconsistencias %}
+            <tr>
+                <td>{{ arrInconsistencias  }}</td>
+            </tr>
+            {% set foo = 2 %}               
+            {% endfor %}                        
+        </table>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>AÑO</th>
+                <th></th>
+            </tr>
+            {% for arCierresAnios in arCierresAnios %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arCierresAnios.codigoCierreAnioPk }}">{{ arCierresAnios.codigoCierreAnioPk }} </td>
+                <td>{{ arCierresAnios.anio  }}</td>
+                {% if foo == 1 %}
+                    <td style="text-align: center"><a class="btn btn-default btn-xs" id="{{ path('brs_rhu_proceso_cierre_anio_cerrar', { 'codigoCierreAnio': arCierresAnios.codigoCierreAnioPk}) }}" style="float:left">Cerrar</a></td>                                                                                                
+                {% else %}
+                    <td style="text-align: center"></td>
+                {% endif %}    
+            </tr>
+            {% endfor %}
+        </table>
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

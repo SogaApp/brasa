@@ -1,0 +1,43 @@
+login:
+    pattern:   /login
+    defaults:  { _controller: BrasaSeguridadBundle:Seguridad:login }
+    
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern:   /logout
+
+registro:
+    pattern:   /registro
+    defaults:  { _controller: BrasaSeguridadBundle:Seguridad:registro }
+    
+brs_seg_admin_usuario_lista:
+    pattern:   /admin/usuario/lista
+    defaults:  { _controller: BrasaSeguridadBundle:SegUsuarios:lista } 
+    
+brs_seg_admin_usuario_nuevo:
+    pattern:   /admin/usuario/nuevo/{codigoUsuario}
+    defaults:  { _controller: BrasaSeguridadBundle:SegUsuarios:nuevo }
+    
+brs_seg_admin_usuario_detalle:
+    pattern:   /admin/usuario/detalle/{codigoUsuario}
+    defaults:  { _controller: BrasaSeguridadBundle:SegUsuarios:detalle }
+    
+brs_seg_admin_usuario_detalle_nuevo_especial:
+    pattern:   /admin/usuario/detalle/nuevo/especial{codigoUsuario}
+    defaults:  { _controller: BrasaSeguridadBundle:SegUsuarios:detalleNuevoPermisoEspecial } 
+    
+brs_seg_admin_usuario_detalle_nuevo_documento:
+    pattern:   /admin/usuario/detalle/nuevo/especial/documento{codigoUsuario}
+    defaults:  { _controller: BrasaSeguridadBundle:SegUsuarios:detalleNuevoPermisoDocumento }    
+
+brs_seg_todos_recuperar_clave:
+    pattern:   /todos/recuperar/clave
+    defaults:  { _controller: BrasaSeguridadBundle:SegUsuarios:recuperar }
+    
+brs_seg_admin_usuario_cambiar_clave:
+    pattern:   /admin/usuario/cambiar/calve/{codigoUsuario}
+    defaults:  { _controller: BrasaSeguridadBundle:SegUsuarios:cambiarClave } 
+    
+     

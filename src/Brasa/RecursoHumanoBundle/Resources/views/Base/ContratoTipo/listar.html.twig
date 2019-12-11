@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+{% block title %}Contratos tipo lista - Soga App{% endblock %}  
+{% block content %}
+    <div class="container">
+    <div class="page-header">    
+        <h3>Listado tipos de contratos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }} 
+    <table class="table table-striped table-bordered table-condensed table-hover">
+        <tr>
+            <th>CÓDIGO</th>
+            <th>{{ knp_pagination_sortable(arContratosTipos, 'NOMBRE', 'TIPO') }}</th> 
+            <th>TIPO</th>
+            <th></th>
+            <th></th>
+        </tr>
+        
+            {%for arContratosTipos in arContratosTipos %}
+               <tr>
+                <td>{{arContratosTipos.codigoContratoTipoPk}}</td>
+                <td>{{arContratosTipos.nombre}}</td>
+                <td>{{arContratosTipos.contratoClaseRel.nombre |default('')}}</td>
+                <td><a href="{{ path('brs_rhu_base_contrato_tipo_nuevo',{'codigoContratoTipo': arContratosTipos.codigoContratoTipoPk})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arContratosTipos.codigoContratoTipoPk }}" /></td>
+            {%endfor%}
+            </tr>            
+    </table>
+    <div class="btn-group" style="float: left">
+        <div class="btn btn-default btn-sm">Contrato tipos <span class="badge">{{ arContratosTipos.getTotalItemCount }}</span></div>                        
+    </div>
+    <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+        {{ knp_pagination_render(arContratosTipos) }}       
+    </div>
+    <div class="btn-toolbar" style="float: right">              
+        <div class='btn-group'>
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_contrato_tipo_nuevo', {'codigoContratoTipo': 0}) }}">Nuevo</a>
+        </div>
+        <div class="btn-group">
+            {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}</td>                   
+        </div>
+        
+    </div>     
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

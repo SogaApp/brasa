@@ -1,0 +1,114 @@
+{% extends '::base.html.twig' %}
+{% block title %}Turno nuevo - Soga App{% endblock %} 
+{% block content %}
+<div class="container">    
+    {{ form_start(formTurno, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(formTurno) }}
+    <h3>Nuevo horario</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Código turno:</label>
+                <div class="col-sm-8">
+                    {% if form_errors(formTurno.codigoTurnoPk) %}
+                            {{ form_widget(formTurno.codigoTurnoPk, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                            <div class="alert alert-danger" role="alert">{{ form_errors(formTurno.codigoTurnoPk)}}</div>
+                        {% else %}
+                            {{ form_widget(formTurno.codigoTurnoPk, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                        {% endif %}    
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Nombre:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.nombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Hora desde:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.horaDesde, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Hora hasta:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.horaHasta, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Horas:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.horas, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Horas diurnas:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.horasDiurnas, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">horas nocturnas:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.horasNocturnas, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">horas pausa:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.horasPausa, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Novedad:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.novedad) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Descanso:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.descanso) }}
+                </div>
+            </div>         
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Incapacidad:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.incapacidad) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Licencia:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.licencia) }}
+                </div>
+            </div>     
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Vacacion:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.vacacion) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Salida dia siguiente:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.salidaDiaSiguiente) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-4 control-label">Comentarios:</label>
+                <div class="col-sm-8">
+                        {{ form_widget(formTurno.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+</div>
+</div>
+    <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_turno_listar') }}">Cancelar</a>
+            {{ form_widget(formTurno.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(formTurno) }}
+</div>    
+{% endblock %}

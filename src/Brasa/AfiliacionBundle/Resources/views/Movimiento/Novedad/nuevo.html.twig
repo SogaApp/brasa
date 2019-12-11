@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nueva novedad</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">     
+            <div class="form-group form-group-sm">
+                <label for="txtNumeroIdentificacion" class="col-sm-3 control-label">Empleado:</label>
+                <div class="col-sm-9">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          <input id="txtNumeroIdentificacion"  name="txtNumeroIdentificacion"  type="text" class="form-control" value="{{ arNovedad.empleadoRel.numeroIdentificacion |default('') }}"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                          <input id="txtNombreCortoEmpleado"  name="txtNombreCortoEmpleado"  type="text" class="form-control" value="{{ arNovedad.empleadoRel.nombreCorto |default('') }}" readOnly="ReadOnly" />
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_afi_buscar_empleado', { 'campoCodigo': 'txtNumeroIdentificacion', 'campoNombre': 'txtNombreCortoEmpleado' }) }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>            
+            <div class="form-group form-group-sm">
+                <label for="form_novedadTipoRel" class="col-sm-3 control-label">Tipo:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.novedadTipoRel, { 'attr': {'class': 'form-control'} }) }}                      
+                </div>                
+            </div>             
+            <div class="form-group form-group-sm">
+                <label for="form_fechaDesde" class="col-sm-3 control-label">Desde:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.fechaDesde) }}
+                </div>
+            </div> 
+            <div class="form-group form-group-sm">
+                <label for="form_fechaHasta" class="col-sm-3 control-label">Hasta:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.fechaHasta) }}
+                </div>
+            </div>               
+        </div>
+    </div>               
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('brs_afi_movimiento_novedad') }}">Cancelar</a>        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

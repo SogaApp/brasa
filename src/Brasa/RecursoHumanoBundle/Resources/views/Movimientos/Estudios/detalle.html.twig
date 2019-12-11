@@ -1,0 +1,105 @@
+{% extends '::base.html.twig' %}
+{% block title %}Estudio detalle - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Estudio</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 9,  'numero': arEstudio.codigoEmpleadoEstudioPk }) }}', 'Archivos', 500, 700)" >Archivos</a>      
+            </div>
+        </div>
+        <br /><br />
+    <!-- Encabezado Movimiento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Información estudios</div>
+      <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered">
+                <tr>
+                    <td class="titulo">CÓDIGO:</td>
+                    <td>{{ arEstudio.codigoEmpleadoEstudioPk }}</td>
+                    <td class="titulo">FECHA:</td>
+                    <td>{{ arEstudio.fecha | date('Y/m/d') }}</td>
+                    <td class="titulo">CARGO</td>
+                    <td>{{ arEstudio.empleadoRel.cargoRel.nombre |default('')}}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">EMPLEADO:</td>
+                    <td>{{ arEstudio.empleadoRel.nombreCorto }}</td>
+                    <td class="titulo">IDENTIFICACIÓN:</td>
+                    <td>{{ arEstudio.empleadoRel.numeroIdentificacion }}</td>
+                    <td class="titulo">TITULO:</td>
+                    <td>{{ arEstudio.titulo }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">TIPO ESTUDIO:</td>
+                    <td>{{ arEstudio.empleadoEstudioTipoRel.nombre|default('') }}</td>
+                    <td class="titulo">INSTITUCIÓN:</td>
+                    <td>{{ arEstudio.institucion }}</td>
+                    <td class="titulo">CIUDAD:</td>
+                    <td>{{ arEstudio.ciudadRel.nombre | default('')}}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">FECHA INICIO:</td>
+                    <td>{% if arEstudio.fechaInicio != null %}{{ arEstudio.fechaInicio | date('Y/m/d') }}{% else %}{% endif%}</td>
+                    <td class="titulo">FECHA TERMINACIÓN:</td>
+                    <td>{% if arEstudio.fechaTerminacion != null %}{{ arEstudio.fechaInicio | date('Y/m/d') }}{% else %}{% endif%}</td>
+                    <td class="titulo">FECHA VEN ESTUDIO/CURSO:</td>
+                    <td>{% if arEstudio.fechaVencimientoCurso != null %}{{ arEstudio.fechaVencimientoCurso | date('Y/m/d') }}{% else %}{% endif%}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">GRADO BACHILLER:</td>
+                    <td>{{arEstudio.gradoBachillerRel.grado |default('')}}</td>
+                    <td class="titulo">GRADUADO:</td>
+                    <td>{% if arEstudio.graduado == 1%}SI{% else %}NO{% endif %}</td>
+                    <td class="titulo">VALIDAR:</td>
+                    <td>{% if arEstudio.validarVencimiento == 1%}SI{% else %}NO{% endif %}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">TIPO ACREDITACIÓN:</td>
+                    <td>{{arEstudio.estudioTipoAcreditacionRel.nombre |default('')}}</td>
+                    <td class="titulo">ACADEMIA:</td>
+                    <td>{{arEstudio.academiaRel.nombre |default('')}}</td>
+                    <td class="titulo">ESTADO:</td>
+                    <td>{{ arEstudio.estudioEstadoRel.nombre |default('')}}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">NUMERO REGISTRO:</td>
+                    <td>{{arEstudio.numeroRegistro}}</td>
+                    <td class="titulo">NUMERO ACREDITACIÓN:</td>
+                    <td>{{arEstudio.numeroAcreditacion}}</td>
+                    <td class="titulo">FECHA ESTADO:</td>
+                    <td>{% if arEstudio.fechaEstado != null %}{{ arEstudio.fechaEstado | date('Y/m/d') }}{% else %}{% endif%}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">FECHA INICIO ACREDITACIÓN:</td>
+                    <td>{% if arEstudio.fechaInicioAcreditacion != null %}{{ arEstudio.fechaInicio | date('Y/m/d') }}{% else %}{% endif%}</td>
+                    <td class="titulo">FECHA VEN ACREDITACIÓN:</td>
+                    <td>{% if arEstudio.fechaVencimientoAcreditacion != null %}{{ arEstudio.fechaVencimientoAcreditacion | date('Y/m/d') }}{% else %}{% endif%}</td>
+                    <td class="titulo">ESTADO INVALIDO:</td>
+                    <td>{{ arEstudio.estudioEstadoInvalidoRel.nombre |default('')}}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">COMENTARIOS:</td>
+                    <td colspan="5" >{{ arEstudio.comentarios }}</td>
+                </tr>
+            </table>
+      </div>
+    </div>
+
+    <!-- Fin Encabezado Movimiento -->
+    
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <a  class="btn btn-default btn-sm" href="{{ path('brs_rhu_estudio_lista') }}">Volver</a>
+</div>
+{% endblock %}

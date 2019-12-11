@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle contrato</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">                      
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+            </div>
+        </div>
+        <br /><br />
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arContrato.codigoContratoPk }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">SOPORTE:</td>
+                        <td class="td-in-well">{{ arContrato.soporte }}</td>
+                        <td class="titulo"></td>
+                        <td></td>
+                    </tr>                
+                    <tr>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo">VALOR:</td>
+                        <td align="right">{{ arContrato.valor | number_format(0, '.', ',')}}</td>
+                    </tr>                        
+                </table>
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <a  class="btn btn-default btn-sm" href="{{ path('brs_tur_base_contrato') }}">Volver</a>
+    </div>
+{% endblock %}

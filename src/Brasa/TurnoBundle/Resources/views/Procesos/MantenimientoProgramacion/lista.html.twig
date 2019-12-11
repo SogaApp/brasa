@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+{% block title %}Mantenimiento programacion - Soga App{% endblock %}
+{% block content %}
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>    
+<div class="container">
+    <div class="page-header">
+        <h3>Mantenimiento programacion</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Parametros</div>
+            <div class="panel-body">        
+                <div class="form-group form-group-sm">
+                    <label for="form_fecha" class="col-sm-3 control-label">Periodo:</label>
+                    <div class="col-sm-9">
+                            {{ form_widget(form.anio) }}
+                            {{ form_widget(form.mes) }}
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnActualizarHorasProgramadas, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                        <br/><br/>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

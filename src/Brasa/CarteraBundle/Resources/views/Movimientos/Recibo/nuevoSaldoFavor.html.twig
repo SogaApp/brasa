@@ -1,0 +1,30 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Nuevo saldo a favor - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Nuevo saldo a favor</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+    <table  class="table table-striped table-bordered table-condensed table-hover">
+        <tr>
+            <th>CODIGO</th>
+            <th>VALOR</th>
+            <th>SALDO</th>
+            <th></th>
+        </tr>
+        {% for arSaldosFavor in arSaldosFavor %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arSaldosFavor.codigoSaldoFavorPk }}">{{ arSaldosFavor.codigoSaldoFavorPk }} </td>
+                <td>{{ arSaldosFavor.valor  }}</td>
+                <td>{{ arSaldosFavor.saldo }}</td>
+                <td style="text-align: right"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arSaldosFavor.codigoSaldoFavorPk }}" /></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="modal-footer">
+        {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+</div>
+    {{ form_end(form) }}
+{% endblock %}

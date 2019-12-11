@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+{% block title %}Entidad salud nuevo - Soga App{% endblock %} 
+{% block content %}
+<div class="container">    
+    {{ form_start(formSalud, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(formSalud) }}
+    <h3>Nueva entidad salud</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formSalud.nombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+        <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nit:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formSalud.nit, { 'attr': {'onkeypress': 'ValidaSoloNumeros();', 'class': 'form-control'} }) }}
+                </div>
+            </div>
+        <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Dirección:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formSalud.direccion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+        <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Teléfono:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formSalud.telefono, { 'attr': {'onkeypress': 'ValidaSoloNumeros();', 'class': 'form-control'} }) }}
+                </div>
+        </div>
+        <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Código interface:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formSalud.codigoInterface, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()', 'class': 'form-control'} }) }}
+                </div>
+        </div>        
+             
+    
+</div>
+
+</div> 
+        <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_salud_listar') }}">Cancelar</a>
+            {{ form_widget(formSalud.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        </div>
+{{ form_end(formSalud) }}  
+</div>
+{% endblock %}

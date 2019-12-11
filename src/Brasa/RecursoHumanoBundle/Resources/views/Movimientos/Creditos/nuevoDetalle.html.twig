@@ -1,0 +1,55 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Crédito detalle nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo pago</h3>
+    <div class="container">
+        {% if mensaje != "0" %}        
+            <div class="alert alert-warning" role="alert">{{mensaje}}</div>
+        {% endif %}    
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Abono</div>
+        <div class="panel-body">   
+            <div class="form-group form-group-sm">
+                <label for="form_creditoTipoRel" class="col-sm-2 control-label">Credito:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.creditoRel, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_creditoTipoRel" class="col-sm-2 control-label">Valor cuota:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.vrCuota, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_creditoTipoRel" class="col-sm-2 control-label">Saldo:</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.saldo, { 'attr': {'class': 'form-control' } }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_creditoTipoRel" class="col-sm-2 control-label">Saldo real:</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.saldoTotal, { 'attr': {'class': 'form-control' } }) }}
+                </div>
+            </div>    
+            <div class="form-group form-group-sm">
+                <label for="form_vrPagar" class="col-sm-2 control-label">Valor abono:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.vrAbono, { 'attr': {'onkeypress': 'ValidaSoloNumeros();','class': 'form-control'} }) }}
+                </div>
+            </div>
+            
+                            
+        </div>
+    </div>                   
+    <div class="modal-footer">      
+            <a class="btn btn-default btn-sm" onclick="window.close()">Cancelar</a>        
+            {{ form_widget(form.save, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

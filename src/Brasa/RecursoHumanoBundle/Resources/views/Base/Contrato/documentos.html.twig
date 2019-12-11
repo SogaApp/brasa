@@ -1,0 +1,31 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Entrega documentos - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+    {{ form_errors(form) }}
+    <h3>Lista entrega documentos</h3>
+    <br>
+    <table class="table table-striped table-bordered table-condensed table-hover">
+        <tr>            
+            <th>CÓDIGO</th>
+            <th>DOCUMENTO</th>
+            <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+        </tr>        
+            {%for arEntregaDocumentos in arEntregaDocumentos %}
+        <tr>
+            <td>{{arEntregaDocumentos.codigoDocumentoPk }}</td>
+            <td>{{arEntregaDocumentos.nombre }}</td>
+            <td align="center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arEntregaDocumentos.codigoDocumentoPk }}" /></td>
+        {%endfor%}
+        </tr>            
+    </table> 
+    <div class="btn-toolbar" style="float: right">
+        <div class="btn-group">                                
+            {{ form_widget(form.BtnEntregaDocumentos, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+        </div>  
+    </div>
+</div>       
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

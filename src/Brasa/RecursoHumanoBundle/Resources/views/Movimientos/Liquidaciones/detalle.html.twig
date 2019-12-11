@@ -1,0 +1,276 @@
+{% extends '::base.html.twig' %}
+{% block title %}Liquidaciones detalle - Soga App{% endblock %}
+{% block content %}
+    <script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles de liquidación</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-group">
+            {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+            {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            {{ form_widget(form.BtnLiquidar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            {{ form_widget(form.BtnGenerarPago, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            {% if arLiquidacion.estadoPagoGenerado == 0 %}
+                <a class="btn btn-default btn-sm" id="{{ path('brs_rhu_movimiento_liquidacion_parametros', { 'codigoLiquidacion': arLiquidacion.codigoLiquidacionPk}) }}" style="float:left">Parametros</a>                        
+            {% endif %}                
+            
+        </div>
+        <br /> <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">Información liquidación</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arLiquidacion.codigoLiquidacionPk }}</td>
+                        <td class="titulo">FECHA:</td>
+                        <td align="right">{{ arLiquidacion.fecha|date("Y/m/d") }}</td>
+                        <td class="titulo">IBP DÍAS ADICIONALES:</td>
+                        <td align="right">{{ arLiquidacion.VrIngresoBasePrestacionAdicional | number_format(0, '.', ',') }}</td>
+                        <td class="titulo">DIAS</td>
+                        <td align="right">{{ arLiquidacion.diasAdicionalesIBP }}</td>                                                
+                    </tr>
+                    <tr>
+                        <td class="titulo">FECHA INICIO:</td>
+                        <td class="td-in-well">{{ arLiquidacion.fechaDesde|date("Y/m/d") }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo"></td>
+                        <td align="right">$ {{ arLiquidacion.vrIngresoBasePrestacionCesantiasInicial | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                       
+                    </tr>
+                    <tr>
+                        <td class="titulo">FECHA FIN:</td>
+                        <td class="td-in-well">{{ arLiquidacion.fechaHasta|date("Y/m/d") }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo"></td>
+                        <td align="right">$ {{ arLiquidacion.vrIngresoBasePrestacionCesantias | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                         
+                    </tr>
+                    <tr>
+                        <td class="titulo">FECHA ÚLTIMO PAGO:</td>
+                        <td class="td-in-well">{{ arLiquidacion.fechaUltimoPago|date("Y/m/d") }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">SALARIO PROMEDIO CESANTIAS:</td>
+                        <td align="right">$ {{ arLiquidacion.vrSalarioPromedioCesantias | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">EMPLEADO:</td>
+                        <td class="td-in-well">{{ arLiquidacion.empleadoRel.nombreCorto|default('SIN EMPLEADO') }}</td>
+                        <td class="titulo">ULTIMO PAGO CESANTIAS:</td>
+                        <td align="right">{{ arLiquidacion.fechaUltimoPagoCesantias|date("Y/m/d") }}</td>
+                        <td class="titulo">CESANTIAS:</td>
+                        <td align="right">$ {{ arLiquidacion.vrCesantias | number_format(0, '.', ',') }}</td>
+                        <td class="titulo">DIAS(AUS):</td>
+                        <td align="right">{{ arLiquidacion.diasCesantias }}({{ arLiquidacion.diasCesantiasAusentismo }})</td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">IDENTIFICACIÓN:</td>
+                        <td>{{ arLiquidacion.empleadoRel.numeroIdentificacion}}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">INTERESES:</td>
+                        <td align="right">$ {{ arLiquidacion.vrInteresesCesantias | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">SALARIO:</td>
+                        <td align="right">$ {{ arLiquidacion.vrSalario | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">IBP PRIMAS (INICIAL):</td>
+                        <td align="right">$ {{ arLiquidacion.vrIngresoBasePrestacionPrimasInicial | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">CONTRATO:</td>
+                        <td><a href="{{ path('brs_rhu_base_contratos_detalles', { 'codigoContrato': arLiquidacion.codigoContratoFk }) }}" target="_blanck" >{{ arLiquidacion.codigoContratoFk}}</a></td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">IBP PRIMAS:</td>
+                        <td align="right">$ {{ arLiquidacion.vrIngresoBasePrestacionPrimas | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">INICIO CONTRATO:</td>
+                        <td>{{ arLiquidacion.fechaInicioContrato|date("Y/m/d") }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                        <td class="titulo">SALARIO PROMEDIO PRIMAS:</td>
+                        <td align="right">$ {{ arLiquidacion.vrSalarioPromedioPrimas | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">TIPO SALARIO:</td>
+                        <td>{{ arLiquidacion.contratoRel.salarioTipoRel.nombre}}</td>
+                        <td class="titulo">ULITMO PAGO PRIMAS:</td>
+                        <td align="right">{{ arLiquidacion.fechaUltimoPagoPrimas|date("Y/m/d") }}</td>
+                        <td class="titulo">PRIMA:</td>
+                        <td align="right">$ {{ arLiquidacion.vrPrima | number_format(0, '.', ',') }}</td>
+                        <td class="titulo">DIAS:</td>
+                        <td align="right">{{ arLiquidacion.diasPrimas }}</td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">GRUPO PAGO:</td>
+                        <td>{{ arLiquidacion.contratoRel.centroCostoRel.nombre}}</td>                       
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">SALARIO VACACIONES:</td>
+                        <td align="right">$ {{ arLiquidacion.vrSalarioVacaciones | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                       
+                    </tr>
+                    <tr>
+                        <td class="titulo">GENERADO:</td>
+                        <td>{% if arLiquidacion.estadoGenerado == 1 %}SI{% else %}NO{% endif %}</td> 
+                        <td class="titulo">ULTIMO PAGO VACACIONES:</td>
+                        <td align="right">{{ arLiquidacion.fechaUltimoPagoVacaciones|date("Y/m/d") }}</td>                        
+                        <td class="titulo">VACACIONES:</td>
+                        <td align="right">$ {{ arLiquidacion.vrVacaciones | number_format(0, '.', ',') }}</td>
+                        <td class="titulo">DIAS(AUS):</td>
+                        <td align="right">{{ arLiquidacion.diasVacaciones }}({{ arLiquidacion.diasVacacionesAusentismo }})</td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">PAGADO:</td>
+                        <td>{% if arLiquidacion.estadoPagoGenerado == 1 %}SI{% else %}NO{% endif %}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">INDEMNIZACION:</td>
+                        <td align="right">$ {{ arLiquidacion.vrIndemnizacion | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">NUMERO CUENTA:</td>
+                        <td>{{ arLiquidacion.empleadoRel.cuenta}}</td>                        
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">DEDUCCIONES:</td>
+                        <td align="right">$ {{ arLiquidacion.vrDeducciones | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                    </tr>
+                    <tr>
+                        <td class="titulo">LIQUIDAR SALARIO:</td>
+                        <td>{% if arLiquidacion.liquidarSalario == 1 %}SI{% else %}NO{% endif %}</td> 
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">DEDUCCION PRIMA:</td>
+                        <td align="right">$ {{ arLiquidacion.vrDeduccionPrima | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                       
+                    </tr>
+                    <tr>
+                        <td class="titulo">PORCENTAJE:</td>
+                        <td>{{ arLiquidacion.porcentajeIbp }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">BONIFICACIONES:</td>
+                        <td align="right">$ {{ arLiquidacion.vrBonificaciones | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                    </tr>                       
+                    <tr>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>
+                        <td class="titulo">TOTAL:</td>
+                        <td align="right">$ {{ arLiquidacion.vrTotal | number_format(0, '.', ',') }}</td>
+                        <td class="titulo"></td>
+                        <td align="right"></td>                        
+                    </tr>                     
+                    <tr>
+                        <td colspan="8">MOTIVO RETIRO: {{ arLiquidacion.motivoTerminacionRel.motivo | default('') }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br /><br />
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#deducciones" data-toggle="tab">Adicionales</a></li>
+        </ul>
+        <div class="tab-content">
+        <div class="tab-pane active" id="deducciones">
+            <!-- Menu Encabezado Movimiento -->
+            <div id="deducciones" style="width: 100%"><br>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>CREDITO</th>
+                        <th>CONCEPTO</th>
+                        <th>BONIFICACION</th>
+                        <th>DESCUENTO</th>
+                        <th></th>                        
+                        <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                    </tr>
+                    {% for arLiquidacionAdicionales in arLiquidacionAdicionales %}
+                    <tr>
+                        <td>
+                            <input type="hidden" name="LblCodigoGuia[]" value="{{ arLiquidacionAdicionales.codigoLiquidacionAdicionalPk }}">
+                            <span class="badge">{{ arLiquidacionAdicionales.codigoLiquidacionAdicionalPk }}</span>
+                        </td>                        
+                        <td>{{ arLiquidacionAdicionales.codigoCreditoFk |default('') }}</td>                                                                            
+                        <td>{{ arLiquidacionAdicionales.pagoConceptoRel.nombre | default('')}}</td>                        
+                        <td style="text-align: right">{{ arLiquidacionAdicionales.vrBonificacion | number_format(0, '.', ',') }}</td>                        
+                        <td style="text-align: right">{{ arLiquidacionAdicionales. vrDeduccion | number_format(0, '.', ',') }}</td>  
+                        {% if arLiquidacionAdicionales.vrBonificacion > 0 %}
+                            <td><a href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_liquidacion_adicional', {'codigoLiquidacion': arLiquidacionAdicionales.codigoLiquidacionFk, 'codigoLiquidacionAdicional': arLiquidacionAdicionales.codigoLiquidacionAdicionalPk, 'tipo': 1 }) }}', 'AgregarNuevoDetalle', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                                                                    
+                        {% else %}
+                            <td><a href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_liquidacion_adicional', {'codigoLiquidacion': arLiquidacionAdicionales.codigoLiquidacionFk, 'codigoLiquidacionAdicional': arLiquidacionAdicionales.codigoLiquidacionAdicionalPk, 'tipo': 2 }) }}', 'AgregarNuevoDetalle', 600, 900)"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                                                                    
+                        {% endif %}                        
+                        <td align="center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arLiquidacionAdicionales.codigoLiquidacionAdicionalPk }}" /></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+                <!-- Botones Menu Items -->
+                <div class="btn-toolbar" style="float:left">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_liquidacion') }}" style="float:left">Volver</a>
+                    </div>
+                </div>
+                <!-- Fin Botones Menu Items -->
+                <div class="btn-toolbar" style="float: right">
+                    {% if arLiquidacion.estadoAutorizado == 0 %}
+                        <div class="btn-group">                                                                                                    
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_liquidacion_adicional', {'codigoLiquidacion': arLiquidacion.codigoLiquidacionPk, 'codigoLiquidacionAdicional': 0, 'tipo': 1}) }}', 'AgregarNuevo', 600, 900)">Nueva bonificacion</a>                                                                                    
+                        </div>
+                        <div class="btn-group">                            
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_liquidacion_detalle_credito', {'codigoLiquidacion': arLiquidacion.codigoLiquidacionPk}) }}', 'AgregarNuevo', 600, 900)">Nuevo credito</a>                                                                                                            
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_liquidacion_adicional', {'codigoLiquidacion': arLiquidacion.codigoLiquidacionPk, 'codigoLiquidacionAdicional': 0, 'tipo': 2}) }}', 'AgregarNuevo', 600, 900)">Nuevo descuento</a>                                                        
+                        </div>
+                    {% endif %}
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarAdicional, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                    </div>
+                </div>
+                <br/><br/>
+                <hr/>
+            </div>
+        </div>
+    </div>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

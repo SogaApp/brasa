@@ -1,0 +1,143 @@
+{% extends '::base.html.twig' %}
+{% block title %}Detalle usuario - Soga App{% endblock %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles del usuario</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">                
+                <a  class="btn btn-default btn-sm" id="{{ path('brs_seg_user_usuario_cambiar_clave', { 'codigoUsuario': arUsuario.id}) }}" style="float:left">Cambiar clave</a>                
+            </div>
+        </div>
+            <br /><br />
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arUsuario.id }}</td>
+                        <td class="titulo">USUARIO</td>
+                        <td class="td-in-well">{{ arUsuario.nombreCorto }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+                    
+        <!-- Fin Encabezado Movimiento -->
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#documentos" data-toggle="tab">Documentos</a></li>
+            <li><a href="#especiales" data-toggle="tab">Especiales</a></li>
+            <li><a href="#roles" data-toggle="tab">Roles</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="documentos">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="documentos" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CÓDIGO</th>
+                            <th>PERMISO</th>
+                            <th>INGRESO</th>
+                            <th>NUEVO</th>
+                            <th>EDITAR</th>
+                            <th>ELIMINAR</th>
+                            <th>AUTORIZAR</th>
+                            <th>DESAUTORIZAR</th>
+                            <th>APROBAR</th>
+                            <th>DESAPROBAR</th>
+                            <th>ANULAR</th>
+                            <th>DESANULAR</th>
+                            <th>IMPRIMIR</th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodosTabla(this, 'ChkSeleccionarPermisoDocumento[]');"/></th>
+                        </tr>
+                        {% for arPermisosDocumentos in arPermisosDocumentos %}
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="LblCodigoGuiaDocumento[]" value="{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}">
+                                    <span class="badge">{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}</span>
+                                </td>
+                                <td>{{ arPermisosDocumentos.documentoRel.nombre  }}</td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarIngreso{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.ingreso == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarNuevo{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.nuevo == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarEditar{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.editar == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarEliminar{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.eliminar == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarAutorizar{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.autorizar == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarDesautorizar{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.desautorizar == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarAprobar{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.aprobar == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarDesaprobar{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.desaprobar == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarAnular{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.anular == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarDesanular{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.desanular == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarImprimir{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" {% if arPermisosDocumentos.imprimir == 1 %} checked="true" {% endif %}></td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarPermisoDocumento[]" value="{{ arPermisosDocumentos.codigoPermisoDocumentoPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div> 
+            </div>
+            <div class="tab-pane" id="especiales">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="especiales" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CODIGO</th>
+                            <th>MODULO</th>
+                            <th>TIPO</th>
+                            <th>PERMISO</th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                        </tr>
+                        {% for arPermisosEspeciales in arPermisosEspeciales %}
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="LblCodigoGuiaEspecial[]" value="{{ arPermisosEspeciales.codigoUsuarioPermisoEspecialPk }}">
+                                    <span class="badge">{{ arPermisosEspeciales.codigoUsuarioPermisoEspecialPk }}</span>
+                                </td>
+                                <td>{{ arPermisosEspeciales.permisoEspecialRel.modulo }}</td>
+                                <td>{{ arPermisosEspeciales.permisoEspecialRel.tipo }}</td>
+                                <td>{{ arPermisosEspeciales.permisoEspecialRel.nombre }}</td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarPermisoEspecial[]" value="{{ arPermisosEspeciales.codigoUsuarioPermisoEspecialPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="roles">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="roles" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CODIGO</th>
+                            <th>ROL</th>
+                            <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                        </tr>
+                        {% for arUsuarioRoles in arUsuarioRoles %}
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="LblCodigoUsuarioRol[]" value="{{ arUsuarioRoles.codigoUsuarioRolPk }}">
+                                    <span class="badge">{{ arUsuarioRoles.codigoUsuarioRolPk }}</span>
+                                </td>
+                                <td>{{ arUsuarioRoles.rolRel.nombre }}</td>
+                                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionarUsuarioRol[]" value="{{ arUsuarioRoles.codigoUsuarioRolPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>                    
+        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}       
+    </div>
+{% endblock %}

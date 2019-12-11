@@ -1,0 +1,33 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Detalle curso nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+    {{ form_errors(form) }}
+    <h3>Nuevo detalle (Curso)</h3> 
+        <table  class="table table-striped table-bordered table-condensed table-hover">            
+            <tr>
+                <th>CODIGO</th>
+                <th>IDENTIFICACION</th>  
+                <th>EMPLEADO</th>
+                <th>TIPO</th>
+                <th>COSTO</th>               
+                <th></th>
+            </tr>
+            {% for arCursosDetalles in arCursosDetalles %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arCursosDetalles.codigoCursoDetallePk }}">{{ arCursosDetalles.codigoCursoDetallePk }} </td>                                
+                <td>{{ arCursosDetalles.cursoRel.empleadoRel.numeroIdentificacion | default('') }}</td>
+                <td>{{ arCursosDetalles.cursoRel.empleadoRel.nombreCorto | default('') }}</td>                                                
+                <td>{{ arCursosDetalles.cursoTipoRel.nombre | default('') }}</td>                                                
+                <td style="text-align: right">{{ arCursosDetalles.costo | number_format(0, '.', ',') }}</td>                
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arCursosDetalles.codigoCursoDetallePk }}" /></td>
+            </tr>
+            {% endfor %} 
+        </table>                
+        <div class="modal-footer">            
+                {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

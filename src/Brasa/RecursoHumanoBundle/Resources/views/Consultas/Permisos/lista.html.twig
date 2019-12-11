@@ -1,0 +1,123 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta permisos - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <div class="page-header">
+        <h3>Consulta permisos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+    {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body"> 
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Identificación:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.TxtIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_centroCostoRel" class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>                 
+
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtNombre" class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.TxtNombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_cargoRel" class="col-sm-2 control-label">Cargo:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.cargoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_departamentoEmpresaRel" class="col-sm-2 control-label">Departamento:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.departamentoEmpresaRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_afectaHorario" class="col-sm-2 control-label">Afecta horario:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.afectaHorario, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>           
+            </div>
+        </div> 
+            <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>{{ knp_pagination_sortable(arPermisos, 'CODIGO', 'p.codigoPermisoPk') }}</th>
+                <th>FECHA</th>
+                <th>GRUPO PAGO</th>
+                <th>IDENTIFICACIÓN</th>
+                <th>{{ knp_pagination_sortable(arPermisos, 'NOMBRE', 'e.nombreCorto') }}</th>
+                <th>CARGO</th>
+                <th>DEPARTAMENTO</th>
+                <th>TIPO PERMISO</th>
+                <th>JEFE AUTORIZA</th>
+                <th>HORA SALIDA</th>
+                <th>HORA LLEGADA</th>
+                <th>HORAS</th>
+                <th>MOTIVO</th>
+                <th>AFECTA HORARIO</th>
+                <th>AUTORIZADO</th>
+                <th>OBSERVACIONES</th>
+            </tr>
+            {% for arPermisos in arPermisos %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arPermisos.codigoPermisoPk }}">{{ arPermisos.codigoPermisoPk }} </td>
+                <td>{{ arPermisos.fechaPermiso |date("Y-m-d")  }}</td>
+                <td>{{ arPermisos.centroCostoRel.nombre | default('')  }}</td>
+                <td>{{ arPermisos.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arPermisos.empleadoRel.nombreCorto  }}</td>
+                <td>{{ arPermisos.cargoRel.nombre  }}</td>
+                <td>{{ arPermisos.departamentoEmpresaRel.nombre  | default('')}}</td>
+                <td>{{ arPermisos.permisoTipoRel.nombre  | default('')}}</td>
+                <td>{{ arPermisos.jefeAutoriza  }}</td>
+                <td>{{ arPermisos.horaSalida |date('H:i:s')  }}</td>
+                <td>{{ arPermisos.horaLlegada |date('H:i:s')  }}</td>
+                <td>{{ arPermisos.horasPermiso  }}</td>
+                <td>{{ arPermisos.motivo  }}</td>
+                <td>{% if arPermisos.afectaHorario == 1%}SI{% else %}NO{% endif %}</td>
+                <td>{% if arPermisos.estadoAutorizado == 1%}SI{% else %}NO{% endif %}</td>
+                <td>{{ arPermisos.observaciones  }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arPermisos) }} 
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arPermisos.getTotalItemCount }}</span></div>        
+            </div>
+        </div>                
+        <div class="btn-toolbar" style="float: right">                 
+            <div class="btn-group">                
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+        </div>
+        
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

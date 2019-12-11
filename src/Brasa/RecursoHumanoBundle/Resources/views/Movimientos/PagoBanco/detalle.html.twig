@@ -1,0 +1,137 @@
+{% extends '::base.html.twig' %}
+{% block title %}Pago banco detalle - Soga App{% endblock %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle pago banco</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">                
+                {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                                                
+                {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                                                
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                                                                
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm">Archivo banco</button>
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-submenu">{{ form_widget(form.BtnArchivoBancolombiaPab, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}</li>
+                        <li class="dropdown-submenu">{{ form_widget(form.BtnArchivoBancolombiaSap, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}</li>
+                        <li class="dropdown-submenu">{{ form_widget(form.BtnArchivoAvvillasInterno, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}</li>
+                        <li class="dropdown-submenu">{{ form_widget(form.BtnArchivoAvvillasOtros, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}</li>
+                        <li class="dropdown-submenu">{{ form_widget(form.BtnArchivoDavivienda, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}</li>
+                        <li class="dropdown-submenu">{{ form_widget(form.BtnArchivoBogota, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}</li>
+                        <li class="dropdown-submenu">{{ form_widget(form.BtnArchivoColpatriaCsv, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}</li>
+                    </ul>
+                </div> 
+                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 7,  'numero': arPagoBanco.codigoPagoBancoPK }) }}', 'Archivos', 500, 700)" >Archivos</a>                    
+            </div>
+        </div>
+
+        <br /><br />
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información pago banco</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arPagoBanco.codigoPagoBancoPK}}</td>
+                        <td class="titulo">DESCRIPCION:</td>
+                        <td class="td-in-well">{{ arPagoBanco.descripcion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CUENTA:</td>
+                        <td class="td-in-well">{{ arPagoBanco.cuentaRel.nombre }}</td>
+                        <td class="titulo">BANCO:</td>
+                        <td class="td-in-well">{{ arPagoBanco.cuentaRel.bancoRel.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">AUTORIZADO:</td>
+                        <td>{% if arPagoBanco.estadoAutorizado == 1%}SI{% else %}NO{% endif %}</td>
+                        <td class="titulo" >REGISTROS:</td>
+                        <td align="right">{{ arPagoBanco.numeroRegistros | number_format(0, '.', ',')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">IMPRESO:</td>
+                        <td>{% if arPagoBanco.estadoImpreso == 1%}SI{% else %}NO{% endif %}</td>
+                        <td class="titulo" >TOTAL:</td>
+                        <td align="right">{{ arPagoBanco.vrTotalPago | number_format(0, '.', ',')}}</td>
+                    </tr>                    
+                </table>
+            </div>
+        </div>
+
+        <!-- Fin Encabezado Movimiento -->
+                       
+        <table class="table table-striped table-bordered table-condensed">
+             <tr>
+                 <th>CÓDIGO</th>
+                 <th>PAG</th>
+                 <th>VAC</th>
+                 <th>LIQ</th>
+                 <th>S.S</th>
+                 <th>IDENTIFICACION</th>
+                 <th>EMPLEADO</th>
+                 <th>BANCO</th>
+                 <th>CUENTA</th>
+                 <th style="text-align: right">VR. PAGO</th>                
+                 <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+             </tr>
+             {% for arPagoBancoDetalle in arPagoBancoDetalle %}
+                 {% if arPagoBancoDetalle.cuenta == null %}{% set class = 'danger' %}{% else %}{% set class = '' %}{% endif %}    
+                 <tr class="{{ class }}">
+                     <td>{{ arPagoBancoDetalle.codigoPagoBancoDetallePk  }}</td>
+                     <td>{{ arPagoBancoDetalle.codigoPagoFk  }}</td>
+                     <td>{{ arPagoBancoDetalle.codigoVacacionFk  }}</td>
+                     <td>{{ arPagoBancoDetalle.codigoLiquidacionFk  }}</td>
+                     <td>{{ arPagoBancoDetalle.codigoPeriodoDetalleFk  }}</td>
+                     <td>{{ arPagoBancoDetalle.empleadoRel.numeroIdentificacion | default('') }}</td>
+                     <td>{{ arPagoBancoDetalle.empleadoRel.nombreCorto | default('') }}</td>
+                     <td>{{ arPagoBancoDetalle.bancoRel.nombre |default('') }}</td>
+                     <td>{{ arPagoBancoDetalle.cuenta  }}</td>
+                     <td class="td-in-well" align="right">{{ arPagoBancoDetalle.vrPago | number_format(0, '.', ',') }}</td>
+                     <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arPagoBancoDetalle.codigoPagoBancoDetallePk }}" /></td>
+                 </tr>
+             {% endfor %}
+         </table>
+                          
+        <div class="btn-group" style="float: left">
+            <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arPagoBancoDetalle.getTotalItemCount }}</span></div>                        
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arPagoBancoDetalle) }}       
+        </div>                    
+        <div class="btn-toolbar" style="float: right">              
+            {%if arPagoBanco.estadoAutorizado == 0 %}                    
+                <div class="btn-group">
+                    <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_pago_banco_detalle_seguridad_social_nuevo', {'codigoPagoBanco': arPagoBanco.codigoPagoBancoPK}) }}', 'AgregarPagoBancoDetalle', 600, 900)">Nuevo seguridad social</a>
+                    <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_pago_banco_detalle_liquidacion_nuevo', {'codigoPagoBanco': arPagoBanco.codigoPagoBancoPK}) }}', 'AgregarPagoBancoDetalle', 600, 900)">Nuevo liquidacion</a>
+                    <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_pago_banco_detalle_vacacion_nuevo', {'codigoPagoBanco': arPagoBanco.codigoPagoBancoPK}) }}', 'AgregarPagoBancoDetalle', 600, 900)">Nuevo vacaciones</a>
+                    <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_movimiento_pago_banco_detalle_nuevo', {'codigoPagoBanco': arPagoBanco.codigoPagoBancoPK}) }}', 'AgregarPagoBancoDetalle', 600, 1200)">Nuevo nomina</a>
+                </div>                        
+            {% endif %}
+            <div class="btn-group">
+                {{ form_widget(form.BtnDetalleExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}               
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.BtnEliminarDetalle, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}               
+            </div>
+        </div> 
+           
+
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <a  class="btn btn-default btn-sm" href="{{ path('brs_rhu_movimiento_pago_banco') }}">Volver</a>
+    </div>
+{% endblock %}

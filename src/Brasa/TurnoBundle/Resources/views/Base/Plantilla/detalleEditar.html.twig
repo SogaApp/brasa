@@ -1,0 +1,124 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Detalle plantilla - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Detalle plantilla</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+    {{ form_errors(form) }}
+
+            <table class="table table-striped table-bordered table-condensed">
+            <tr>                                
+                <th>POS</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+                <th>11</th>
+                <th>12</th>
+                <th>13</th>
+                <th>14</th>
+                <th>15</th>
+                <th>16</th>
+                <th>17</th>
+                <th>18</th>
+                <th>19</th>
+                <th>20</th>
+                <th>21</th>
+                <th>22</th>
+                <th>23</th>
+                <th>24</th>
+                <th>25</th>
+                <th>26</th>
+                <th>27</th>
+                <th>28</th>
+                <th>29</th>
+                <th>30</th>
+                <th>31</th>
+                <th>LU</th>
+                <th>MA</th>
+                <th>MI</th>
+                <th>JU</th>
+                <th>VI</th>
+                <th>SA</th>
+                <th>DO</th>
+                <th>DF</th>
+                <th>FE</th>
+                <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+            </tr>
+            {% for arPlantillaDetalle in arPlantillaDetalle %}
+                <tr>
+                    <input type="hidden" name="LblCodigo[]" value="{{ arPlantillaDetalle.codigoPlantillaDetallePk }}">                      
+                        <td><input class="input-grid" type="text" name="TxtPosicion{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.posicion  }}" size="5" style="text-transform: uppercase; width:25px" onkeypress='validarMayuscula(this);' onclick="this.select()"/></td>    
+                        <td><input class="input-grid" type="text" name="TxtDia1{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia1  }}" size="4" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td><input class="input-grid" type="text" name="TxtDia2{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia2  }}" size="4" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td><input class="input-grid" type="text" name="TxtDia3{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia3  }}" size="4" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia4{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia4  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia5{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia5  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia6{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia6  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia7{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia7  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia8{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia8  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia9{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia9  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia10{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia10  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia11{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia11  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia12{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia12  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia13{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia13  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia14{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia14  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia15{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia15  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia16{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia16  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia17{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia17  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia18{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia18  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia19{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia19  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia20{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia20  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia21{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia21  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia22{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia22  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia23{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia23  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia24{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia24  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia25{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia25  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia26{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia26  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia27{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia27  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia28{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia28  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia29{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia29 }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia30{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia30  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDia31{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.dia31  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtLunes{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.lunes  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtMartes{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.martes  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtMiercoles{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.miercoles  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtJueves{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.jueves  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtViernes{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.viernes  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtSabado{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.sabado  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDomingo{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.domingo  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtDomingoFestivo{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.domingoFestivo  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>
+                        <td style="text-align: right"><input class="input-grid" type="text" name="TxtFestivo{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" value="{{ arPlantillaDetalle.festivo  }}" size="5" style="text-transform: uppercase; width:25px" onkeyup="javascript:this.value=this.value.toUpperCase();" onclick="this.select()"/></td>                                                           
+                    <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arPlantillaDetalle.codigoPlantillaDetallePk }}" /></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        </div>
+        <div class="btn-toolbar" style="float: right">
+        <div class="btn-group">
+            {{ form_widget(form.BtnDetalleActualizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+        </div>        
+        <div class="btn-group">
+            {{ form_widget(form.BtnDetalleEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+        </div>
+
+
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

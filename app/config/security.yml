@@ -1,0 +1,39 @@
+security:
+    encoders:
+        Brasa\SeguridadBundle\Entity\User:
+            algorithm: sha512
+            encode-as-base64: true
+            iterations: 10
+ 
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
+ 
+    providers:
+        user_db:
+            entity: { class: Brasa\SeguridadBundle\Entity\User, property: username }
+ 
+    firewalls:
+        main:
+            pattern: /.*
+            provider: user_db
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                remember_me: true
+            logout:
+                path: /logout
+                target: /
+            remember_me:
+                key: MiClaveSegura
+                lifetime: 1800
+                path: /.*
+                domain: ~
+            security: true
+            anonymous: true
+            
+    access_control:
+        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: /todos, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /admin, roles: ROLE_ADMIN }
+        - { path: /.*, roles: ROLE_USER }        
+        - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

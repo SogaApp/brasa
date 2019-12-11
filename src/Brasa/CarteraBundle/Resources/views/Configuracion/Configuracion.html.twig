@@ -1,0 +1,61 @@
+{% extends '::base.html.twig' %}
+{% block title %}Configuración cartera - Soga App{% endblock %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">    
+        {{ form_start(formConfiguracion, { 'attr': {'class': 'form-horizontal'} }) }}
+        {{ form_errors(formConfiguracion) }}
+        <h3>Configuración</h3>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#configuracion" data-toggle="tab">Configuración</a></li>
+            <li><a href="#consecutivo" data-toggle="tab">Consecutivo</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="configuracion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Información de la configuración</div>
+                    <div class="panel-body">
+                                                                                
+                    </div>
+                </div>  
+            </div>
+            <div class="tab-pane" id="consecutivo">
+                <div id="consecutivo" style="width: 100%">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Información de los consecutivos</div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered table-condensed table-hover">
+                                <tr>
+                                    <th>CÓDIGO</th>
+                                    <th>NOMBRE</th>
+                                    <th>CONSECUTIVO</th>
+                                </tr>
+                                {% for arConsecutivo in arConsecutivo %}
+                                    <tr>
+
+                                        <td>
+                                            <input type="hidden" name="LblCodigo[]" value="{{ arConsecutivo.codigoConsecutivoPk }}">
+                                            <span class="badge">{{ arConsecutivo.codigoConsecutivoPk }}</span>
+                                        </td>
+                                        <td>{{ arConsecutivo.nombre }}</td>
+                                        <td style="text-align: left"><input class="input-grid" type="text" name="TxtConsecutivo{{ arConsecutivo.codigoConsecutivoPk }}" value="{{ arConsecutivo.consecutivo }}" size="5" style="text-align: right; width:50px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>            
+                </div> 
+            </div>
+
+            <div class="modal-footer">      
+                {{ form_widget(formConfiguracion.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            </div>                    
+        </div>
+        {{ form_end(formConfiguracion) }}
+    </div>      
+{% endblock %}

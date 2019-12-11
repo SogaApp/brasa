@@ -1,0 +1,3 @@
+brasa_tesoreria_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: BrasaTesoreriaBundle:Default:index }

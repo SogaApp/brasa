@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+{% block title %}Tipo acreditacion lista - Soga App{% endblock %}  
+{% block content %}
+    <div class="container">
+    <div class="page-header">    
+        <h3>Listado tipo acreditacion</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }} 
+    <table class="table table-striped table-bordered table-condensed table-hover">
+        <tr>
+            <th>CÓDIGO</th>
+            <th>CODIGO CURSO</th>
+            <th>NOMBRE</th>
+            <th>CARGO</th>
+            <th>CODIGO CARGO</th>
+            <th></th>
+            <th></th>
+        </tr>
+            {%for arAcreditacionTipo in arAcreditacionTipo %}
+               <tr>
+                <td>{{arAcreditacionTipo.codigoAcreditacionTipoPk}}</td>
+                <td>{{arAcreditacionTipo.codigo}}</td>
+                <td>{{arAcreditacionTipo.nombre}}</td>
+                <td>{{arAcreditacionTipo.cargo}}</td>
+                <td>{{arAcreditacionTipo.cargoCodigo}}</td>
+                <td><a href="{{ path('brs_rhu_base_acreditacion_tipo_nuevo',{'codigoAcreditacionTipoPk': arAcreditacionTipo.codigoAcreditacionTipoPk})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arAcreditacionTipo.codigoAcreditacionTipoPk }}" /></td>
+            {%endfor%}
+            </tr>            
+    </table>
+    <div class="btn-group" style="float: left">
+        <div class="btn btn-default btn-sm">Tipos acreditaciones <span class="badge">{{ arAcreditacionTipo.getTotalItemCount }}</span></div>                        
+    </div>
+    <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+        {{ knp_pagination_render(arAcreditacionTipo) }}       
+    </div>
+    <div class="btn-toolbar" style="float: right">              
+        <div class="btn-group">
+            {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_acreditacion_tipo_nuevo', {'codigoAcreditacionTipoPk': 0}) }}">Nuevo</a>
+        </div>
+        <div class="btn-group">
+            {{ form_widget(form.BtnEliminar, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}</td>                   
+        </div>
+    </div>     
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

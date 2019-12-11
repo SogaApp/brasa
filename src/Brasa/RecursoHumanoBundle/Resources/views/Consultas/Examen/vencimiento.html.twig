@@ -1,0 +1,79 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta exámenes vencidos - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <div class="page-header">
+        <h3>Consulta vencimiento examenes medicos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">                
+                                           
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtNumeroIdentificacion" class="col-sm-2 control-label">Identificacion:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtNumeroIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                       
+                <div class="form-group form-group-sm">  
+                    <label for="form_fecha" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.fecha, {'attr': {'maxlength' : 10} }) }}
+                    </div>
+                </div>                                         
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                    
+            </div>
+        </div> 
+            <table class="table table-striped table-bordered table-condensed">
+                <tr>
+                    <th>{{ knp_pagination_sortable(arExamenesDetalles, 'CÓDIGO', 'e.codigoExamenDetallePk') }}</th>
+                    <th>EXAMEN</th>
+                    <th>VENCIMIENTO</th>
+                    <th>IDENTIFICACION</th>
+                    <th>EMPLEADO</th>
+                    <th></th>
+                </tr>
+                {% for arExamenesDetalles in arExamenesDetalles %}
+                    <tr>
+                        <td><input type="hidden" name="LblCodigo[]" value="{{ arExamenesDetalles.codigoExamenDetallePk }}">{{ arExamenesDetalles.codigoExamenDetallePk }} </td>
+                        <td>{{ arExamenesDetalles.examenTipoRel.nombre  }}</td>
+                        {% if arExamenesDetalles.validarVencimiento == 1 %}
+                            <td>{{ arExamenesDetalles.fechaVence |date("Y/m/d")  }}</td>
+                        {% else %}
+                            <td>NO REQUIERE</td>
+                        {% endif %}
+                        <td>{{ arExamenesDetalles.examenRel.identificacion  }}</td>
+                        <td>{{ arExamenesDetalles.examenRel.nombreCorto  }}</td>
+                        <td style="text-align: center"><a href="{{ path('brs_rhu_examen_detalle', { 'codigoExamen': arExamenesDetalles.codigoExamenFk }) }}" target="_blank"><img src="{{ asset('imagenes/bootstrap/glyphicons_152_new_window.png') }}" width=22 height=22></a></td>                
+                    </tr>
+                {% endfor %}
+            </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arExamenesDetalles) }} 
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arExamenesDetalles.getTotalItemCount }}</span></div>        
+            </div>
+        </div>                
+        <div class="btn-toolbar" style="float: right">                 
+            <div class="btn-group">                
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

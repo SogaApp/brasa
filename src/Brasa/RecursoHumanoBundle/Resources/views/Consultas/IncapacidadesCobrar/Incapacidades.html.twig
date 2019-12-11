@@ -1,0 +1,111 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta incapacidades por cobrar - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <div class="page-header">
+        <h3>Consulta incapacidades por cobrar</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">                
+                <div class="form-group form-group-sm">  
+                    <label for="form_centroCostoRel" class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                                           
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Identificacion:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>   
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }} 
+                    </div>                
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }} 
+                    </div>                
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_entidadSaludRel" class="col-sm-2 control-label">Eps:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.entidadSaludRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrarIncapacidadesCobrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>    
+            </div>
+        </div> 
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>NUMERO</th>
+                <th>TIPO</th>                
+                <th>EPS</th>
+                <th>IDENTIFICACION</th>                
+                <th>EMPLEADO</th>                
+                <th>DESDE</th>
+                <th>HASTA</th>
+                <th>DÍAS</th>
+                <th>COB</th>
+                <th>PRO</th>
+                <th>TRA</th>
+                <th>LEG</th>
+                <th style="text-align: right">VALOR</th>
+                <th style="text-align: right">PAGADO</th>
+                <th style="text-align: right">SALDO</th>
+                
+            </tr>
+            {% for arIncapacidadesCobrar in arIncapacidadesCobrar %}
+            <tr>
+                <td>{{ arIncapacidadesCobrar.numeroEps }} </td>
+                <td>{{ arIncapacidadesCobrar.incapacidadTipoRel.nombre  }}</td>                
+                <td>{{ arIncapacidadesCobrar.entidadSaludRel.nombre  }}</td>
+                <td>{{ arIncapacidadesCobrar.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arIncapacidadesCobrar.empleadoRel.nombreCorto  }}</td>                
+                <td>{{ arIncapacidadesCobrar.fechaDesde |date("Y/m/d")  }}</td>
+                <td>{{ arIncapacidadesCobrar.fechaHasta |date("Y/m/d")  }}</td>
+                <td>{{ arIncapacidadesCobrar.cantidad  }}</td>
+                <td>{% if arIncapacidadesCobrar.estadoCobrar == 1  %}SI{%else%}NO{% endif %}</td>
+                <td>{% if arIncapacidadesCobrar.estadoProrroga == 1  %}SI{%else%}NO{% endif %}</td>
+                <td>{% if arIncapacidadesCobrar.estadoTranscripcion == 1  %}SI{%else%}NO{% endif %}</td>
+                <td>{% if arIncapacidadesCobrar.estadoLegalizado == 1  %}SI{%else%}NO{% endif %}</td>
+                <td style="text-align: right">{{ arIncapacidadesCobrar.vrIncapacidad | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arIncapacidadesCobrar.vrPagado | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arIncapacidadesCobrar.vrSaldo | number_format(2, '.', ',') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arIncapacidadesCobrar) }} 
+            </div>
+            
+        </div>                
+        <div class="btn-toolbar" style="float: right">                 
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcelIncapacidadesCobrar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+                {{ form_widget(form.BtnPDFIncapacidadesCobrar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+

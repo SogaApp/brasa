@@ -1,0 +1,124 @@
+{% extends '::base.html.twig' %}
+{% block title %}Grupo de pago detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle grupo de pago</h3>
+        </div>
+
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Información centro de costo</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.codigoCentroCostoPk }}</td>
+                        <td class="titulo">NOMBRE:</th>
+                        <td class="td-in-well">{{ arCentrosCostos.nombre }}</td>
+                        <td class="titulo">PERIODO PAGO:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.periodoPagoRel.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ÚLTIMA PROGRAMACION PAGO:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.fechaUltimoPagoProgramado|date('Y/m/d') }}</td>
+                        <td class="titulo">PAGO ABIERTO:</th>
+                        <td class="td-in-well">{% if arCentrosCostos.pagoAbierto == 1 %} SI {% else %} NO {% endif%}</td>
+                        <td class="titulo">ACTIVO:</td>
+                        <td class="td-in-well">{% if arCentrosCostos.estadoActivo == 1 %} SI {% else %} NO {% endif%}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">PAGO AUTOMÁTICO:</td>
+                        <td class="td-in-well">{% if arCentrosCostos.generarPagoAutomatico == 1 %} SI {% else %} NO {% endif%}</td>
+                        <td class="titulo">HORA PAGO AUTOMÁTICO:</th>
+                        <td class="td-in-well">{{ arCentrosCostos.horaPagoAutomatico|date('H:i')}}</td>
+                        <td class="titulo">CIUDAD:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.ciudadRel.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CÓDIGO INTERFACE:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.codigoInterface|default('SIN CÓDIGO') }}
+                        <td class="titulo">DÍAS PAGO</td>
+                        <td class="td-in-well">{{ arCentrosCostos.diasPago }}</td>
+                        <td class="titulo">SUCURSAL SEGURIDAD SOCIAL:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.sucursalRel.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">PORCENTAJE ADMINISTRACIÓN:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.porcentajeAdministracion }}
+                        <td class="titulo">VALOR ADMINISTRACIÓN:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.valorAdministracion }}
+                        <td class="titulo">GENERA SERVICIO POR COBRAR</td>
+                        <td class="td-in-well">{% if arCentrosCostos.generaServicioCobrar == 1 %} SI {% else %} NO {% endif%}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ULTIMO PAGO:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.fechaUltimoPago|date('Y/m/d') }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ULTIMO PAGO PRIMAS:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.fechaUltimoPagoPrima|date('Y/m/d') }} </td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">ULTIMO PAGO CESANTIAS:</td>
+                        <td class="td-in-well">{{ arCentrosCostos.fechaUltimoPagoCesantias|date('Y/m/d') }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">COMENTARIOS:</td>
+                        <td class="td-in-well" colspan="5">{{ arCentrosCostos.comentarios }}
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <a name="marcador"></a>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#sedes" data-toggle="tab">Sedes</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="sedes">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CODIGO</th>
+                        <th>NOMBRE</th>
+                    </tr>
+                    {% for arSedes in arSedes %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arSedes.codigoSedePk }}">{{ arSedes.codigoSedePk }} </td>
+                            <td>{{ arSedes.nombre  }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_centros_costos_lista') }}" style="float:left">Volver</a>
+            </div>
+            <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Sedes <span class="badge">{{ arSedes.getTotalItemCount }}</span></div>
+            </div>
+            <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arSedes) }}
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

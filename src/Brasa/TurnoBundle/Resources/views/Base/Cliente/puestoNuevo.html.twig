@@ -1,0 +1,99 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo puesto</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">     
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Programador:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.programadorRel, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label for="form_nombre" class="col-sm-3 control-label">Nombre:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                </div>                
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_direccion" class="col-sm-3 control-label">Direccion:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.direccion, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                </div>                
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_ciudadRel" class="col-sm-3 control-label">Ciudad:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.ciudadRel, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_telefono" class="col-sm-3 control-label">Telefono:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.telefono, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_celular" class="col-sm-3 control-label">Celular:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.celular, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_contacto" class="col-sm-3 control-label">Contacto:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.contacto, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_telefonoContacto" class="col-sm-3 control-label">Telefono contacto:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.telefonoContacto, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_celuarContacto" class="col-sm-3 control-label">Celular contacto:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.celularContacto, { 'attr': {'class': 'form-control'} }) }}                        
+                </div>                
+            </div>                
+        </div>
+    </div> 
+    <div class="panel panel-default">
+        <div class="panel-heading">Información control</div>       
+            <div class="panel-body">   
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-3 control-label">Zona:</label>
+                    <div class="col-sm-9">
+                        {{ form_widget(form.zonaRel, { 'attr': {'class': 'form-control'} }) }}                        
+                    </div>                
+                </div>                 
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-3 control-label">Operacion:</label>
+                    <div class="col-sm-9">
+                            {{ form_widget(form.operacionRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                           
+            </div>
+    </div>                 
+    <div class="panel panel-default">
+        <div class="panel-heading">Información contabilidad</div>
+        <div class="panel-body">               
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Centro costo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.centroCostoContabilidadRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                           
+        </div>
+    </div>                 
+    <div class="modal-footer">        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

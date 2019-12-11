@@ -1,0 +1,75 @@
+{% extends '::base.html.twig' %}
+{% block title %}Adicionales al pago agregar valor - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <p class="description"><h3 >Agregar {% if tipo == 1 %}bonificación{% endif %}{% if tipo == 2 %}descuento{% endif %}{% if tipo == 3 %}comisión{% endif %}</h3></p>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+            <div class="panel panel-default">
+                <div class="panel-heading">Datos empleado</div>
+                <div class="panel-body">
+                    
+                <div class="form-group form-group-sm">
+                <label for="form_txtNumeroIdentificacion" class="col-sm-4 control-label">Empleado:</label>
+                <div class="col-sm-8">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="input-group">
+                          <input id="form_txtNumeroIdentificacion"  name="form_txtNumeroIdentificacion"  type="text" class="form-control" value="{{ arCredito.empleadoRel.numeroIdentificacion |default('') }}"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="input-group">                                      
+                          <input id="form_txtNombreCorto"  name="form_txtNombreCorto"  type="text" class="form-control" value="{{ arCredito.empleadoRel.nombreCorto |default('') }}" readOnly="ReadOnly" />
+                          <span class="input-group-btn">                                        
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_buscar_empleado') }}', 'buscarEmpleado', 600, 900)">Buscar</a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+                    
+                    
+                <div class="form-group form-group-sm">
+                    <label for="pagoConceptoRel" class="col-sm-4 control-label">Tipo:</label>
+                    <div class="col-sm-8">
+                            {{ form_widget(form.pagoConceptoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <label for="TxtValor" class="col-sm-4 control-label">Valor:</label>
+                    <div class="col-sm-8">
+                            {{ form_widget(form.TxtValor, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-4 control-label">Aplicar a día laborado:</label>
+                    <div class="col-sm-8">
+                            {{ form_widget(form.aplicarDiaLaborado, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>   
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-4 control-label">Aplicar a día laborado (Sin descansos):</label>
+                    <div class="col-sm-8">
+                            {{ form_widget(form.aplicarDiaLaboradoSinDescanso, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <label for="TxtDetalle" class="col-sm-4 control-label">Detalle:</label>
+                    <div class="col-sm-8">
+                            {{ form_widget(form.TxtDetalle, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                    </div>
+                </div>                         
+                </div>
+            </div>
+
+            <div class="modal-footer">                
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_pagos_adicionales_lista', {'modalidad': modalidad, 'periodo': periodo}) }}">Cancelar</a>
+                {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+                {{ form_widget(form.BtnGuardaryNuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            </div>
+            <br />
+        {{ form_end(form) }}
+
+</div>
+{% endblock %}

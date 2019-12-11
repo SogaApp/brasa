@@ -1,0 +1,53 @@
+<script>
+    $('#myModal').modal('toggle');
+</script>        
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Descartar aspirante requisicion</h4>
+      </div>  
+      {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+      <div class="modal-body"> 
+        
+        <div class="form-group form-group-sm">
+            <label for="form_fechaDescarte" class="col-sm-4 control-label">Fecha descarte:</label>
+            <div class="col-sm-8">
+                    {{ form_widget(form.fechaDescarte, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="form_motivoDescarteRequisicionAspiranteRel" class="col-sm-4 control-label">Motivo:</label>
+            <div class="col-sm-8">
+                    {{ form_widget(form.motivoDescarteRequisicionAspiranteRel, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>    
+        <div class="form-group form-group-sm">
+            <label for="form_comentarios" class="col-sm-4 control-label">Comentarios aspirante requisicion:</label>
+            <div class="col-sm-8">
+                    {{ form_widget(form.comentarios, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="form_bloqueado" class="col-sm-4 control-label">Bloquear aspirante:</label>
+            <div class="col-sm-8">
+                    {{ form_widget(form.bloqueado) }}
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="form_comentariosAspirante" class="col-sm-4 control-label">Comentarios aspirante:</label>
+            <div class="col-sm-8">
+                    {{ form_widget(form.comentariosAspirante, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>        
+        {{ form_widget(form.BtnGuardar, { 'attr': {'class': 'btn btn-primary'} }) }}            
+      </div>
+      {{ form_end(form) }}
+    </div>
+  </div>
+</div>

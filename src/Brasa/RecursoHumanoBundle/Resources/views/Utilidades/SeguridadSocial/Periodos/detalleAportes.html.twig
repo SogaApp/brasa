@@ -1,0 +1,150 @@
+{% extends '::base.html.twig' %}
+{% block title %}Seguridad social aportes detalle empleados - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Lista aportes por periodo detalle</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-group">
+            {{ form_widget(form.BtnLiquidar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+        </div>
+        <br/><br/>
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                    <label for="form_centroCostoRel" class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th></th>
+                <th>CÓDIGO</th>
+                <th>DOC</th>
+                <th>EMPLEADO</th>
+                <th>GRUPO PAGO</th>
+                <th>CONTRATO</th>
+                <th>ING</th>
+                <th>RET</th>
+                <th>VST</th>
+                <th>SLN</th>
+                <th>IGE</th>
+                <th>LMA</th>
+                <th>VAC</th>
+                <th>IRP</th>
+                <th>INT</th>
+                <th style="text-align: right">SALARIO</th>
+                <th style="text-align: right">IBC</th>
+                <th>S.I</th>
+                <th>D.P</th>
+                <th>D.S</th>
+                <th>D.R</th>
+                <th>D.C</th>
+                <th style="text-align: right">IBC.P</th>
+                <th style="text-align: right">IBC.S</th>
+                <th style="text-align: right">IBC.R</th>
+                <th style="text-align: right">IBC.C</th>
+                <th style="text-align: right">T.P</th>
+                <th style="text-align: right">T.S</th>
+                <th style="text-align: right">T.R</th>
+                <th style="text-align: right">T.C</th>
+                <th style="text-align: right">T.SN</th>
+                <th style="text-align: right">T.I</th>
+                <th style="text-align: right">C.P</th>
+                <th style="text-align: right">C.FSSO</th>
+                <th style="text-align: right">C.FSSU</th>
+                <th style="text-align: right">C.S</th>
+                <th style="text-align: right">C.R</th>
+                <th style="text-align: right">C.C</th>
+                <th style="text-align: right">C.SN</th>
+                <th style="text-align: right">C.I</th>
+                <th style="text-align: right">TOTAL</th>
+            </tr>
+            {% for arSsoAportes in arSsoAportes %}
+                <tr>
+                    <td style="text-align: center"><a
+                                href="javascript:abrirVentana3('{{ path('brs_rhu_seguridadsocial_periodo_detalle_aporte_editar', { 'codigoAporte':  arSsoAportes.codigoAportePk }) }}', 'EditarAporte', 600, 900)"><img
+                                    src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20
+                                    title="Editar el registro"></a></td>
+                    <td>{{ arSsoAportes.codigoAportePk }} </td>
+                    <td>
+                        <a href="javascript:abrirVentana3('{{ path('brs_rhu_ss_resumen_pago', {'codigoPeriodoDetalle': arPeriodoDetalle.codigoPeriodoDetallePK, 'codigoEmpleado': arSsoAportes.codigoEmpleadoFK}) }}', 'resumenPagos', 600, 900)">{{ arSsoAportes.empleadoRel.numeroIdentificacion }}</a>
+                    </td>
+                    <td>{{ arSsoAportes.empleadoRel.nombreCorto }}</td>
+                    <td>{{ arSsoAportes.empleadoRel.centroCostoRel.nombre |default('') }}</td>
+                    <td>{{ arSsoAportes.codigoContratoFk }}</td>
+                    <td>{{ arSsoAportes.ingreso }}</td>
+                    <td>{{ arSsoAportes.retiro }}</td>
+                    <td>{{ arSsoAportes.variacionTransitoriaSalario }}</td>
+                    <td>{% if arSsoAportes.suspensionTemporalContratoLicenciaServicios == 'X' %}{{ arSsoAportes.suspensionTemporalContratoLicenciaServicios }}{{ arSsoAportes.diasLicencia }} {% endif %}</td>
+                    <td>{% if arSsoAportes.incapacidadGeneral == 'X' %}{{ arSsoAportes.incapacidadGeneral }}{{ arSsoAportes.diasIncapacidadGeneral }} {% endif %}</td>
+                    <td>{% if arSsoAportes.licenciaMaternidad == 'X' %}{{ arSsoAportes.licenciaMaternidad }}{{ arSsoAportes.diasLicenciaMaternidad }} {% endif %}</td>
+                    <td>{% if arSsoAportes.vacaciones == 'X' %}{{ arSsoAportes.vacaciones }}{{ arSsoAportes.diasVacaciones }} {% endif %}</td>
+                    <td>{% if arSsoAportes.incapacidadAccidenteTrabajoEnfermedadProfesional > 0 %}{{ arSsoAportes.incapacidadAccidenteTrabajoEnfermedadProfesional }} {% endif %}</td>
+                    <td>{{ arSsoAportes.salarioIntegral }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.salarioBasico | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.vrIngresoBaseCotizacion | number_format(0, '.', ',') }}</td>
+                    <td>{% if arSsoAportes.salarioIntegral == 'X' %}{{ arSsoAportes.salarioIntegral }} {% endif %}</td>
+                    <td>{{ arSsoAportes.diasCotizadosPension }}</td>
+                    <td>{{ arSsoAportes.diasCotizadosSalud }}</td>
+                    <td>{{ arSsoAportes.diasCotizadosRiesgosProfesionales }}</td>
+                    <td>{{ arSsoAportes.diasCotizadosCajaCompensacion }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.ibcPension | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.ibcSalud | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.ibcRiesgosProfesionales | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.ibcCaja | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.tarifaPension | number_format(2, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.tarifaSalud | number_format(2, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.tarifaRiesgos | number_format(4, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.tarifaCaja | number_format(2, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.tarifaSena | number_format(2, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.tarifaIcbf | number_format(2, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.cotizacionPension | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.aportesFondoSolidaridadPensionalSolidaridad | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.aportesFondoSolidaridadPensionalSubsistencia | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.cotizacionSalud | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.cotizacionRiesgos | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.cotizacionCaja | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.cotizacionSena | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.cotizacionIcbf | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arSsoAportes.totalCotizacion  | number_format(0, '.', ',') }}</td>
+                </tr>
+            {% endfor %}
+            <td colspan="39"></td>
+            <td style="text-align: right">{{ arPeriodoDetalle.totalCotizacion | number_format(0, '.', ',') }}</td>
+
+        </table>
+        <div class="btn-group" style="float: left">
+            <div class="btn btn-default btn-sm">Registros <span
+                        class="badge">{{ arSsoAportes.getTotalItemCount }}</span></div>
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+            {{ knp_pagination_render(arSsoAportes) }}
+        </div>
+
+
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm"
+                   href="{{ path('brs_rhu_ss_periodo_detalle', { 'codigoPeriodo': arPeriodoDetalle.codigoPeriodoFk }) }}"
+                   style="float:left">Volver</a>
+            </div>
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}

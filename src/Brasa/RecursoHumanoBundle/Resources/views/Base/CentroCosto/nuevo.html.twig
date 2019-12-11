@@ -1,0 +1,216 @@
+{% extends '::base.html.twig' %}
+{% block title %}Grupo de pago nuevo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    <h3>Nuevo grupo pago</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">             
+            <div class="form-group form-group-sm">
+                <label for="form_clienteRel" class="col-sm-2 control-label">Cliente:</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.clienteRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>            
+            <div class="form-group form-group-sm">
+                <label for="form_periodoPagoRel" class="col-sm-2 control-label">Periodo pago:</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.periodoPagoRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                  
+            <div class="form-group form-group-sm">
+                <label for="form_nombre" class="col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.nombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_ciudadRel" class="col-sm-2 control-label">Ciudad:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.ciudadRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div> 
+            <div class="form-group form-group-sm">
+                <label for="form_ssoSucursal" class="col-sm-2 control-label">Sucursal seguridad social:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.sucursalRel, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_fechaUltimoPagoProgramado" class="col-sm-2 control-label">Ultimo pago:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.fechaUltimoPagoProgramado) }}
+                </div>
+            </div> 
+            <div class="form-group form-group-sm">
+                <label for="form_fechaUltimoPagoPrima" class="col-sm-2 control-label">Ultimo pago primas:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.fechaUltimoPagoPrima) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_fechaUltimoPagoCesantias" class="col-sm-2 control-label">Ultimo pago cesantias:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.fechaUltimoPagoCesantias) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_administrativo" class="col-sm-2 control-label">Administrativo:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.administrativo) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_estadoActivo" class="col-sm-2 control-label">Activo:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.estadoActivo) }}
+                </div>
+            </div>  
+            <div class="form-group form-group-sm">
+                <label for="form_ChkGenerarPeriodo" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="ChkGenerarPeriodo" checked> Generar programacion pago (nomina) al guardar
+                      </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_generaServicioCobrar" class="col-sm-2 control-label">Genera servicio por cobrar:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.generaServicioCobrar, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_diasPago" class="col-sm-2 control-label">Días Pago:</label>
+                <div class="col-sm-10">
+                            {{ form_widget(form.diasPago, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="form_comentarios" class="col-sm-2 control-label">Comentarios:</label>
+                <div class="col-sm-10">
+                            {{ form_widget(form.comentarios, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>                 
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Generacion programaciones pago (nomina) automaticas</div>
+        <div class="panel-body">                 
+            <div class="form-group form-group-sm">
+                <label for="form_generarPagoAutomatico" class="col-sm-2 control-label">Pago automatico:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.generarPagoAutomatico, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_horaPagoAutomatico" class="col-sm-2 control-label">Hora pago automatico:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.horaPagoAutomatico) }}
+                </div>
+            </div> 
+        </div>
+    </div>                
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion liquidacion (Empresas servicios temporales)</div>
+        <div class="panel-body">                 
+            <div class="form-group form-group-sm">
+                <label for="form_porcentajeAdministracion" class="col-sm-2 control-label">Porcentaje admon:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.porcentajeAdministracion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label for="form_valorAdministracion" class="col-sm-2 control-label">Valor admon:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(form.valorAdministracion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>                
+        </div>
+    </div>                      
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion programacion turnos</div>
+        <div class="panel-body">                 
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Genera soporte pago:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.generaSoportePago) }}
+                    <p style="font-size: 0.8em;">* Indica si a este grupo de pago (centro costo) se le genera soporte de pago en turnos</p>
+                </div>
+            </div>             
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Descanso ordinario:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.descansoOrdinario) }}
+                </div>
+            </div> 
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Pagar dia 31:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.pagarDia31) }}
+                </div>
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Secuencia:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.secuencia, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>     
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Turno fijo:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.codigoTurnoFijoNominaFk, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                    <p style="font-size: 0.8em;">* Independiente del turno programado, se liquida con este turno la nomina</p>
+                </div>                
+            </div> 
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Turno fijo descanso:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.codigoTurnoFijoDescansoFk, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                        
+                    <p style="font-size: 0.8em;">* Cuando el turno es de descanso es reemplazado por este turno</p>
+                </div>                
+            </div>                     
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Dias de descanso fijo:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.diasDescansoFijo, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                                            
+                </div>                
+            </div>                  
+        </div>                 
+    </div>   
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion programacion turnos (Compensacion)</div>
+        <div class="panel-body">                 
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Descanso dominicales:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.descansoCompensacionDominicales) }}
+                </div>
+            </div>         
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Descanso fijo:</label>
+                <div class="col-sm-9">
+                        {{ form_widget(form.descansoCompensacionFijo) }}
+                </div>
+            </div>                 
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Dias de descanso fijo:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.diasDescansoCompensacionFijo, { 'attr': {'class': 'form-control', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}                                            
+                </div>                
+            </div>                  
+        </div>                 
+    </div>                
+                
+    <div class="modal-footer">     
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_centros_costos_lista') }}">Cancelar</a>        
+            {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -1,0 +1,190 @@
+{% extends '::base.html.twig' %}
+{% block title %}Capacitación detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalles de la capacitacion</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-group">
+            {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+            {{ form_widget(form.BtnImprimirNotas, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}            
+            {{ form_widget(form.BtnCerrar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_ad_archivos_lista', { 'codigoDocumento': 20,  'numero': arCapacitacion.codigoCapacitacionPk }) }}', 'Archivos', 500, 700)" >Archivos</a>
+        </div>
+        <br /> <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">Información</div>
+            <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered">
+                <tr>
+                    <td class="titulo">CÓDIGO:</td>
+                    <td class="td-in-well">{{ arCapacitacion.codigoCapacitacionPk }}</td>
+                    <td class="titulo">FECHA:</td>
+                    <td class="td-in-well">{{ arCapacitacion.fechaCapacitacion |date("Y/m/d") }}</td>
+                    <td class="titulo">HORA:</td>
+                    <td class="td-in-well">{{ arCapacitacion.fechaCapacitacion |date("H:i:s") }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">DURACION:</td>
+                    <td class="td-in-well">{{ arCapacitacion.duracion }}</td>
+                    <td class="titulo">CIUDAD:</td>
+                    <td class="td-in-well">{{ arCapacitacion.ciudadRel.nombre | default('') }}</td>
+                    <td class="titulo">LUGAR:</td>
+                    <td class="td-in-well">{{ arCapacitacion.lugar }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">TIPO CAPACITACIÓN:</td>
+                    <td class="td-in-well">{{ arCapacitacion.capacitacionTipoRel.nombre | default('') }}</td>
+                    <td class="titulo">TEMA:</td>
+                    <td class="td-in-well">{{ arCapacitacion.tema }}</td>
+                    <td class="titulo">METODOLOGIA:</td>
+                    <td class="td-in-well">{{ arCapacitacion.capacitacionMetodologiaRel.nombre | default('') }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">OBJETIVO:</td>
+                    <td class="td-in-well">{{ arCapacitacion.objetivo }}</td>
+                    <td class="titulo">CONTENIDO:</td>
+                    <td class="td-in-well">{{ arCapacitacion.contenido }}</td>
+                    <td class="titulo">PERSONAS A CAPACITAR</td>
+                    <td class="td-in-well" align="rigth">{{ arCapacitacion.numeroPersonasCapacitar }}</td></td>
+                </tr>
+                <tr>
+                    <td class="titulo">FACILITADOR:</td>
+                    <td class="td-in-well">{{ arCapacitacion.facilitador }}</td>
+                    <td class="titulo">IDENTIFICACION:</td>
+                    <td class="td-in-well">{{ arCapacitacion.numeroIdentificacionFacilitador }}</td>
+                    <td class="titulo">PERSONAS ASISTIERON:</td>
+                    <td class="td-in-well" align="rigth">{{ arCapacitacion.numeroPersonasAsistieron }}</td></td>
+                </tr>
+                <tr>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                    <td class="titulo">ABIERTO</td>
+                    <td class="td-in-well">{% if arCapacitacion.estado == 0%}SI{% else %}NO{% endif%}</td>
+                </tr>
+                
+            </table>
+            </div>
+        </div>
+        <a name="marcador"></a>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#detalles" data-toggle="tab">Detalles</a></li>
+            <li><a href="#notas" data-toggle="tab">Notas</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="detalles">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>IDENTIFICACION</th>
+                        <th>EMPLEADO</th>
+                        <th>GRUPO PAGO</th>
+                        <th>CARGO</th>
+                        <th>PUESTO</th>
+                        <th>CLIENTE</th>
+                        <th>EVAL %</th>
+                        <th>ASISTENCIA</th>
+                        <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                    </tr>
+                    {% for arCapacitacionesDetalles in arCapacitacionesDetalles %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arCapacitacionesDetalles.codigoCapacitacionDetallePk }}">{{ arCapacitacionesDetalles.codigoCapacitacionDetallePk }} </td>
+                            <td>{{ arCapacitacionesDetalles.numeroIdentificacion }}</td>
+                            <td>{{ arCapacitacionesDetalles.nombreCorto }}</td>
+                            <td>{{ arCapacitacionesDetalles.empleadoRel.centroCostoRel.nombre | default('') }}</td>
+                            <td>{{ arCapacitacionesDetalles.empleadoRel.cargoRel.nombre | default('') }}</td>
+                            <td>{{ arCapacitacionesDetalles.empleadoRel.puestoRel.nombre | default('') }}</td>
+                            <td>{{ arCapacitacionesDetalles.empleadoRel.puestoRel.ClienteRel.nombreCorto | default('') }}</td>
+                            {% if arCapacitacion.estadoAutorizado == 0 %}
+                                <td style="text-align: center"><input class="input-grid" type="text" name="TxtEvaluacion{{ arCapacitacionesDetalles.codigoCapacitacionDetallePk }}" value="{{ arCapacitacionesDetalles.evaluacion  }}" size="15" style="text-align: right; width:40px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>
+                            {% else %}
+                                <td>{{ arCapacitacionesDetalles.evaluacion }}</td>
+                            {% endif %}
+                            <td>{% if arCapacitacionesDetalles.asistencia == 1 %}SI {% else%} NO {% endif %}</td>
+                            <td align="center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arCapacitacionesDetalles.codigoCapacitacionDetallePk }}" /></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        {% if arCapacitacion.estadoAutorizado == 0 %}
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_capacitacion_detalle_nuevo_empleado', {'codigoCapacitacion': arCapacitacion.codigoCapacitacionPk }) }}', 'AgregarEmpleadoCapacitacion', 600, 900)" >Nuevo empleado</a>                        
+                        {% endif %}
+                    </div>
+                    <div class="btn-group">
+                        {#{% if arCapacitacion.estadoAutorizado == 0 %}
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_capacitacion_detalle_nuevo', {'codigoCapacitacion': arCapacitacion.codigoCapacitacionPk }) }}', 'AgregarEmpleadoCapacitacion', 600, 900)" >Nuevo</a>
+                        {% endif %}#}    
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnActualizarDetalle, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}               
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnNoAsistio, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}               
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnAsistio, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}               
+                    </div>
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarDetalle, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}               
+                    </div>                   
+                </div>        
+                <div class="btn-toolbar" style="float: left">
+                    <div class="btn-group" style="float: left">
+                        <div class="btn btn-default btn-sm">Asistentes <span class="badge">{{ arCapacitacionesDetalles.getTotalItemCount }}</span></div>                        
+                    </div>
+                    <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                        {{ knp_pagination_render(arCapacitacionesDetalles) }}       
+                    </div>
+                </div>       
+                
+            </div>    
+            <div class="tab-pane" id="notas">
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>NOTA</th>                                                
+                        <th></th>
+                    </tr>
+                    {% for arCapacitacionesNotas in arCapacitacionesNotas %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]" value="{{ arCapacitacionesNotas.codigoCapacitacionNotaPk }}">{{ arCapacitacionesNotas.codigoCapacitacionNotaPk }} </td>
+                            <td>{{ arCapacitacionesNotas.nota }}</td>
+                            <td><input type="checkbox" name="ChkSeleccionarNota[]" value="{{ arCapacitacionesNotas.codigoCapacitacionNotaPk }}" /></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        {% if arCapacitacion.estadoAutorizado == 0 %}
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_capacitacion_detalle_nuevo_nota', {'codigoCapacitacion': arCapacitacion.codigoCapacitacionPk }) }}', 'AgregarNota', 600, 900)" >Nuevo</a>                        
+                        {% endif %}    
+                    </div>                  
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarNota, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}               
+                    </div>                   
+                </div>        
+                
+                {{ knp_pagination_render(arCapacitacionesDetalles) }}       
+                
+            </div>                 
+        </div>
+        
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_capacitacion_lista') }}" style="float:left">Volver</a>
+            </div>
+        </div>
+        <br /><br />
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

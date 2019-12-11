@@ -1,0 +1,97 @@
+{% extends '::base.html.twig' %}
+{% block title %}Horario nuevo - Soga App{% endblock %} 
+{% block content %}
+<div class="container">    
+    {{ form_start(formHorario, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(formHorario) }}
+    <h3>Nuevo horario</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.nombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Hora entrada:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.horaEntrada, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Hora salida:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.horaSalida, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Genera hora extra:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.generaHoraExtra, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Control horario:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.controlHorario, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>                
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Lunes:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.lunes, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Martes:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.martes, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Miercoles:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.miercoles, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Jueves:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.jueves, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Viernes:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.viernes, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Sabado:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.sabado, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Domingo:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.domingo, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Festivo:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formHorario.festivo, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>    
+</div>
+</div>
+    <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_horario_listar') }}">Cancelar</a>
+            {{ form_widget(formHorario.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(formHorario) }}
+</div>    
+{% endblock %}

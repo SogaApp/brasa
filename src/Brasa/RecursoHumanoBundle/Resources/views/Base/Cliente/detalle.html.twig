@@ -1,0 +1,90 @@
+{% extends '::base.html.twig' %}
+{% block title %}Cliente detalle - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle cliente</h3>
+        </div>
+
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Información cliente</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CÓDIGO:</td>
+                        <td class="td-in-well">{{ arCliente.codigoClientePk }}</td>
+                        <td class="titulo">NIT:</th>
+                        <td class="td-in-well">{{ arCliente.nit }}</td>
+                        <td class="titulo">DV:</td>
+                        <td class="td-in-well">{{ arCliente.digitoVerificacion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CLIENTE:</td>
+                        <td class="td-in-well">{{ arCliente.nombreCorto }}</td>
+                        <td class="titulo">FORMA PAGO:</th>
+                        <td class="td-in-well">{{ arCliente.formaPagoRel.nombre }}</td>
+                        <td class="titulo">PLAZO:</td>
+                        <td class="td-in-well">{{ arCliente.plazoPago }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">DIRECCIÓN:</td>
+                        <td class="td-in-well">{{ arCliente.direccion }}</td>
+                        <td class="titulo">BARRIO:</th>
+                        <td class="td-in-well">{{ arCliente.barrio }}</td>
+                        <td class="titulo">CIUDAD:</td>
+                        <td class="td-in-well">{{ arCliente.ciudadRel.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">TELEFONO:</td>
+                        <td class="td-in-well">{{ arCliente.telefono }}</td>
+                        <td class="titulo">CELULAR:</th>
+                        <td class="td-in-well">{{ arCliente.celular }}</td>
+                        <td class="titulo">EMAIL:</td>
+                        <td class="td-in-well">{{ arCliente.email }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">GERENTE:</td>
+                        <td class="td-in-well">{{ arCliente.gerente }}</td>
+                        <td class="titulo">CELULAR:</th>
+                        <td class="td-in-well">{{ arCliente.celularGerente }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">FINANCIERO:</td>
+                        <td class="td-in-well">{{ arCliente.financiero }}</td>
+                        <td class="titulo">CELULAR:</th>
+                        <td class="td-in-well">{{ arCliente.celularFinanciero }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CONTACTO:</td>
+                        <td class="td-in-well">{{ arCliente.Contacto }}</td>
+                        <td class="titulo">CELULAR:</th>
+                        <td class="td-in-well">{{ arCliente.celularContacto }}</td>
+                        <td class="titulo">TELEFONO</td>
+                        <td class="td-in-well">{{ arCliente.telefonoContacto }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">COMENTARIOS:</td>
+                        <td class="td-in-well" colspan="5">{{ arCliente.comentarios }}
+                    </tr>
+                </table>
+            </div>
+        </div>
+                   
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_cliente') }}" style="float:left">Volver</a>
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

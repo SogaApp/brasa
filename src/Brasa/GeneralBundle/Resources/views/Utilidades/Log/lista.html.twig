@@ -1,0 +1,124 @@
+{% extends '::base.html.twig' %}
+{% block title %}Log - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Log de datos</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de búsqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+
+                    <label for="form_TxtNumero" class="col-sm-2 control-label">Código:</label>
+                    <div class="col-sm-2">
+                        <i class="fa fa-info-circle" title="Código del registro modificado, en su respectiva entidad" style="float: right;color: gray; padding-top: 9px;padding-right: 16px; position: absolute;right: 0px;">&nbsp;</i>
+                        {{ form_widget(form.TxtCodigo, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+
+                    <label for="form_TxtNumero" class="col-sm-2 control-label">Entidad:</label>
+                    <div class="col-sm-2">
+                        <i class="fa fa-info-circle" title="Nombre de la entidad" style="float: right;color: gray; padding-top: 9px;padding-right: 16px; position: absolute;right: 0px;">&nbsp;</i>
+                        {{ form_widget(form.TxtEntidad, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+
+                    <label class="col-sm-2 control-label">Modulo:</label>
+                    <div class="col-sm-2">
+                        <i class="fa fa-info-circle" title="Recurso humano&#10;Turno" style="float: right;color: gray; padding-top: 9px;padding-right: 16px; position: absolute;right: 0px;">&nbsp;</i>
+                        {{ form_widget(form.TxtModulo, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+
+
+
+                </div>
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Fecha Desde:</label>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.DtmFecha) }}
+                    </div>
+
+                    <label for="form_TxtNumero" class="col-sm-1 control-label">Usuario:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.UsuarioRel, { 'attr': {'class': 'form-control to-select-2'} }) }}
+                    </div>
+
+                    <label class="col-sm-2 control-label">Acción:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.SelAccion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Fecha Hasta:</label>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.DtmFechaHasta) }}
+                    </div>
+                    <label class="col-sm-1 control-label"></label>
+                    <div class="col-sm-2">
+                        <i class="fa fa-info-circle" title="Filtrar unicamente los registros ingresados el dia de hoy" style="float: left;color: gray; padding-top: 11px;padding-right: 16px; position: absolute;left: 0px;">&nbsp;</i>
+                        {{ form_widget(form.IngresaronHoy) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.filtrarFecha) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-12 text-right">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <table class="table table-striped table-bordered table-condensed table-hover">
+        <tr>
+            <th>ID</th>
+            <th>USUARIO</th>
+            <th>ACCION</th>
+            <th>DOCUMENTO</th>
+            <th>ENTIDAD</th>
+            <th>CODIGO</th>
+            <th>MODULO</th>
+            <th>FECHA</th>
+            <th></th>
+        </tr>
+        {% for arLog in arLogs %}
+            <tr>
+                <td>{{ arLog.codigoLogExtendidoPk }}</td>
+                <td>{{ arLog.usuarioRel.nombreCorto }}</td>
+                <td class="col-sm-1">
+                    {% if arLog.accion == 'CREACION' %}
+                        <span class="label label-primary">CREACION</span>
+                    {% elseif arLog.accion == 'ACTUALIZACION' %}
+                        <span class="label label-info">ACTUALIZACION</span>
+                    {% elseif arLog.accion == 'ELIMINACION' %}
+                        <span class="label label-danger">ELIMINACION</span>
+                    {% endif %}
+                </td>
+                <td></td>
+                <td>{{ arLog.nombreEntidad }}</td>
+                <td>{{ arLog.codigoRegistroPk }}</td>
+                <td>{{ arLog.modulo }}</td>
+                <td class="col-sm-1">{{ arLog.fecha | date("Y-m-d H:i:s") }}</td>
+                <td style="text-align: center">
+                    <a href="javascript:abrirVentana3('{{ path('brs_gen_consulta_log_extendido_',{codigoRegistro: arLog.codigoLogExtendidoPk }) }}', 'Ver detalles', 500, 400)">
+                        <img src="{{ asset('imagenes/bootstrap/glyphicons_039_notes.png') }}" title="Ver log" width="20px" height="20px">
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+        {{ knp_pagination_render(arLogs) }}
+        <div class="btn-group" style="float: right">
+            {{ form_widget(form.BtnExcel) }}
+        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+
+
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Factura detalle seleccion nuevo - Soga App{% endblock %}
+{% block content %}
+    <div class="container">                   
+        <p class="description"><h3>Agregar seleccion</h3></p>      
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}            
+            <table class="table table-striped table-bordered table-condensed">
+                <tr>
+                    <th>CÓDIGO</th>
+                    <th>FECHA</th>
+                    <th>IDENTIFICACION</th>
+                    <th>NOMBRE</th>
+                    <th>VALOR</th>
+                    <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                </tr>
+
+                {% for arSelecciones in arSelecciones %}
+                    <tr> 
+                        <td><input type="hidden" name="LblCodigo[]" value="{{ arSelecciones.codigoSeleccionPk }}">{{ arSelecciones.codigoSeleccionPk }}</td>  
+                        <td>{{ arSelecciones.fecha |date("Y/m/d")  }}</td>
+                        <td>{{ arSelecciones.numeroIdentificacion  }}</td>
+                        <td>{{ arSelecciones.nombreCorto  }}</td>                        
+                        <td style="text-align: right">{{ arSelecciones.VrServicio | number_format(0, '.', ',') }}</td>
+                        <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arSelecciones.codigoSeleccionPk }}" /></td>
+                    </tr>
+                {% endfor %}                                
+            </table>
+            {{ knp_pagination_render(arSelecciones) }}
+            <div class="modal-footer">                
+                {{ form_widget(form.BtnAgregar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            </div> 
+            <br />
+        {{ form_end(form) }}
+
+</div>
+{% endblock %}

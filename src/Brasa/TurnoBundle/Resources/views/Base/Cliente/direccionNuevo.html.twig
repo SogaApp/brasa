@@ -1,0 +1,53 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block content %}
+<div class="container">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <h3>Nuevo direccion</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">                            
+            <div class="form-group form-group-sm">
+                <label for="form_nombre" class="col-sm-3 control-label">Nombre:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.nombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>                
+            </div>     
+            <div class="form-group form-group-sm">
+                <label for="form_direccion" class="col-sm-3 control-label">Direccion:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.direccion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_barrio" class="col-sm-3 control-label">Barrio:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.barrio, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>                
+            </div> 
+            <div class="form-group form-group-sm">
+                <label for="form_telefono" class="col-sm-3 control-label">Telefono:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.telefono, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>                
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_email" class="col-sm-3 control-label">Email:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.email, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>                
+            </div>   
+            <div class="form-group form-group-sm">
+                <label for="form_ciudadRel" class="col-sm-3 control-label">Ciudad:</label>
+                <div class="col-sm-9">
+                    {{ form_widget(form.ciudadRel, { 'attr': {'class': 'form-control','style':'text-transform:uppercase;'} }) }}                        
+                </div>                
+            </div>                                                                                         
+        </div>
+    </div>                                    
+    <div class="modal-footer">        
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        {{ form_widget(form.guardarnuevo, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

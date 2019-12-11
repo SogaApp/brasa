@@ -1,0 +1,178 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Pedido detalle resumen - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        {% if arServicio != null %}
+        <div class="panel panel-default">
+            <div class="panel-heading">Información del servicio</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO:</td>
+                        <td class="td-in-well">{{ arServicio.codigoServicioPk }}</td>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">CLIENTE:</td>
+                        <td class="td-in-well">{{ arServicio.clienteRel.nombreCorto }}</td>
+                        <td class="titulo" >HORAS DIURNAS:</td>
+                        <td align="right">{{ arServicio.horasDiurnas | number_format(0, '.', ',')}}</td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo">SECTOR:</td>
+                        <td class="td-in-well">{{ arServicio.sectorRel.nombre }}</td>
+                        <td class="titulo" >HORAS NOCTURNAS:</td>
+                        <td align="right">{{ arServicio.horasNocturnas | number_format(0, '.', ',')}}</td>
+                    </tr>                 
+                    <tr>
+                        <td class="titulo">USUARIO:</td>
+                        <td class="td-in-well">{{ arServicio.usuario}}</td>
+                        <td class="titulo" >HORAS:</td>
+                        <td align="right">{{ arServicio.horas | number_format(0, '.', ',')}}</td>
+                    </tr> 
+                    <tr>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo" >COSTO:</td>
+                        <td align="right">{{ arServicio.vrTotalCosto | number_format(0, '.', ',')}}</td>
+                    </tr>                
+                    <tr>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo" >MINIMO:</td>
+                        <td align="right">{{ arServicio.vrTotalPrecioMinimo | number_format(0, '.', ',')}}</td>
+                    </tr>                
+                    <tr>
+                        <td class="titulo"></td>
+                        <td class="td-in-well"></td>
+                        <td class="titulo" >VALOR:</td>
+                        <td align="right">{{ arServicio.vrTotal | number_format(0, '.', ',')}}</td>
+                    </tr>                 
+                </table>
+            </div>
+        </div> 
+        {% else %}
+            <h4>El pedido no proviene de un servicio permanente</h4>
+        {% endif %}                    
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">Información pedido</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">CODIGO DETALLE:</td>
+                        <td class="td-in-well">{{ arPedidoDetalle.codigoPedidoDetallePk }}</td>
+                        <td class="titulo" >PENDIENTE FACTURAR:</td>
+                        <td align="right">{{ arPedidoDetalle.vrTotalDetallePendiente | number_format(0, '.', ',')}}</td>
+                    </tr>                 
+                </table>
+            </div>
+        </div>        
+        
+        <h4>Facturas</h4>
+        <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>NUMERO</th>
+                <th>TIPO</th>
+                <th>SUBTIPO</th>
+                <th>SERVICIO</th>
+                <th>CANT</th>
+                <th>VALOR</th>
+            </tr>
+            {% for arFacturaDetalles in arFacturaDetalles %}
+                <tr>
+                    <td>{{ arFacturaDetalles.facturaRel.numero  }}</td>
+                    <td>{{ arFacturaDetalles.facturaRel.facturaTipoRel.nombre  }}</td>
+                    <td>{{ arFacturaDetalles.facturaRel.facturaSubtipoRel.nombre |default('')  }}</td>
+                    <td>{{ arFacturaDetalles.conceptoServicioRel.nombre | default('') }}</td>
+                    <td style="text-align: right">{{ arFacturaDetalles.cantidad | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arFacturaDetalles.subtotalOperado | number_format(0, '.', ',') }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br />
+        <h4>Programaciones</h4>
+        <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>COD</th>
+                <th>RECURSO</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+                <th>11</th>
+                <th>12</th>
+                <th>13</th>
+                <th>14</th>
+                <th>15</th>
+                <th>16</th>
+                <th>17</th>
+                <th>18</th>
+                <th>19</th>
+                <th>20</th>
+                <th>21</th>
+                <th>22</th>
+                <th>23</th>
+                <th>24</th>
+                <th>25</th>
+                <th>26</th>
+                <th>27</th>
+                <th>28</th>
+                <th>29</th>
+                <th>30</th>
+                <th>31</th>
+                <th>H</th>
+                <th>HD</th>
+                <th>HN</th>
+            </tr>
+            {% for arProgramacionDetalles in arProgramacionDetalles %}
+                <tr>                    
+                    <td>{{ arProgramacionDetalles.codigoProgramacionFk  }}</td>
+                    <td>{{ arProgramacionDetalles.recursoRel.nombreCorto | default('')  }}</td>
+                    <td>{{ arProgramacionDetalles.dia1  }}</td>
+                    <td>{{ arProgramacionDetalles.dia2  }}</td>
+                    <td>{{ arProgramacionDetalles.dia3  }}</td>
+                    <td>{{ arProgramacionDetalles.dia4  }}</td>
+                    <td>{{ arProgramacionDetalles.dia5  }}</td>
+                    <td>{{ arProgramacionDetalles.dia6  }}</td>
+                    <td>{{ arProgramacionDetalles.dia7  }}</td>
+                    <td>{{ arProgramacionDetalles.dia8  }}</td>
+                    <td>{{ arProgramacionDetalles.dia9  }}</td>
+                    <td>{{ arProgramacionDetalles.dia10  }}</td>
+                    <td>{{ arProgramacionDetalles.dia11  }}</td>
+                    <td>{{ arProgramacionDetalles.dia12  }}</td>
+                    <td>{{ arProgramacionDetalles.dia13  }}</td>
+                    <td>{{ arProgramacionDetalles.dia14  }}</td>
+                    <td>{{ arProgramacionDetalles.dia15  }}</td>
+                    <td>{{ arProgramacionDetalles.dia16  }}</td>
+                    <td>{{ arProgramacionDetalles.dia17  }}</td>
+                    <td>{{ arProgramacionDetalles.dia18  }}</td>
+                    <td>{{ arProgramacionDetalles.dia19  }}</td>
+                    <td>{{ arProgramacionDetalles.dia20  }}</td>
+                    <td>{{ arProgramacionDetalles.dia21  }}</td>
+                    <td>{{ arProgramacionDetalles.dia22  }}</td>
+                    <td>{{ arProgramacionDetalles.dia23  }}</td>
+                    <td>{{ arProgramacionDetalles.dia24  }}</td>
+                    <td>{{ arProgramacionDetalles.dia25  }}</td>
+                    <td>{{ arProgramacionDetalles.dia26  }}</td>
+                    <td>{{ arProgramacionDetalles.dia27  }}</td>
+                    <td>{{ arProgramacionDetalles.dia28  }}</td>
+                    <td>{{ arProgramacionDetalles.dia29  }}</td>
+                    <td>{{ arProgramacionDetalles.dia30  }}</td>
+                    <td>{{ arProgramacionDetalles.dia31  }}</td>
+                    <td style="text-align: right">{{ arProgramacionDetalles.horas | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arProgramacionDetalles.horasDiurnas | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arProgramacionDetalles.horasNocturnas | number_format(0, '.', ',') }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+{% endblock %}

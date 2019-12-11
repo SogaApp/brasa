@@ -1,0 +1,36 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Factura detalle examen nuevo - Soga App{% endblock %}
+{% block content %}
+    <div class="container">                   
+        <p class="description"><h3>Agregar examen cobrar</h3></p>      
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}            
+            <table class="table table-striped table-bordered table-condensed">
+                <tr>
+                    <th>CÓDIGO</th>
+                    <th>FECHA</th>
+                    <th>IDENTIFICACION</th>
+                    <th>NOMBRE</th>
+                    <th>VALOR</th>
+                    <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                </tr>
+
+                {% for arExamenes in arExamenes %}
+                    <tr> 
+                        <td><input type="hidden" name="LblCodigo[]" value="{{ arExamenes.codigoExamenPk }}">{{ arExamenes.codigoExamenPk }}</td>  
+                        <td>{{ arExamenes.fecha |date("Y/m/d")  }}</td>
+                        <td>{{ arExamenes.identificacion  }}</td>
+                        <td>{{ arExamenes.nombreCorto  }}</td>                        
+                        <td style="text-align: right">{{ arExamenes.VrTotal | number_format(0, '.', ',') }}</td>
+                        <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arExamenes.codigoExamenPk }}" /></td>
+                    </tr>
+                {% endfor %}                                
+            </table>
+            {{ knp_pagination_render(arExamenes) }}
+            <div class="modal-footer">                
+                {{ form_widget(form.BtnAgregar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            </div> 
+            <br />
+        {{ form_end(form) }}
+
+</div>
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends '::base.html.twig' %}
+{% block title %}Movimiento detalle - Soga App{% endblock %}
+{% block content %}
+    <script>
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>
+    <div class="container">
+        <div class="page-header">
+            <h3>Detalle movimiento </h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">                                                    
+                {{ form_widget(form.BtnAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnDesAutorizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+        </div>
+        <div style="float:right">
+            {% if arMovimiento.estadoImpreso == 1 %}<span class="label label-default">Impreso</span>{% endif %}
+            {% if arMovimiento.estadoAutorizado == 1 %}<span class="label label-default">Autorizado</span>{% endif %}
+        </div>                    
+        <br /><br />
+        <!-- Encabezado Movimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Información</div>
+            <div class="panel-body">
+                <table width="100%" class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="titulo">NUMERO:</td>
+                        <td class="td-in-well">{{ arMovimiento.numero }}</td>
+                        <td class="titulo">CODIGO</td>
+                        <td class="td-in-well">{{ arMovimiento.codigoMovimientoPk }}</td>
+                    </tr>                                                                                                 
+                    <tr>
+                        <td class="titulo">FECHA:</td>
+                        <td class="td-in-well">{{ arMovimiento.fecha |date("Y/m/d") }}</td>
+                        <td class="titulo" >DOCUMENTO:</td>
+                        <td class="td-in-well">{{ arMovimiento.documentoRel.nombre | default('') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="titulo">TERCERO</td>
+                        <td class="td-in-well">{{ arMovimiento.terceroRel.nombreCorto | default('') }}</td></td>
+                        <td class="titulo" ></td>
+                        <td class="td-in-well"></td>
+                    </tr>
+                    <tr>
+                        <td class="titulo" >COMENTARIO: </td>
+                        <td class="td-in-well" colspan="5">{{ arMovimiento.comentarios }}</td>                        
+                    </tr>                     
+                </table>
+            </div>
+        </div>
+
+        <!-- Fin Encabezado Movimiento -->
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#detalles" data-toggle="tab">Detalle</a></li>            
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="detalles">
+                <!-- Menu Encabezado Movimiento -->
+                <div id="detalles" style="width: 100%"><br>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>CODIGO</th>
+                            <th>ITEM</th>
+                            <th>LOTE</th>
+                            <th>VENCE</th>
+                            <th>BODEGA</th>
+                            <th>CANTIDAD</th>
+                            <th>COSTO</th>                                                                                     
+                            <th></th>
+                        </tr>
+                        {% for arMovimientoDetalle in arMovimientoDetalle %}
+                            <tr>
+                                <td>{{ arMovimientoDetalle.codigoDetalleMovimientoPk  }}<input type="hidden" name="LblCodigo[]" value="{{ arMovimientoDetalle.codigoDetalleMovimientoPk }}"></td>
+                                <td>{{ arMovimientoDetalle.itemRel.nombre | default('')  }}</td> 
+                               
+                                {% if arMovimiento.estadoAutorizado == 0 %}
+                                    <td><input class="input-grid" type="text" name="TxtLote[{{ arMovimientoDetalle.codigoDetalleMovimientoPk }}]" id="TxtLote[{{ arMovimientoDetalle.codigoDetalleMovimientoPk }}]" value="{{ arMovimientoDetalle.loteFk  }}" size="30" style="width:110px" onclick="this.select()" onBlur="javascript:this.value=this.value.toUpperCase()"/> <a class="btn btn-default btn-xs" href="javascript:abrirVentana3('{{ path('brs_inv_buscar_lote', {'codigoItem': arMovimientoDetalle.codigoItemFk, 'campoLote': 'TxtLote[' ~ arMovimientoDetalle.codigoDetalleMovimientoPk~ ']'}) }}', 'buscarLote', 600, 900)">...</a></td>                                                
+                                    <td><input class="input-grid" type="text" name="TxtVence[{{ arMovimientoDetalle.codigoDetalleMovimientoPk }}]" value="{{ arMovimientoDetalle.fechaVencimiento |date('Y-m-d')  }}" size="20" style="width:70px" onclick="this.select()" onBlur="javascript:this.value=this.value.toUpperCase()"/></td>                                                                                    
+                                    <td><input class="input-grid" type="text" name="TxtBodega[{{ arMovimientoDetalle.codigoDetalleMovimientoPk }}]" id="TxtBodega[{{ arMovimientoDetalle.codigoDetalleMovimientoPk }}]" value="{{ arMovimientoDetalle.codigoBodegaFk  }}" size="6" style="width:30px" onclick="this.select()"/> <a class="btn btn-default btn-xs" href="javascript:abrirVentana3('{{ path('brs_inv_buscar_bodega', { 'campoCodigo': 'TxtBodega[' ~ arMovimientoDetalle.codigoDetalleMovimientoPk~ ']'}) }}', 'buscarBodega', 600, 900)">...</a></td>                                                
+                                    <td style="text-align: right"><input class="input-grid" type="text" name="TxtCantidad[{{ arMovimientoDetalle.codigoDetalleMovimientoPk }}]" value="{{ arMovimientoDetalle.cantidad  }}" size="10" style="text-align: right; width:60px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>                                                
+                                    <td style="text-align: right"><input class="input-grid" type="text" name="TxtCosto[{{ arMovimientoDetalle.codigoDetalleMovimientoPk }}]" value="{{ arMovimientoDetalle.vrCosto  }}" size="10" style="text-align: right; width:60px" onkeypress="return validarNumeros(event)" onclick="this.select()"/></td>                                                
+                                {% else %}
+                                    <td>{{ arMovimientoDetalle.loteFk  }}</td>
+                                    <td>{{ arMovimientoDetalle.fechaVencimiento | date('Y-m-d')  }}</td>                                 
+                                    <td>{{ arMovimientoDetalle.codigoBodegaFk  }}</td>                                 
+                                    <td style="text-align: right">{{ arMovimientoDetalle.cantidad | number_format(0, '.', ',') }}</td> 
+                                    <td style="text-align: right">{{ arMovimientoDetalle.vrCosto | number_format(0, '.', ',') }}</td>                                                                                                    
+                                {% endif %}                                                                                                
+                                <td align="center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arMovimientoDetalle.codigoDetalleMovimientoPk }}" /></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="btn-toolbar" style="float: right">
+                    {% if arMovimiento.estadoAutorizado == 0 %}
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_inv_movimiento_movimiento_detalle_nuevo', {'codigoMovimiento': arMovimiento.codigoMovimientoPk }) }}', 'AgregarNuevoDetalle', 600, 900)">Nuevo</a>
+                        </div>
+                    {% endif %}
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnDetalleActualizar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+                    </div>                     
+                    <div class="btn-group">
+                        {{ form_widget(form.BtnEliminarDetalle, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <a  class="btn btn-default btn-sm" href="{{ path('brs_inv_movimiento_movimiento_lista', {'codigoDocumento': arMovimiento.codigoDocumentoFk }) }}">Volver</a>
+    </div>
+{% endblock %}

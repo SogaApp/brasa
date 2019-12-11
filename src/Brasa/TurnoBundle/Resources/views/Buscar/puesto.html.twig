@@ -1,0 +1,71 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Buscar recurso - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script language="javascript">
+        function selTercero(codigo,campoCodigo)
+        {            
+            opener.document.getElementById(campoCodigo).value = codigo;
+            opener.document.getElementById(campoCodigo).focus();
+            self.close();
+        }
+    </script>    
+    <div class="page-header">
+        <h3>Buscar puesto</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}                
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtNombre" class="col-sm-3 control-label">Nombre:</label>
+                    <div class="col-sm-9">                  
+                        {{ form_widget(form.TxtNombre , { 'attr': {'class': 'form-control','autofocus':'autofocus', 'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}
+                    </div>                   
+                </div>  
+                     
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtCodigo" class="col-sm-3 control-label">Codigo:</label>
+                    <div class="col-sm-9">                  
+                        {{ form_widget(form.TxtCodigo, { 'attr': {'class': 'form-control'} }) }}
+                    </div>      
+                </div>   
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                                                    
+            </div>
+        </div>        
+        <table  class="table table-striped table-bordered table-condensed table-hover">            
+            <tr>
+                <th>{{ knp_pagination_sortable(arPuestos, 'CÓDIGO', 'e.codigoPuestoPk') }}</th>
+                <th>NIT</th>
+                <th>{{ knp_pagination_sortable(arPuestos, 'NOMBRE', 'e.nombre') }}</th>                                                
+                <th></th>
+            </tr>
+            {% for arPuestos in arPuestos %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arPuestos.codigoPuestoPk }}">{{ arPuestos.codigoPuestoPk }} </td>
+                <td>{{ arPuestos.codigoPuestoPk  }}</td>
+                <td>{{ arPuestos.nombre }}</td>                                                
+                <td style="text-align: center"><a href="javascript:selTercero('{{ arPuestos.codigoPuestoPk }}','{{ campoCodigo }}')" ><img src="{{ asset('imagenes/bootstrap/glyphicons_198_ok.png') }}" width=20 height=20></a></td>                                
+            </tr>
+            {% endfor %} 
+        </table>                                         
+                  
+
+        <!-- Botones Menu Items -->
+        <div class="btn-toolbar">            
+            <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arPuestos.getTotalItemCount }}</span></div>                        
+            </div>            
+        </div>          
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}   
+    
+</div>
+{% endblock %}

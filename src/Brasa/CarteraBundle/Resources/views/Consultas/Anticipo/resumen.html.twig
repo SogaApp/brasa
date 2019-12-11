@@ -1,0 +1,144 @@
+{% extends '::base.html.twig' %}
+{% block title %}Cartera consulta anticipo lista - Soga App{% endblock %}
+{% block content %}
+<script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Resumen anticipos</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div     class="form-group form-group-sm">
+                    <label for="txtNit" class="col-sm-2 control-label">Cliente:</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                          <div class="col-lg-2">
+                            <div class="input-group">
+                              {{ form_widget(form.TxtNit, { 'attr': {'class': 'form-control'} }) }}                              
+                            </div>
+                          </div>
+                          <div class="col-lg-10">
+                            <div class="input-group">     
+                              {{ form_widget(form.TxtNombreCliente, { 'attr': {'class': 'form-control', 'readOnly': 'ReadOnly'} }) }}                              
+                              <span class="input-group-btn">                                        
+                                <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_cartera_buscar_cliente', { 'campoCodigo': 'form_TxtNit', 'campoNombre': 'form_TxtNombreCliente' }) }}', 'buscarCliente', 600, 900)">Buscar</a>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>                
+                    
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtNumero" class="col-sm-2 control-label">Numero:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.TxtNumero, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }}
+                    </div>
+                </div>                     
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }}
+                    </div>
+                </div>    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrarLista, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CUENTA</th>
+                <th>NUM</th>
+                <th>TOTAL</th>
+            </tr>
+            {% for arAnticiposResumen in arAnticiposResumen %}
+            <tr>
+                
+                <td>{{ arAnticiposResumen.cuenta  }}</td>
+                <td>{{ arAnticiposResumen.numeroAnticipos  }}</td>
+                <td style="text-align: right">{{ arAnticiposResumen.vrTotalPago | number_format(2, '.', ',') }}</td>
+            </tr>
+            {% endfor %}
+        </table>  
+        
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>{{ knp_pagination_sortable(arAnticipos, 'CÓDIGO', 'r.codigoAnticipoPk') }}</th>
+                <th>NUMERO</th>
+                <th>CUENTA</th>
+                <th>FECHA</th>
+                <th>F.PAGO</th>
+                <th>NIT</th>
+                <th>CLIENTE</th>                                                
+                <th>DSTO</th>
+                <th>AJ. PESO</th>
+                <th>RTE ICA</th>
+                <th>RTE IVA</th>
+                <th>RTE FTE</th>
+                <th>TOTAL</th>
+                <th>T. PAGO</th>
+                <th>ANU</th>
+                <th>AUT</th>
+                <th>IMP</th>
+            </tr>
+            {% for arAnticipos in arAnticipos %}
+            <tr>
+                <td>{{ arAnticipos.codigoAnticipoPk  }}</td>
+                <td>{{ arAnticipos.numero  }}</td>
+                <td>{{ arAnticipos.cuentaRel.nombre |default('')  }}</td>
+                <td>{{ arAnticipos.fecha |date("Y/m/d")  }}</td>
+                <td>{{ arAnticipos.fechaPago |date("Y/m/d")  }}</td>
+                <td>{{ arAnticipos.clienteRel.nit |default('')  }}</td>
+                <td>{{ arAnticipos.clienteRel.nombreCorto |default('')  }}</td>                                                
+                <td style="text-align: right">{{ arAnticipos.vrTotalDescuento | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arAnticipos.vrTotalAjustePeso | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arAnticipos.vrTotalReteIca | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arAnticipos.vrTotalReteIva | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arAnticipos.vrTotalReteFuente | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arAnticipos.vrTotal | number_format(2, '.', ',') }}</td>
+                <td style="text-align: right">{{ arAnticipos.vrTotalPago | number_format(2, '.', ',') }}</td>
+                <td>{% if arAnticipos.estadoAnulado == 1%}SI{% else %}NO{% endif %}</td>
+                <td>{% if arAnticipos.estadoAutorizado == 1%}SI{% else %}NO{% endif %}</td>
+                <td>{% if arAnticipos.estadoImpreso == 1%}SI{% else %}NO{% endif %}</td>
+            </tr>
+
+            {% endfor %}
+        </table>
+        <!-- Botones Menu Items -->
+        <div class="btn-group" style="float: left">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arAnticipos.getTotalItemCount }}</span></div>
+        </div>
+        <div class="btn-group btn-sm" style="float: left;margin-left: 0px;padding-top: 0px;">
+                {{ knp_pagination_render(arAnticipos) }}
+        </div>
+        <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnImprimir, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
+            </div>
+        </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

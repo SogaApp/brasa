@@ -1,0 +1,76 @@
+{% extends '::base_sin_menu.html.twig' %}
+{% block title %}Seguridad social empleados - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Lista empleados aporte</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">  
+                    <label for="form_sucursalRel" class="col-sm-3 control-label">Sucursal:</label>
+                    <div class="col-sm-9">                  
+                        {{ form_widget(form.sucursalRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_centroCostoRel" class="col-sm-3 control-label">Grupo pago:</label>
+                    <div class="col-sm-9">                  
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div> 
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-3 control-label">Identificacion:</label>
+                    <div class="col-sm-9">                  
+                        {{ form_widget(form.numeroIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                                                    
+            </div>
+        </div>
+        <table  class="table table-striped table-bordered table-condensed table-hover">            
+            <tr>
+                <th>CÓDIGO</th>
+                <th>IDENTIFICACIÓN</th>
+                <th>NOMBRE</th>
+                <th>GRUPO PAGO</th>
+                <th>CONTRATO</th>
+                <th>DÍAS</th>
+                <th>SALARIO</th>
+                <th>GENERADO</th>
+                <th align="center"><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+            </tr>
+            {% for arCopiarEmpleados in arCopiarEmpleados %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arCopiarEmpleados.codigoPeriodoEmpleadoPk }}">{{ arCopiarEmpleados.codigoPeriodoEmpleadoPk }} </td>
+                <td>{{ arCopiarEmpleados.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arCopiarEmpleados.empleadoRel.nombreCorto  }}</td>
+                <td>{{ arCopiarEmpleados.empleadoRel.centroCostoRel.nombre |default('') }}</td>
+                <td>{{ arCopiarEmpleados.codigoContratoFk  }}</td>
+                <td style="text-align: right">{{ arCopiarEmpleados.dias | number_format(0, '.', ',') }}</td>
+                <td style="text-align: right">{{ arCopiarEmpleados.vrSalario | number_format(0, '.', ',') }}</td>
+                <td>{% if arCopiarEmpleados.ssoPeriodoDetalleRel.estadoGenerado == 1 %}SI{% else %}NO{% endif %}</td>
+                <td style="text-align: center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arCopiarEmpleados.codigoPeriodoEmpleadoPk }}" /></td>
+            </tr>
+            {% endfor %}                        
+        </table>                       
+        {{ knp_pagination_render(arCopiarEmpleados) }}    
+
+
+        <!-- Botones Menu Items -->    
+        <div class="btn-group" style="float: right">
+            {{ form_widget(form.BtnCopiar, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+         </div>
+        <!-- Fin Botones Menu Items -->
+        {{ form_rest(form) }}
+    {{ form_end(form) }}   
+    
+</div>
+{% endblock %}

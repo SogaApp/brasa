@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+{% block title %}Contabilidad exportar registros - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <div class="page-header">
+        <h3>Exportar registros (Intercambio de datos)</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de exportacion</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-2 control-label">Comprobante:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.TxtComprobante, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">                  
+                        
+                    </div>                    
+                </div>                                        
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-2 control-label">Desde</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Numero desde:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.TxtNumeroDesde, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-2 control-label">Hasta</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Numero hasta:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.TxtNumeroHasta, { 'attr': {'class': 'form-control'} }) }}
+                    </div>                    
+                </div> 
+                <div class="form-group form-group-sm">  
+                    <label class="col-sm-2 control-label">Filtrar por fecha:</label>
+                    <div class="col-sm-4"> 
+                        {{ form_widget(form.filtrarFecha) }}
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">                  
+                        
+                    </div>                    
+                </div>                     
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnGenerarOfimatica, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                                
+                        {{ form_widget(form.BtnGenerarIlimitada, { 'attr': {'class': 'btn btn-default btn-sm'} }) }} 
+                    </div>
+                </div>
+            </div>
+        </div>       
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+

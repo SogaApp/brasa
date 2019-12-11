@@ -1,0 +1,91 @@
+{% extends '::base.html.twig' %}
+{% block title %}Adicionales al pago detalle - Soga App{% endblock %}
+{% block content %}
+<script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="container">
+    <div class="page-header">
+        <h3>Adicionales al pago</h3>            
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <!-- Encabezado Movimiento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Información programación de pago</div>
+      <div class="panel-body">
+            <table width="100%" class="table table-condensed table-bordered">
+                <tr>
+                    <td class="titulo">NÚMERO:</td>
+                    <td class="td-in-well">{{ arProgramacionPago.codigoProgramacionPagoPk }}</td>
+                    <td class="titulo">PERIODO DESDE:</td>
+                    <td class="td-in-well">{{ arProgramacionPago.fechaDesde |date("Y/m/d") }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">CENTRO DE COSTO:</td>
+                    <td class="td-in-well">{{ arProgramacionPago.centroCostoRel.nombre }}</td>
+                    <td class="titulo">PERIODO HASTA:</td>
+                    <td class="td-in-well">{{ arProgramacionPago.fechaHasta |date("Y/m/d") }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo" colspan="8">COMENTARIOS:</td>
+                </tr>
+            </table>
+      </div>
+    </div>    
+
+    <!-- Fin Encabezado Movimiento -->
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>CONCEPTO</th>
+                        <th>DETALLE</th>
+                        <th>EMPLEADO</th>
+                        <th>CANTIDAD</th>
+                        <th>VALOR</th>
+                        <th>PERMANENTE</th>
+                        <th>APLICA DIA L.</th>
+                        <th></th>
+                        <th><input type="checkbox" name="ChkSeleccionarTodos" OnClick="ChequearTodos(this);"/></th>
+                    </tr>
+                    {% for arPagosAdicionales in arPagosAdicionales %}
+                    <tr>
+                        <td>
+                            <input type="hidden" name="LblCodigoGuia[]" value="{{ arPagosAdicionales.codigoPagoAdicionalPk }}">
+                            <span class="badge">{{ arPagosAdicionales.codigoPagoAdicionalPk }}</span>
+                        </td>
+                        <td>{{ arPagosAdicionales.pagoConceptoRel.nombre}}</td>                        
+                        <td>{{ arPagosAdicionales.detalle }}</td>
+                        <td>{{ arPagosAdicionales.empleadoRel.nombreCorto|default('Sin nombre') }}</td>
+                        <td style="text-align: right">{{ arPagosAdicionales.cantidad | number_format(1, '.', ',') }}</td>                            
+                        <td style="text-align: right">{{ arPagosAdicionales.valor | number_format(2, '.', ',') }}</td>                                                        
+                        <td>{% if arPagosAdicionales.permanente == 1 %} SI {% else %} NO {% endif %}</td>                        
+                        <td>{% if arPagosAdicionales.aplicaDiaLaborado == 1 %} SI {% else %} NO {% endif %}</td>                        
+                        <td style="text-align: center"><a href="javascript:abrirVentana3('{{ path('brs_rhu_pagos_adicionales_agregar_valoreditar', { 'codigoProgramacionPago': arProgramacionPago.codigoProgramacionPagoPk, 'tipo': arPagosAdicionales.tipoAdicional, 'codigoPagoAdicional': arPagosAdicionales.codigoPagoAdicionalPk }) }}', 'EditarAdicionalPago', 600, 900)" ><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>                            
+                        <td style="text-align: center"><input type="checkbox" name="ChkSeleccionar[]" value="{{ arPagosAdicionales.codigoPagoAdicionalPk }}" /></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <!-- Botones Menu Items -->
+                <div class="btn-toolbar" style="float:left">
+                    <div class="btn-group">
+                        
+                    </div>
+                </div>
+
+                <div class="btn-toolbar" style="float:right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_pagos_adicionales_agregar_tiempo', {'codigoProgramacionPago': arProgramacionPago.codigoProgramacionPagoPk}) }}', 'AgregarTiempo', 600, 900)" >Tiempo suplementario</a>
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_pagos_adicionales_agregar_valor', {'codigoProgramacionPago': arProgramacionPago.codigoProgramacionPagoPk, 'tipo': 1 }) }}', 'AgregarValor', 600, 900)" >Bonificacion</a>                        
+                        <a class="btn btn-default btn-sm" href="javascript:abrirVentana3('{{ path('brs_rhu_pagos_adicionales_agregar_valor', {'codigoProgramacionPago': arProgramacionPago.codigoProgramacionPagoPk, 'tipo': 2 }) }}', 'AgregarValor', 600, 900)" >Descuento</a>
+                     </div>
+                     <div class="btn-group">
+                        {{ form_widget(form.BtnAplicaDiaLaborado, { 'attr': {'class': 'btn btn-success btn-sm'} }) }}                                                
+                        {{ form_widget(form.BtnRetirarConcepto, { 'attr': {'class': 'btn btn-danger btn-sm'} }) }}                        
+                    </div>
+                </div>    
+    {{ form_end(form) }}
+</div>
+{% endblock %}

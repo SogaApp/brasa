@@ -1,0 +1,117 @@
+{% extends '::base.html.twig' %}
+{% block title %}Consulta contratos por periodo - Soga App{% endblock %}
+{% block content %}
+<div class="container">
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('.date').datepicker({ dateFormat: 'yy-mm-dd' ,dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ], monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]})  });
+    </script>
+    <div class="page-header">
+        <h3>Consulta contratos periodo</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">                
+                <div class="form-group form-group-sm">  
+                    <label for="form_centroCostoRel" class="col-sm-2 control-label">Grupo pago:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.centroCostoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                                           
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtIdentificacion" class="col-sm-2 control-label">Identificacion:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtIdentificacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaDesde" class="col-sm-2 control-label">Fecha desde:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.fechaDesde, {'attr': {'maxlength' : 10} }) }} 
+                    </div>
+                    <label for="form_zonaRel" class="col-sm-2 control-label">Zona:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.zonaRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_fechaHasta" class="col-sm-2 control-label">Fecha hasta:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.fechaHasta, {'attr': {'maxlength' : 10} }) }} 
+                    </div>
+                    <label for="form_subZonaRel" class="col-sm-2 control-label">Subzona:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.subZonaRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">  
+                    <label for="form_empleadoTipoRel" class="col-sm-2 control-label">Empleado tipo:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.empleadoTipoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <label for="form_contratoTipoRel" class="col-sm-2 control-label">Contrato tipo:</label>
+                    <div class="col-sm-4">                  
+                        {{ form_widget(form.contratoTipoRel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrarContratosPeriodo, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>    
+            </div>
+        </div> 
+        <table class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>TIPO</th>
+                <th>FECHA</th>                
+                <th>DOCUMENTO</th>                
+                <th>EMPLEADO</th>                
+                <th>GRUPO PAGO</th>
+                <th>HASTA</th>
+                <th>MOTIVO</th>
+                <th>TIPO</th>
+                <th>ZONA</th>
+                <th>SUB ZONA</th>
+                <th>USUARIO</th>
+            </tr>
+            {% for arContrato in arContrato %}
+            <tr>
+                <td>{{ arContrato.codigoContratoPk }} </td>
+                <td>{{ arContrato.ContratoTipoRel.nombreCorto  }}</td>
+                <td>{{ arContrato.fecha |date("Y/m/d")  }}</td>                
+                <td>{{ arContrato.empleadoRel.numeroIdentificacion  }}</td>
+                <td>{{ arContrato.empleadoRel.nombreCorto  }}</td>
+                <td>{{ arContrato.centroCostoRel.nombre |default('value')  }}</td>                
+                <td>{{ arContrato.fechaHasta |date("Y/m/d")  }}</td>
+                <td>{{ arContrato.terminacionContratoRel.motivo  |default('')}}</td>
+                <td>{{ arContrato.empleadoRel.empleadoTipoRel.nombre  |default('')}}</td>
+                <td>{{ arContrato.empleadoRel.zonaRel.nombre  |default('')}}</td>
+                <td>{{ arContrato.empleadoRel.subZonaRel.nombre  |default('')}}</td>
+                <td>{{ arContrato.codigoUsuarioTermina  |default('')}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arContrato) }} 
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-default btn-sm">Registros <span class="badge">{{ arContrato.getTotalItemCount }}</span></div>        
+            </div>
+        </div>             
+        <div class="btn-toolbar" style="float: right">                 
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcelContratosPeriodo, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+

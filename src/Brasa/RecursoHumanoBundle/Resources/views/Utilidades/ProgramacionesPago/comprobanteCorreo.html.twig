@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+{% block title %}Enviar comprobante correo - Soga App{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Enviar comprobante correo pdf</h3>
+        </div>
+
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+        {{ form_errors(form) }}
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">Información a generar</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-4 control-label">Codigo programación pago:</label>
+                    <div class="col-sm-8">
+                            {{ form_widget(form.codigoProgramacionPago, { 'attr': {'class': 'form-control','autofocus':'autofocus'} }) }}
+                    </div>
+                </div>                  
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-4 control-label">Codigo pago:</label>
+                    <div class="col-sm-8">
+                            {{ form_widget(form.codigoPago, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnEnviar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>    
+            </div>        
+        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

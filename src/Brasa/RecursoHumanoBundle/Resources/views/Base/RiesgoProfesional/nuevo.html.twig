@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+{% block title %}Riesgos profesionales nuevo - Soga App{% endblock %} 
+{% block content %}
+<div class="container">    
+    {{ form_start(formEntidadRiesgoProfesional, { 'attr': {'class': 'form-horizontal'} }) }}
+    {{ form_errors(formEntidadRiesgoProfesional) }}
+    <h3>Nuevo registro</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Informacion general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formEntidadRiesgoProfesional.nombre, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','onkeypress': 'txNombres();', 'class': 'form-control','autofocus':'autofocus'} }) }}
+                </div>
+            </div>
+        <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Nit:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formEntidadRiesgoProfesional.nit, { 'attr': {'onkeypress': 'ValidaSoloNumeros();', 'class': 'form-control'} }) }}
+                </div>
+            </div>
+        <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Dirección:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formEntidadRiesgoProfesional.direccion, { 'attr': {'style':'text-transform:uppercase;','onblur':'javascript:this.value=this.value.toUpperCase()','class': 'form-control'} }) }}
+                </div>
+            </div>
+        <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Teléfono:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formEntidadRiesgoProfesional.telefono, { 'attr': {'onkeypress': 'ValidaSoloNumeros();', 'class': 'form-control'} }) }}
+                </div>
+        </div>
+        <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label">Código interface:</label>
+                <div class="col-sm-10">
+                        {{ form_widget(formEntidadRiesgoProfesional.codigoInterface, { 'attr': {'onkeypress': 'ValidaSoloNumeros();', 'class': 'form-control'} }) }}
+                </div>
+        </div>        
+             
+    
+</div>
+
+</div> 
+        <div class="modal-footer">
+            <a class="btn btn-default btn-sm" href="{{ path('brs_rhu_base_riesgoProfesional_listar') }}">Cancelar</a>
+            {{ form_widget(formEntidadRiesgoProfesional.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+        </div>
+{{ form_end(formEntidadRiesgoProfesional) }}  
+</div>
+{% endblock %}

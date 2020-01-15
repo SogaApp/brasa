@@ -193,6 +193,7 @@ class generalController extends Controller
         $i = 2;
 
 
+
         //$query = $em->createQuery($this->strDqlLista);
         //$arIngresos = new \Brasa\AfiliacionBundle\Entity\AfiEmpleado();
         //$arGeneral = $query->getResult();

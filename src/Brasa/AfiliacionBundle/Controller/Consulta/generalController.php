@@ -192,18 +192,12 @@ class generalController extends Controller
             ->setCellValue('I1', 'SALARIO');
         $i = 2;
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 30fa032eaa121a2a644bd8fdcc615fe16e877a7d
         //$query = $em->createQuery($this->strDqlLista);
         //$arIngresos = new \Brasa\AfiliacionBundle\Entity\AfiEmpleado();
         //$arGeneral = $query->getResult();
         /** @var AfiContrato $arContratos */
         $arContratos = ($em->createQuery($this->strDqlLista))->execute();
 
-<<<<<<< HEAD
         foreach ($arContratos as $arContratos) {
 
             $objPHPExcel->setActiveSheetIndex(0)
@@ -216,24 +210,8 @@ class generalController extends Controller
                 ->setCellValue('G' . $i, $arContratos->getFechaHasta()->format('Y-m-d'))
                 ->setCellValue('H' . $i, $arContratos->getEstadoActivo() == 1 ? "SI" : "NO")
                 ->setCellValue('I' . $i, $arContratos->getVrSalario());
-=======
-        foreach ($arContratos as $arContrato) {
-
-            $objPHPExcel->setActiveSheetIndex(0)
-                ->setCellValue('A' . $i, $arContrato->getCodigoContratoPk())
-                ->setCellValue('B' . $i, $arContrato->getClienteRel()->getNombreCorto())
-                ->setCellValue('C' . $i, $arContrato->getClienteRel()->getAsesorRel()->getNombre())
-                ->setCellValue('D' . $i, $arContrato->getEmpleadoRel()->getNumeroIdentificacion())
-                ->setCellValue('E' . $i, $arContrato->getEmpleadoRel()->getNombreCorto())
-                ->setCellValue('F' . $i, $arContrato->getFechaDesde()->format('Y-m-d'))
-                ->setCellValue('G' . $i, $arContrato->getFechaHasta()->format('Y-m-d'))
-                ->setCellValue('H' . $i, $arContrato->getIndefinido() == 1 ? "SI" : "NO")
-                ->setCellValue('I' . $i, $arContrato->getVrSalario());
->>>>>>> 30fa032eaa121a2a644bd8fdcc615fe16e877a7d
             $i++;
         }
-
-
 
         $objPHPExcel->getActiveSheet()->setTitle('EmpleadoContrato');
         $objPHPExcel->setActiveSheetIndex(0);

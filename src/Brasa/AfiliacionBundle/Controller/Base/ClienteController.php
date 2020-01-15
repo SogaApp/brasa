@@ -57,7 +57,6 @@ class ClienteController extends Controller
             'form' => $form->createView()));
     }
 
-
     /**
      * @Route("/afi/base/cliente/nuevo/{codigoCliente}", name="brs_afi_base_cliente_nuevo")
      */    

@@ -10,4 +10,9 @@
 /bin/
 /composer.phar
 /nbproject/private/
+<<<<<<< HEAD
 .idea/
+=======
+.idea/
+/web/imagenes/logos/logo.jpg
+>>>>>>> 30fa032eaa121a2a644bd8fdcc615fe16e877a7d

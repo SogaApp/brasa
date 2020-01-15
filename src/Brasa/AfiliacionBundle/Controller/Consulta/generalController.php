@@ -233,6 +233,7 @@ class generalController extends Controller
             $i++;
         }
 
+
         $objPHPExcel->getActiveSheet()->setTitle('EmpleadoContrato');
         $objPHPExcel->setActiveSheetIndex(0);
         // Redirect output to a client’s web browser (Excel2007)

@@ -192,6 +192,7 @@ class generalController extends Controller
             ->setCellValue('I1', 'SALARIO');
         $i = 2;
 
+
         //$query = $em->createQuery($this->strDqlLista);
         //$arIngresos = new \Brasa\AfiliacionBundle\Entity\AfiEmpleado();
         //$arGeneral = $query->getResult();

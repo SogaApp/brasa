@@ -198,18 +198,18 @@ class generalController extends Controller
         /** @var AfiContrato $arContratos */
         $arContratos = ($em->createQuery($this->strDqlLista))->execute();
 
-        foreach ($arContratos as $arContratos) {
+        foreach ($arContratos as $arContrato) {
 
             $objPHPExcel->setActiveSheetIndex(0)
-                ->setCellValue('A' . $i, $arContratos->getCodigoContratoPk())
-                ->setCellValue('B' . $i, $arContratos->getClienteRel()->getNombreCorto())
-                ->setCellValue('C' . $i, $arContratos->getClienteRel()->getAsesorRel()->getNombre())
-                ->setCellValue('D' . $i, $arContratos->getEmpleadoRel()->getNumeroIdentificacion())
-                ->setCellValue('E' . $i, $arContratos->getEmpleadoRel()->getNombreCorto())
-                ->setCellValue('F' . $i, $arContratos->getFechaDesde()->format('Y-m-d'))
-                ->setCellValue('G' . $i, $arContratos->getFechaHasta()->format('Y-m-d'))
-                ->setCellValue('H' . $i, $arContratos->getEstadoActivo() == 1 ? "SI" : "NO")
-                ->setCellValue('I' . $i, $arContratos->getVrSalario());
+                ->setCellValue('A' . $i, $arContrato->getCodigoContratoPk())
+                ->setCellValue('B' . $i, $arContrato->getClienteRel()->getNombreCorto())
+                ->setCellValue('C' . $i, $arContrato->getClienteRel()->getAsesorRel()->getNombre())
+                ->setCellValue('D' . $i, $arContrato->getEmpleadoRel()->getNumeroIdentificacion())
+                ->setCellValue('E' . $i, $arContrato->getEmpleadoRel()->getNombreCorto())
+                ->setCellValue('F' . $i, $arContrato->getFechaDesde()->format('Y-m-d'))
+                ->setCellValue('G' . $i, $arContrato->getFechaHasta()->format('Y-m-d'))
+                ->setCellValue('H' . $i, $arContrato->getIndefinido() == 1 ? "SI" : "NO")
+                ->setCellValue('I' . $i, $arContrato->getVrSalario());
             $i++;
         }
 

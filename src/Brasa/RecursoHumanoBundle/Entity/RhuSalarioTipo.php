@@ -20,7 +20,12 @@ class RhuSalarioTipo
     /**
      * @ORM\Column(name="nombre", type="string", length=50, nullable=true)
      */    
-    private $nombre; 
+    private $nombre;
+
+    /**
+     * @ORM\Column(name="prefijo", type="string", length=10, nullable=true)
+     */
+    private $prefijo;
 
     /**
      * @ORM\OneToMany(targetEntity="RhuContrato", mappedBy="salarioTipoRel")
@@ -68,6 +73,29 @@ class RhuSalarioTipo
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set prefijo
+     *
+     * @param $prefijo
+     * @return RhuSalarioTipo
+     */
+    public function setPrefijo($prefijo)
+    {
+        $this->prefijo = $prefijo;
+
+        return $this;
+    }
+
+    /**
+     * Get prefijo
+     *
+     * @return string
+     */
+    public function getPrefijo()
+    {
+        return $this->prefijo;
     }
 
     /**

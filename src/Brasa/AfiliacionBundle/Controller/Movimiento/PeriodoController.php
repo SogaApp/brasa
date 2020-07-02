@@ -1176,7 +1176,7 @@ class PeriodoController extends Controller
                 //40	9	192	200	N	Salario básico 	Obligatorio, sin comas ni puntos. No puede ser menor cero. Puede ser menor que 1 smlmv. Lo suministra el aportante Este valor debe ser reportado sin centavos
                 fputs($ar, $this->RellenarNr($arPeriodoDetallePago->getSalarioBasico(), "0", 9, "I"));
                 //41	1	201	201	A	Salario Integral	Se debe indicar con una X si el salario es integral o blanco si no lo es. Es responsabilidad del aportante suministrar esta información.
-                fputs($ar, $this->RellenarNr($arPeriodoDetallePago->getSalarioIntegral(), " ", 1, "D"));
+                fputs($ar, $this->RellenarNr('F', " ", 1, "D"));
                 //42	9	202	210	N	IBC Pensión	Obligatorio. Lo suministra el aportante.
                 fputs($ar, $this->RellenarNr($arPeriodoDetallePago->getIbcPension(), "0", 9, "I"));
                 //43	9	211	219	N	IBC Salud	Obligatorio. Lo suministra el aportante.
@@ -1499,7 +1499,7 @@ class PeriodoController extends Controller
                     //40	9	192	200	N	Salario básico 	Obligatorio, sin comas ni puntos. No puede ser menor cero. Puede ser menor que 1 smlmv. Lo suministra el aportante Este valor debe ser reportado sin centavos
                     fputs($ar, $this->RellenarNr($arPeriodoDetallePago->getSalarioBasico(), "0", 9, "I"));
                     //41	1	201	201	A	Salario Integral	Se debe indicar con una X si el salario es integral o blanco si no lo es. Es responsabilidad del aportante suministrar esta información.
-                    fputs($ar, $this->RellenarNr($arPeriodoDetallePago->getSalarioIntegral(), " ", 1, "D"));
+                    fputs($ar, $this->RellenarNr('F', " ", 1, "D"));
                     //42	9	202	210	N	IBC Pensión	Obligatorio. Lo suministra el aportante.
                     fputs($ar, $this->RellenarNr($arPeriodoDetallePago->getIbcPension(), "0", 9, "I"));
                     //43	9	211	219	N	IBC Salud	Obligatorio. Lo suministra el aportante.

@@ -490,7 +490,7 @@ class PeriodoController extends Controller
                 $rutaArchivo = $ruta . "PeriodoCobro" . $arPeriodo->getCodigoPeriodoPk() . ".pdf";
                 $strMensaje = "Reciba un cordial saludo de HORUS.<br>" .
                     "Adjuntamos la cuenta de cobro de la Seguridad Social y quedamos atentos a las novedades a reportar, recuerde realizar el pago en la cuenta de ahorros Bancolombia N°014-038-579-35<br>" .
-                    "Titular: SERVICIOS Y OBRAS SAS NIT . 901300842.<br>" .
+                    "Titular: SERVICIOS Y OBRAS SAS NIT . 901300482.<br>" .
                     "Por favor enviar soporte de pago .<br>" .
                     "Le recordamos que también ofrecemos servicios en:<br>" .
                     "* Certificaciones en alturas.<br>" .

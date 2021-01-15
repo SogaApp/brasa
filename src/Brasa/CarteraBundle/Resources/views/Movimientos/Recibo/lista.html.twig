@@ -45,14 +45,22 @@
                         {{ form_widget(form.estadoImpreso, { 'attr': {'class': 'form-control'} }) }}
                     </div>                    
                 </div>
-                <div class="form-group form-group-sm">  
-                    <label for="form_TxtNumero" class="col-sm-2 control-label"></label>
-                    <div class="col-sm-4"></div>
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaDesdeRecibo" class="col-sm-2 control-label">Fecha desde:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaDesdeRecibo) }}
+                    </div>
                     <label for="form_asesorRel" class="col-sm-2 control-label">Asesor:</label>
                     <div class="col-sm-4">                  
                         {{ form_widget(form.asesorRel, { 'attr': {'class': 'form-control'} }) }}
                     </div>                    
-                </div>     
+                </div>
+                <div class="form-group form-group-sm">
+                    <label for="form_fechaHastaRecibo" class="col-sm-2 control-label">Fecha hasta:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaHastaRecibo) }}
+                    </div>
+                </div>
                 <div class="form-group form-group-sm">
                     <div class="col-sm-offset-2 col-sm-10">
                         {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
@@ -63,10 +71,10 @@
         <table  class="table table-striped table-bordered table-condensed table-hover">
             <tr>
                 <th>{{ knp_pagination_sortable(arRecibos, 'CÓDIGO', 'r.codigoReciboPk') }}</th>
-                <th>NUMERO</th>
+                <th>{{ knp_pagination_sortable(arRecibos, 'NUMERO', 'r.numero') }}</th>
                 <th>TIPO</th>
-                <th>FECHA</th>
-                <th>F.PAGO</th>
+                <th>{{ knp_pagination_sortable(arRecibos, 'FECHA', 'r.fecha') }}</th>
+                <th>{{ knp_pagination_sortable(arRecibos, 'F.PAGO', 'r.fechaPago') }}</th>
                 <th>NIT</th>
                 <th>CLIENTE</th>
                 <th>ASESOR</th>

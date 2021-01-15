@@ -85,7 +85,7 @@ class CarAnticipoRepository extends EntityRepository
         $arAnticipo = $em->getRepository('BrasaCarteraBundle:CarAnticipo')->find($codigo);        
         if($arAnticipo->getEstadoAutorizado() == 1) {
            if($arAnticipo->getNumero() == 0) {            
-                $intNumero = $em->getRepository('BrasaCarteraBundle:CarConsecutivo')->consecutivo(1);
+                $intNumero = $em->getRepository('BrasaCarteraBundle:CarConsecutivo')->consecutivo(4);
                 $arAnticipo->setNumero($intNumero);
                 $arAnticipo->setEstadoImpreso(1);
                 $em->persist($arAnticipo);

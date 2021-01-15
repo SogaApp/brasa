@@ -273,14 +273,15 @@ class MovimientoAnticipoController extends Controller
                 } else {
                     //$objMensaje->Mensaje("error", "No se puede imprimir el registro, no esta autorizado", $this);
                     $objAnticipo = new \Brasa\CarteraBundle\Formatos\FormatoAnticipo();
-                    $objAnticipo->Generar($this, $codigoAnticipo);
                     $arAnticipo->setEstadoImpresoAnticipado(1);
-                    if($arAnticipo->getNumero() == 0) {            
-                        $intNumero = $em->getRepository('BrasaCarteraBundle:CarConsecutivo')->consecutivo(1);
+                    if($arAnticipo->getNumero() == 0) {
+                        $intNumero = $em->getRepository('BrasaCarteraBundle:CarConsecutivo')->consecutivo(4);
                         $arAnticipo->setNumero($intNumero);
                     }
                     $em->persist($arAnticipo);
                     $em->flush();
+
+                    $objAnticipo->Generar($this, $codigoAnticipo);
                     return $this->redirect($this->generateUrl('brs_cartera_movimiento_anticipo_detalle', array('codigoAnticipo' => $codigoAnticipo)));                        
                         
                 }

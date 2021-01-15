@@ -463,11 +463,14 @@ class MovimientoReciboController extends Controller {
     private function lista() {
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
+
         $this->strListaDql = $em->getRepository('BrasaCarteraBundle:CarRecibo')->listaDQL(
-                $session->get('filtroReciboNumero'), 
-                $session->get('filtroCodigoCliente'), 
-                $session->get('filtroReciboEstadoImpreso'), 
-                $session->get('filtroAsesor'));
+            $session->get('filtroReciboNumero'),
+            $session->get('filtroCodigoCliente'),
+            $session->get('filtroReciboEstadoImpreso'),
+            $session->get('filtroAsesor'),
+            $strFechaDesde = $session->get('filtroDesdeRecibo'),
+            $strFechaHasta = $session->get('filtroHastaRecibo'));
     }
 
     private function filtrar($form) {
@@ -482,6 +485,16 @@ class MovimientoReciboController extends Controller {
         $session->set('filtroReciboNumero', $form->get('TxtNumero')->getData());
         $session->set('filtroReciboEstadoImpreso', $form->get('estadoImpreso')->getData());
         $session->set('filtroNit', $form->get('TxtNit')->getData());
+
+        $dateFechaDesde = $form->get('fechaDesdeRecibo')->getData();
+        $dateFechaHasta = $form->get('fechaHastaRecibo')->getData();
+        if ($form->get('fechaDesdeRecibo')->getData() == null || $form->get('fechaHastaRecibo')->getData() == null){
+            $session->set('filtroDesdeRecibo', $form->get('fechaDesdeRecibo')->getData());
+            $session->set('filtroHastaRecibo', $form->get('fechaHastaRecibo')->getData());
+        } else {
+            $session->set('filtroDesdeRecibo', $dateFechaDesde->format('Y-m-d'));
+            $session->set('filtroHastaRecibo', $dateFechaHasta->format('Y-m-d'));
+        }
     }
 
     private function formularioFiltro() {
@@ -515,16 +528,32 @@ class MovimientoReciboController extends Controller {
         if ($session->get('filtroAsesor')) {
             $arrayPropiedadesAsesor['data'] = $em->getReference("BrasaGeneralBundle:GenAsesor", $session->get('filtroAsesor'));
         }
+
+        $dateFecha = new \DateTime('now');
+        $strFechaDesde = $dateFecha->format('Y/m/')."01";
+        $intUltimoDia = $strUltimoDiaMes = date("d",(mktime(0,0,0,$dateFecha->format('m')+1,1,$dateFecha->format('Y'))-1));
+        $strFechaHasta = $dateFecha->format('Y/m/').$intUltimoDia;
+        if($session->get('filtroDesdeRecibo') != "") {
+            $strFechaDesde = $session->get('filtroDesdeRecibo');
+        }
+        if($session->get('filtroHastaRecibo') != "") {
+            $strFechaHasta = $session->get('filtroHastaRecibo');
+        }
+        $dateFechaDesde = date_create($strFechaDesde);
+        $dateFechaHasta = date_create($strFechaHasta);
+
         $form = $this->createFormBuilder()
-                ->add('asesorRel', 'entity', $arrayPropiedadesAsesor)
-                ->add('TxtNumero', 'text', array('label' => 'Codigo', 'data' => $session->get('filtroCotizacionNumero')))
-                ->add('TxtNit', 'text', array('label' => 'Nit', 'data' => $session->get('filtroNit')))
-                ->add('TxtNombreCliente', 'text', array('label' => 'NombreCliente', 'data' => $strNombreCliente))
-                ->add('estadoImpreso', 'choice', array('choices' => array('2' => 'TODOS', '1' => 'IMPRESO', '0' => 'SIN IMPRIMIR'), 'data' => $session->get('filtroReciboEstadoImpreso')))
-                ->add('BtnEliminar', 'submit', array('label' => 'Eliminar',))
-                ->add('BtnExcel', 'submit', array('label' => 'Excel',))
-                ->add('BtnFiltrar', 'submit', array('label' => 'Filtrar'))
-                ->getForm();
+            ->add('asesorRel', 'entity', $arrayPropiedadesAsesor)
+            ->add('TxtNumero', 'text', array('label' => 'Codigo', 'data' => $session->get('filtroCotizacionNumero')))
+            ->add('TxtNit', 'text', array('label' => 'Nit', 'data' => $session->get('filtroNit')))
+            ->add('TxtNombreCliente', 'text', array('label' => 'NombreCliente', 'data' => $strNombreCliente))
+            ->add('estadoImpreso', 'choice', array('choices' => array('2' => 'TODOS', '1' => 'IMPRESO', '0' => 'SIN IMPRIMIR'), 'data' => $session->get('filtroReciboEstadoImpreso')))
+            ->add('BtnEliminar', 'submit', array('label' => 'Eliminar',))
+            ->add('BtnExcel', 'submit', array('label' => 'Excel',))
+            ->add('BtnFiltrar', 'submit', array('label' => 'Filtrar'))
+            ->add('fechaDesdeRecibo', 'date', array('format' => 'yyyyMMdd', 'data' => $dateFechaDesde))
+            ->add('fechaHastaRecibo', 'date', array('format' => 'yyyyMMdd', 'data' => $dateFechaHasta))
+            ->getForm();
         return $form;
     }
 

@@ -6037,6 +6037,7 @@ insert into `car_nota_debito_concepto` (`codigo_nota_debito_concepto_pk`, `nombr
 insert into `car_consecutivo` (`codigo_consecutivo_pk`, `nombre`, `consecutivo`) values('1','RECIBO','1');
 insert into `car_consecutivo` (`codigo_consecutivo_pk`, `nombre`, `consecutivo`) values('2','NOTA DEBITO','1');
 insert into `car_consecutivo` (`codigo_consecutivo_pk`, `nombre`, `consecutivo`) values('3','NOTA CREDITO','1');
+insert into `car_consecutivo` (`codigo_consecutivo_pk`, `nombre`, `consecutivo`) values('4','ANTICIPO','1');
 
 insert into `car_recibo_tipo` (`codigo_recibo_tipo_pk`, `nombre`) values('1','OFICINA 1');
 insert into `car_recibo_tipo` (`codigo_recibo_tipo_pk`, `nombre`) values('2','OFICINA 2');

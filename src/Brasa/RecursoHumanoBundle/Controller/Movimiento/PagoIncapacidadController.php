@@ -125,7 +125,7 @@ class PagoIncapacidadController extends Controller
             }            
             
             if ($form->get('BtnDetalleActualizar')->isClicked()) {
-                /*$arrControles = $request->request->All();
+                $arrControles = $request->request->All();
                 $intIndice = 0;
                 $arIncapacidadPagoDetalles = new \Brasa\RecursoHumanoBundle\Entity\RhuIncapacidadPagoDetalle();
                 $arIncapacidadPagoDetalles = $em->getRepository('BrasaRecursoHumanoBundle:RhuIncapacidadPagoDetalle')->findBy(array('codigoIncapacidadPagoFk' => $codigoIncapacidadPago));
@@ -138,8 +138,7 @@ class PagoIncapacidadController extends Controller
                 }
                 $em->flush();
                 $em->getRepository('BrasaRecursoHumanoBundle:RhuIncapacidadPago')->liquidar($codigoIncapacidadPago);
-                 * 
-                 */
+
                 return $this->redirect($this->generateUrl('brs_rhu_incapacidades_pagos_detalle', array('codigoIncapacidadPago' => $codigoIncapacidadPago)));                           
             }
         }                

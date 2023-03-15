@@ -227,8 +227,11 @@ class CertificadoIngresoRetencionController extends Controller
             ->add('certifico4', 'text', array('data' => '4. Mis consumos mediante tarjeta de crédito no excedieron la suma de 1.400 UVT ($53.206.000).', 'required' => true))
             ->add('certifico5', 'text', array('data' => '5. Que el total de mis compras y consumos no superaron la suma de 1.400 UVT ($53.206.000).', 'required' => true))
             ->add('certifico6', 'text', array('data' => '6. Que el valor total de mis consignaciones bancarias, depósitos o inversiones financieras no excedieron la suma de 1.400 UVT ($53.206.000).', 'required' => true))
-            ->add('BtnGenerar', 'submit', array('label' => 'Generar'))    
-            ->getForm();        
+            ->add('BtnGenerar', 'submit', array('label' => 'Generar'))
+            ->getForm();
+
+
+
         return $formCertificado;
     }                 
     

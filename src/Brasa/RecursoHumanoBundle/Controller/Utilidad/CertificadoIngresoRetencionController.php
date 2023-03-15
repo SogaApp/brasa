@@ -221,12 +221,12 @@ class CertificadoIngresoRetencionController extends Controller
                 'property' => 'nombre',
                 'required' => true))
             ->add('afc', 'number', array('data' => '0', 'required' => false))
-            ->add('certifico1', 'text', array('data' => '1. Mi patrimonio bruto era igual o inferior a 4.500 UVT ($123.683.000)', 'required' => true))                
-            ->add('certifico2', 'text', array('data' => '2. No fui responsable del impuesto sobre las ventas', 'required' => true))                
-            ->add('certifico3', 'text', array('data' => '3. Mis ingresos totales fueron iguales o inferiores a 1.400 UVT ($38.479.000)', 'required' => true))
-            ->add('certifico4', 'text', array('data' => '4. Mis consumos mediante tarjeta de crédito no excedieron la suma de 2.800 UVT ($76.958.000)', 'required' => true))
-            ->add('certifico5', 'text', array('data' => '5. Quen el total de mis compras y consumos no superaron la suma de 2.800 UVT ($76.958.000)', 'required' => true))                
-            ->add('certifico6', 'text', array('data' => '6. Que el valor total de mis consignaciones bancarias, depósitos o inversiones financieras no excedieron la suma de 4.500 UVT ($123.683.000)', 'required' => true))                
+            ->add('certifico1', 'text', array('data' => '1. Mi patrimonio bruto era igual o inferior a 4.500 UVT ($171.018.000)', 'required' => true))
+            ->add('certifico2', 'text', array('data' => '2. No fui responsable del impuesto sobre las ventas a 31 de Diciembre del 2022.', 'required' => true))
+            ->add('certifico3', 'text', array('data' => '3. Mis ingresos totales fueron iguales o inferiores a 1.400 UVT ($53.206.000).', 'required' => true))
+            ->add('certifico4', 'text', array('data' => '4. Mis consumos mediante tarjeta de crédito no excedieron la suma de 1.400 UVT ($53.206.000).', 'required' => true))
+            ->add('certifico5', 'text', array('data' => '5. Que el total de mis compras y consumos no superaron la suma de 1.400 UVT ($53.206.000).', 'required' => true))
+            ->add('certifico6', 'text', array('data' => '6. Que el valor total de mis consignaciones bancarias, depósitos o inversiones financieras no excedieron la suma de 1.400 UVT ($53.206.000).', 'required' => true))
             ->add('BtnGenerar', 'submit', array('label' => 'Generar'))    
             ->getForm();        
         return $formCertificado;

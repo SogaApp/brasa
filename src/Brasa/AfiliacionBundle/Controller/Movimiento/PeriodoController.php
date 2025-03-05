@@ -117,6 +117,7 @@ class PeriodoController extends Controller
                 $arPeriodos = new \Brasa\AfiliacionBundle\Entity\AfiPeriodo();
                 $arPeriodos = $em->getRepository('BrasaAfiliacionBundle:AfiPeriodo')->findBy(array('estadoGenerado' => 0, 'estadoCerrado' => 0));
                 foreach ($arPeriodos as $arPeriodo) {
+                    echo $arPeriodo->getCodigoPeriodoPk() . ', ';
                     $em->getRepository('BrasaAfiliacionBundle:AfiPeriodo')->generar($arPeriodo->getCodigoPeriodoPk());
                 }
                 return $this->redirect($this->generateUrl('brs_afi_movimiento_periodo'));
